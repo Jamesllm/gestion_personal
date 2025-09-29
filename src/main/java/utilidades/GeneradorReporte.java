@@ -20,7 +20,7 @@ public class GeneradorReporte {
         this.conexion = conexion;
     }
 
-    public void generarReporte(String categoria) {
+    public void generarReporte(String categoria, String titulo) {
         try {
             // Ruta del archivo JRXML
             String reportPath = "src/main/resources/reportes/" + categoria + ".jrxml";
@@ -30,7 +30,7 @@ public class GeneradorReporte {
 
             // Parámetros dinámicos
             Map<String, Object> params = new HashMap<>();
-            params.put("TITULO", "Reporte de " + categoria);
+            params.put("TITULO", "Reporte de " + titulo);
 
             JasperPrint print;
 

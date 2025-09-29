@@ -1123,7 +1123,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCerrarSesionMousePressed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-        DGenerarReporte dgenerarReporte = new DGenerarReporte(this, rootPaneCheckingEnabled, conexionDB);
+        DGenerarReporte dgenerarReporte = new DGenerarReporte(this, false, conexionDB);
         dgenerarReporte.setVisible(true);
         
     }//GEN-LAST:event_btnGenerarReporteActionPerformed

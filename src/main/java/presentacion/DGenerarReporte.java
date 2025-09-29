@@ -78,13 +78,13 @@ public class DGenerarReporte extends javax.swing.JDialog {
         btnAgregarEmpleado.setBackground(new java.awt.Color(0, 121, 216));
         btnAgregarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAgregarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarEmpleado.setText("Agregar");
+        btnAgregarEmpleado.setText("Generar");
         btnAgregarEmpleado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarEmpleadoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAgregarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(544, 470, 230, 60));
+        jPanel1.add(btnAgregarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 240, 230, 60));
 
         btnLogin3.setBackground(new java.awt.Color(255, 102, 102));
         btnLogin3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -95,43 +95,42 @@ public class DGenerarReporte extends javax.swing.JDialog {
                 btnLogin3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLogin3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 470, 180, 60));
+        jPanel1.add(btnLogin3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 180, 60));
 
         lblCorreo6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblCorreo6.setText("Categoria");
-        jPanel1.add(lblCorreo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 184, 39));
+        jPanel1.add(lblCorreo6, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 184, 39));
 
         cb_categorias.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jPanel1.add(cb_categorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 180, 40));
+        jPanel1.add(cb_categorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 690, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -4, 790, 550));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -4, 790, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadoActionPerformed
         String categoria = (String) cb_categorias.getSelectedItem();
+        GeneradorReporte generadorReporte = new GeneradorReporte(conexionDB.getConexion());
 
         switch (categoria) {
             case "Asistencia Mensual":
-//                generarReporteAsistenciaMensual();
-                GeneradorReporte generadorReporte = new GeneradorReporte(conexionDB.getConexion());
-                generadorReporte.generarReporte("empleados_departamento");
+                generadorReporte.generarReporte("asistencia_mensual", categoria);
                 break;
             case "Distribución por Departamento":
-//                generarReporteDepartamentos();
+                generadorReporte.generarReporte("empleados_departamento", categoria);
                 break;
             case "Total de Empleados":
-//                generarReporteEmpleados();
+                generadorReporte.generarReporte("total_empleados", categoria);
                 break;
             case "Inventario General":
-//                generarReporteInventario();
+                generadorReporte.generarReporte("inventario_general", categoria);
                 break;
             case "Stock Actual":
-//                generarReporteStock();
+                generadorReporte.generarReporte("stock_actual", categoria);
                 break;
             case "Entradas y Salidas de Inventario":
-//                generarReporteMovimientos();
+                generadorReporte.generarReporte("entrada_salida_inventario", categoria);
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Seleccione una categoría válida.");
