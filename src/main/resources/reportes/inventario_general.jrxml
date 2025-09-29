@@ -8,6 +8,8 @@
               leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
     <parameter name="TITULO" class="java.lang.String"/>
+ <parameter name="NOMBRE_EMPRESA" class="java.lang.String"/>
+  <parameter name="RUC_EMPRESA" class="java.lang.String"/>
 
     <queryString>
         <![CDATA[
@@ -30,12 +32,14 @@
             <textField>
                 <reportElement x="0" y="10" width="555" height="30"/>
                 <textElement textAlignment="Center">
-                    <font size="16" isBold="true"/>
+                    <font size="12" isBold="true"/>
                 </textElement>
-                <textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+                <textFieldExpression><![CDATA[$P{NOMBRE_EMPRESA}]]></textFieldExpression>
             </textField>
         </band>
     </title>
+	
+	
 
     <columnHeader>
         <band height="20">

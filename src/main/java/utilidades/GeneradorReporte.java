@@ -46,14 +46,6 @@ public class GeneradorReporte {
             String logoPath = "src/main/resources/imagenes/logo.png";
             File logoFile = new File(logoPath);
             
-            // Solo agregar logo si existe
-            if (logoFile.exists()) {
-                params.put("LOGO_EMPRESA", logoPath);
-            } else {
-                LOGGER.warning("Logo no encontrado en: " + logoPath);
-                params.put("LOGO_EMPRESA", ""); // Enviar vacío para evitar error
-            }
-            
             params.put("NOMBRE_EMPRESA", "MODAS TEXTILES DRAGO S.A.C.");
             params.put("RUC_EMPRESA", "20123456789");
             params.put("DIRECCION_EMPRESA", "Av. Principal 123, Lima - Perú");
