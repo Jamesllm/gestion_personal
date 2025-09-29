@@ -95,7 +95,7 @@ public class DGenerarReporte extends javax.swing.JDialog {
                 btnLogin3ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLogin3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 180, 60));
+        jPanel1.add(btnLogin3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 180, 60));
 
         lblCorreo6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblCorreo6.setText("Categoria");

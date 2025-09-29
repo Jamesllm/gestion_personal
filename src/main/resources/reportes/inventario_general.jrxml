@@ -24,6 +24,7 @@
     <field name="precio_unitario" class="java.math.BigDecimal"/>
     <field name="fecha_ultimo_movimiento" class="java.sql.Timestamp"/>
 
+    <!-- Título del reporte -->
     <title>
         <band height="50">
             <textField>
