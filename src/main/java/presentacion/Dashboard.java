@@ -462,7 +462,7 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_horas_trabajadas1 = new javax.swing.JLabel();
         lbl_atender_ahora4 = new javax.swing.JLabel();
         lbl_atender_ahora7 = new javax.swing.JLabel();
-        btnAgregarEmpleado1 = new javax.swing.JButton();
+        btnGenerarReporte = new javax.swing.JButton();
         panel_dis_mensual = new javax.swing.JScrollPane();
         panel_dis_departamento = new javax.swing.JScrollPane();
         jLabel15 = new javax.swing.JLabel();
@@ -917,16 +917,16 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_atender_ahora7.setText("Análisis detallado del rendimiento empresarial");
         jPanel_Comprobantes.add(lbl_atender_ahora7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
-        btnAgregarEmpleado1.setBackground(new java.awt.Color(0, 121, 216));
-        btnAgregarEmpleado1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAgregarEmpleado1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgregarEmpleado1.setText("Exportar reporte");
-        btnAgregarEmpleado1.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerarReporte.setBackground(new java.awt.Color(0, 121, 216));
+        btnGenerarReporte.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarReporte.setText("Generar reporte");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarEmpleado1ActionPerformed(evt);
+                btnGenerarReporteActionPerformed(evt);
             }
         });
-        jPanel_Comprobantes.add(btnAgregarEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
+        jPanel_Comprobantes.add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
 
         panel_dis_mensual.setBackground(new java.awt.Color(236, 243, 248));
         jPanel_Comprobantes.add(panel_dis_mensual, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 430, 430));
@@ -1122,9 +1122,11 @@ public class Dashboard extends javax.swing.JFrame {
 //        lg.setVisible(true);
     }//GEN-LAST:event_btnCerrarSesionMousePressed
 
-    private void btnAgregarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleado1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarEmpleado1ActionPerformed
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        DGenerarReporte dgenerarReporte = new DGenerarReporte(this, rootPaneCheckingEnabled, conexionDB);
+        dgenerarReporte.setVisible(true);
+        
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         utilidades.Utilidades.actualizarColoresBotones(btnInventario, btnInventario, btnInicio, btnEmpleados, btnAsistencia, btnReportes);
@@ -1134,10 +1136,10 @@ public class Dashboard extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
     private javax.swing.JButton btnAgregarEmpleado;
-    private javax.swing.JButton btnAgregarEmpleado1;
     private javax.swing.JButton btnAsistencia;
     private javax.swing.JMenuItem btnCerrarSesion;
     private javax.swing.JButton btnEmpleados;
+    private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnReportes;

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="empleados_departamento"
+              pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+
+ 
+
+    <!-- Estilo -->
+    <style name="Titulo" fontName="Arial" fontSize="16" isBold="true"/>
+	
+	 <queryString>
+        <![CDATA[
+            SELECT d.nombre_departamento AS departamento,
+                   COUNT(e.id_empleado) AS cantidad_empleados
+            FROM departamento d
+            LEFT JOIN empleado e ON d.id_departamento = e.id_departamento
+            GROUP BY d.nombre_departamento
+            ORDER BY cantidad_empleados DESC
+        ]]>
+    </queryString>
+
+    <!-- Campos que devuelve el SQL -->
+    <field name="departamento" class="java.lang.String"/>
+    <field name="cantidad_empleados" class="java.lang.Long"/> <!-- COUNT devuelve número -->
+
+    <!-- Título -->
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="10" width="500" height="30" style="Titulo"/>
+                <text><![CDATA[Reporte de Empleados por Departamento]]></text>
+            </staticText>
+        </band>
+    </title>
+
+    <!-- Encabezado de columnas -->
+    <columnHeader>
+        <band height="20">
+            <staticText>
+                <reportElement x="0" y="0" width="250" height="20"/>
+                <text><![CDATA[Departamento]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="250" y="0" width="150" height="20"/>
+                <text><![CDATA[Cantidad de Empleados]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <!-- Detalle -->
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="250" height="20"/>
+                <textFieldExpression><![CDATA[$F{departamento}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="250" y="0" width="150" height="20"/>
+                <textFieldExpression><![CDATA[$F{cantidad_empleados}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+</jasperReport>

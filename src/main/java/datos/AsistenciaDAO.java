@@ -104,4 +104,20 @@ public class AsistenciaDAO {
         );
     }
 
+    private List<String[]> obtenerAsistenciaMensual() {
+        List<String[]> datos = new ArrayList<>();
+        String sql = "SELECT MONTH(fecha) AS mes, COUNT(*) AS total_asistencias "
+                + "FROM asistencia GROUP BY MONTH(fecha) ORDER BY mes";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    datos.add(new String[]{String.valueOf(rs.getInt("mes")), String.valueOf(rs.getInt("total_asistencias"))});
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datos;
+    }
+
 }

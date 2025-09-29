@@ -79,4 +79,20 @@ public class DepartamentoDAO {
             ps.executeUpdate();
         }
     }
+
+    private List<String[]> obtenerDistribucionDepartamentos() {
+        List<String[]> datos = new ArrayList<>();
+        String sql = "SELECT d.nombre AS departamento, COUNT(e.id_empleado) AS cantidad_empleados "
+                + "FROM empleados e INNER JOIN departamentos d ON e.id_departamento = d.id_departamento "
+                + "GROUP BY d.nombre";
+        try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                datos.add(new String[]{rs.getString("departamento"), String.valueOf(rs.getInt("cantidad_empleados"))});
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return datos;
+    }
+
 }

@@ -11,11 +11,14 @@ utilidades\Utilidades.class
 presentacion\Login$1.class
 negocio\ActualizadorFechaHora.class
 negocio\ControlAsistencia.class
+presentacion\DGenerarReporte$2.class
 clases\Rol.class
+presentacion\DGenerarReporte$1.class
 presentacion\DAgregarEmpleado.class
 presentacion\DEmpleado.class
 clases\Usuario.class
 presentacion\Dashboard$4.class
+presentacion\DGenerarReporte.class
 datos\Conexion.class
 presentacion\DRecuperarCuenta.class
 presentacion\DRecuperarCuenta$2.class
@@ -35,5 +38,6 @@ presentacion\Dashboard.class
 datos\DepartamentoDAO.class
 presentacion\DEmpleado$2.class
 presentacion\Dashboard$3.class
+utilidades\GeneradorReporte.class
 datos\EmpleadoDAO.class
 presentacion\Login$2.class
