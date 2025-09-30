@@ -20,6 +20,7 @@ public class Inventario {
     private Timestamp fechaUltimoMovimiento;
     private int stockMinimo;
     private double precioUnitario;
+    private boolean estado;
 
     public Inventario() {
     }
@@ -33,7 +34,17 @@ public class Inventario {
         this.stockMinimo = stockMinimo;
         this.precioUnitario = precioUnitario;
     }
-    
+
+    public Inventario(int idItem, String nombreItem, int stockActual, String unidad, String ubicacion, int stockMinimo, double precioUnitario, boolean estado) {
+        this.idItem = idItem;
+        this.nombreItem = nombreItem;
+        this.stockActual = stockActual;
+        this.unidad = unidad;
+        this.ubicacion = ubicacion;
+        this.stockMinimo = stockMinimo;
+        this.precioUnitario = precioUnitario;
+        this.estado = estado;
+    }
 
     // Getters y Setters
     public int getIdItem() {
@@ -98,5 +109,13 @@ public class Inventario {
 
     public void setPrecioUnitario(double precioUnitario) {
         this.precioUnitario = precioUnitario;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 }

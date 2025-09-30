@@ -45,7 +45,7 @@ public class InventarioDAO {
 
     // Eliminar item
     public boolean eliminar(int idItem) throws SQLException {
-        String sql = "DELETE FROM inventario WHERE id_item=?";
+        String sql = "UPDATE inventario SET estado= FALSE WHERE id_item=?;";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, idItem);
             return ps.executeUpdate() > 0;
@@ -89,6 +89,7 @@ public class InventarioDAO {
         inv.setFechaUltimoMovimiento(rs.getTimestamp("fecha_ultimo_movimiento"));
         inv.setStockMinimo(rs.getInt("stock_minimo"));
         inv.setPrecioUnitario(rs.getDouble("precio_unitario"));
+        inv.setEstado(rs.getBoolean("estado"));
         return inv;
     }
 }

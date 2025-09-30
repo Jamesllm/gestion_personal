@@ -206,14 +206,14 @@ public class Dashboard extends javax.swing.JFrame {
             List<Inventario> lista = dao.listar();
 
             // Definir modelo de la tabla
-            String[] columnas = {"ID", "Nombre", "Stock Actual", "Unidad", "Ubicación", "Stock Mínimo", "Precio Unitario"};
+            String[] columnas = {"ID", "Nombre", "Stock Actual", "Unidad", "Ubicación", "Stock Mínimo", "Precio Unitario", "Estado"};
             DefaultTableModel modelo = new DefaultTableModel(null, columnas);
 
             // Rellenar con datos
             NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "PE"));
 
             for (Inventario inv : lista) {
-                Object[] fila = new Object[7];
+                Object[] fila = new Object[8];
                 fila[0] = inv.getIdItem();
                 fila[1] = inv.getNombreItem();
                 fila[2] = inv.getStockActual();
@@ -221,6 +221,7 @@ public class Dashboard extends javax.swing.JFrame {
                 fila[4] = inv.getUbicacion();
                 fila[5] = inv.getStockMinimo();
                 fila[6] = formatoMoneda.format(inv.getPrecioUnitario());
+                fila[7] = inv.isEstado() ? "Activo" : "Inactivo";
                 modelo.addRow(fila);
             }
 
@@ -1304,9 +1305,11 @@ public class Dashboard extends javax.swing.JFrame {
             NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "PE"));
             Number numero = formatoMoneda.parse(precioStr);
             double precio_unitario = numero.doubleValue();
+            boolean estado = (boolean) tablaInventario.getValueAt(filaSeleccionada, 7);
+            
 
             // Crear objeto Inventario
-            Inventario inventario = new Inventario(id, nombre, stock_actual, unidad, ubicacion, stock_minimo, precio_unitario);
+            Inventario inventario = new Inventario(id, nombre, stock_actual, unidad, ubicacion, stock_minimo, precio_unitario, estado);
 
             // Abrir el diálogo en modo edición
             DAgregarInventario dialog = new DAgregarInventario(this, true, conexionDB, inventario);
@@ -1343,7 +1346,46 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEditarEmpleadoActionPerformed
 
     private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
-        // TODO add your handling code here:
+        int filaSeleccionada = tablaInventario.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione un empleado de la tabla",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Obtener ID del empleado seleccionado
+        int idProducto = (int) tablaInventario.getValueAt(filaSeleccionada, 0);
+
+        // Confirmación antes de eliminar
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar al producto con ID " + idProducto + "?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                InventarioDAO dao = new InventarioDAO(conexionDB.getConexion());
+                dao.eliminar(idProducto);
+
+                JOptionPane.showMessageDialog(this,
+                        "Producto eliminado con éxito.",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                // Refrescar tabla del Dashboard
+                cargarInventarioEnTabla();
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error al eliminar producto: " + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                logger.log(java.util.logging.Level.SEVERE, "Error al eliminar producto", ex);
+            }
+        }
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
     private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
