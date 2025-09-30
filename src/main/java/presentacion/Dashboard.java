@@ -1219,7 +1219,8 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnAgregarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleado1ActionPerformed
-        // TODO add your handling code here:
+        DAgregarInventario agregar = new DAgregarInventario(this, false, conexionDB);
+        agregar.setVisible(true);
     }//GEN-LAST:event_btnAgregarEmpleado1ActionPerformed
 
 

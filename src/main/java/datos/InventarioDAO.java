@@ -68,7 +68,7 @@ public class InventarioDAO {
     // Listar todos los items
     public List<Inventario> listar() throws SQLException {
         List<Inventario> lista = new ArrayList<>();
-        String sql = "SELECT * FROM inventario ORDER BY nombre_item DESC";
+        String sql = "SELECT * FROM inventario ORDER BY id_item DESC";
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {

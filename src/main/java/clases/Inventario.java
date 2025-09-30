@@ -8,7 +8,6 @@ package clases;
  *
  * @author James
  */
-
 import java.sql.Timestamp;
 
 public class Inventario {
@@ -21,6 +20,20 @@ public class Inventario {
     private Timestamp fechaUltimoMovimiento;
     private int stockMinimo;
     private double precioUnitario;
+
+    public Inventario() {
+    }
+    
+    
+
+    public Inventario(String nombreItem, int stockActual, String unidad, String ubicacion, int stockMinimo, double precioUnitario) {
+        this.nombreItem = nombreItem;
+        this.stockActual = stockActual;
+        this.unidad = unidad;
+        this.ubicacion = ubicacion;
+        this.stockMinimo = stockMinimo;
+        this.precioUnitario = precioUnitario;
+    }
 
     // Getters y Setters
     public int getIdItem() {

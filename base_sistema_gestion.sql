@@ -45,7 +45,7 @@ CREATE TABLE usuario (
 CREATE TABLE asistencia (
     id_asistencia SERIAL PRIMARY KEY,
     id_empleado INTEGER NOT NULL,
-    fecha DATE NOT NULL,
+    fecha DATE NOT NULL DEFAULT CURRENT_DATE,
     hora_entrada TIME,
     hora_salida TIME,
     estado VARCHAR(20) DEFAULT 'PRESENTE',
