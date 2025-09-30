@@ -1435,7 +1435,8 @@ public class Dashboard extends javax.swing.JFrame {
             NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "PE"));
             Number numero = formatoMoneda.parse(precioStr);
             double precio_unitario = numero.doubleValue();
-            boolean estado = (boolean) tablaInventario.getValueAt(filaSeleccionada, 7);
+            String estadoStr = (String) tablaInventario.getValueAt(filaSeleccionada, 7);
+            boolean estado = estadoStr.equals("Activo");
 
             // Crear objeto Inventario
             Inventario inventario = new Inventario(id, nombre, stock_actual, unidad, ubicacion, stock_minimo, precio_unitario, estado);
