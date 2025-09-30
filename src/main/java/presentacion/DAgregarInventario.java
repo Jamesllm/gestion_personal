@@ -26,6 +26,7 @@ public class DAgregarInventario extends javax.swing.JDialog {
      */
     private Conexion conexionDB;
     private Dashboard dashboard;
+    private int idInventario = -1;
 
     public DAgregarInventario(Dashboard parent, boolean modal, Conexion conexionDB) {
         super(parent, modal);
@@ -33,6 +34,20 @@ public class DAgregarInventario extends javax.swing.JDialog {
         this.setLocationRelativeTo(this);
         this.dashboard = parent;
         this.conexionDB = conexionDB;
+    }
+
+    // Constructor para editar
+    public DAgregarInventario(Dashboard parent, boolean modal, Conexion conexionDB, Inventario inventario) {
+        this(parent, modal, conexionDB); // reutiliza el otro constructor
+        this.idInventario = inventario.getIdItem();
+
+        // Prellenar los campos
+        txt_nombre.setText(inventario.getNombreItem());
+        txt_stock_actual.setText(String.valueOf(inventario.getStockActual()));
+        txt_unidad.setText(inventario.getUnidad());
+        txt_ubicacion.setText(inventario.getUbicacion());
+        txt_stock_minimo.setText(String.valueOf(inventario.getStockMinimo()));
+        txt_precio_unitario.setText(String.valueOf(inventario.getPrecioUnitario()));
     }
 
     /**
@@ -162,13 +177,14 @@ public class DAgregarInventario extends javax.swing.JDialog {
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProductoActionPerformed
         String nombre = txt_nombre.getText().trim();
-        int stock_actual = Integer.parseInt(txt_stock_actual.getText().trim()); // convertir a int
+        int stock_actual = Integer.parseInt(txt_stock_actual.getText().trim());
         String unidad = txt_unidad.getText().trim();
         String ubicacion = txt_ubicacion.getText().trim();
-        int stock_minimo = Integer.parseInt(txt_stock_minimo.getText().trim()); // suponiendo que tienes txt_stock_minimo
-        double precio_unitario = Double.parseDouble(txt_precio_unitario.getText().trim()); // convertir a double
+        int stock_minimo = Integer.parseInt(txt_stock_minimo.getText().trim());
+        double precio_unitario = Double.parseDouble(txt_precio_unitario.getText().trim());
 
         Inventario inventario = new Inventario(
+                idInventario, // pasa el ID si es edición
                 nombre,
                 stock_actual,
                 unidad,
@@ -179,25 +195,25 @@ public class DAgregarInventario extends javax.swing.JDialog {
 
         InventarioDAO inventarioDAO = new InventarioDAO(conexionDB.getConexion());
         try {
-            inventarioDAO.insertar(inventario);
+            if (idInventario == -1) {
+                inventarioDAO.insertar(inventario);
+                JOptionPane.showMessageDialog(this, "Inventario agregado con éxito.",
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                inventarioDAO.actualizar(inventario);
+                JOptionPane.showMessageDialog(this, "Inventario actualizado con éxito.",
+                        "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
 
-            // Mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Inventario agregado con éxito.",
-                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
-            // Refrescar tabla del Dashboard
             if (dashboard != null) {
                 dashboard.cargarInventarioEnTabla();
             }
             this.dispose();
-        } catch (SQLException ex) {
-            // Mensaje de error
-            JOptionPane.showMessageDialog(this, "No se pudo agregar el inventario.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
 
-            // Log para depuración
-            System.getLogger(DAgregarEmpleado.class.getName())
-                    .log(System.Logger.Level.ERROR, (String) null, ex);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el inventario.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnAgregarProductoActionPerformed
 

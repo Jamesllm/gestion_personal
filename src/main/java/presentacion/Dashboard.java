@@ -16,6 +16,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -512,6 +513,7 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_atender_ahora5 = new javax.swing.JLabel();
         btnAgregarEmpleado1 = new javax.swing.JButton();
         lbl_atender_ahora8 = new javax.swing.JLabel();
+        btnEditarProducto = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnInicio = new javax.swing.JButton();
@@ -1027,6 +1029,17 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_atender_ahora8.setText("Administra la información de todo el inventario");
         jPanel_Inventario.add(lbl_atender_ahora8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
+        btnEditarProducto.setBackground(new java.awt.Color(255, 153, 102));
+        btnEditarProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarProducto.setText("Editar producto");
+        btnEditarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProductoActionPerformed(evt);
+            }
+        });
+        jPanel_Inventario.add(btnEditarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(573, 40, 150, 52));
+
         PanelTab.addTab("Inventario", jPanel_Inventario);
 
         jPanel2.setBackground(new java.awt.Color(236, 243, 248));
@@ -1223,6 +1236,40 @@ public class Dashboard extends javax.swing.JFrame {
         agregar.setVisible(true);
     }//GEN-LAST:event_btnAgregarEmpleado1ActionPerformed
 
+    private void btnEditarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProductoActionPerformed
+        try {
+            int filaSeleccionada = tablaInventario.getSelectedRow();
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(this, "Seleccione un producto para editar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Obtener datos de la tabla
+            int id = (int) tablaInventario.getValueAt(filaSeleccionada, 0);
+            String nombre = (String) tablaInventario.getValueAt(filaSeleccionada, 1);
+            int stock_actual = (int) tablaInventario.getValueAt(filaSeleccionada, 2);
+            String unidad = (String) tablaInventario.getValueAt(filaSeleccionada, 3);
+            String ubicacion = (String) tablaInventario.getValueAt(filaSeleccionada, 4);
+            int stock_minimo = (int) tablaInventario.getValueAt(filaSeleccionada, 5);
+
+            // Precio unitario: quitar "S/" y convertir
+            String precioStr = tablaInventario.getValueAt(filaSeleccionada, 6).toString();
+
+            NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "PE"));
+            Number numero = formatoMoneda.parse(precioStr);
+            double precio_unitario = numero.doubleValue();
+
+            // Crear objeto Inventario
+            Inventario inventario = new Inventario(id, nombre, stock_actual, unidad, ubicacion, stock_minimo, precio_unitario);
+
+            // Abrir el diálogo en modo edición
+            DAgregarInventario dialog = new DAgregarInventario(this, true, conexionDB, inventario);
+            dialog.setVisible(true);
+        } catch (ParseException ex) {
+            System.getLogger(Dashboard.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+        }
+    }//GEN-LAST:event_btnEditarProductoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
@@ -1230,6 +1277,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarEmpleado1;
     private javax.swing.JButton btnAsistencia;
     private javax.swing.JMenuItem btnCerrarSesion;
+    private javax.swing.JButton btnEditarProducto;
     private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnInicio;

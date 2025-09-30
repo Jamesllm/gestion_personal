@@ -14,6 +14,7 @@ clases\Empleado.class
 presentacion\Login.class
 datos\ModuloDAO.class
 presentacion\DRecuperarCuenta$1.class
+presentacion\Dashboard$10.class
 presentacion\DEmpleado$2.class
 presentacion\Dashboard$3.class
 utilidades\GeneradorReporte.class

@@ -23,10 +23,9 @@ public class Inventario {
 
     public Inventario() {
     }
-    
-    
 
-    public Inventario(String nombreItem, int stockActual, String unidad, String ubicacion, int stockMinimo, double precioUnitario) {
+    public Inventario(int idItem, String nombreItem, int stockActual, String unidad, String ubicacion, int stockMinimo, double precioUnitario) {
+        this.idItem = idItem;
         this.nombreItem = nombreItem;
         this.stockActual = stockActual;
         this.unidad = unidad;
@@ -34,6 +33,7 @@ public class Inventario {
         this.stockMinimo = stockMinimo;
         this.precioUnitario = precioUnitario;
     }
+    
 
     // Getters y Setters
     public int getIdItem() {
