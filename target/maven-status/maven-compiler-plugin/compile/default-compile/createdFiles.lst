@@ -17,6 +17,7 @@ clases\Empleado.class
 presentacion\Login.class
 datos\ModuloDAO.class
 presentacion\DRecuperarCuenta$1.class
+presentacion\Dashboard$16.class
 presentacion\Dashboard$10.class
 presentacion\DEmpleado$2.class
 presentacion\Dashboard$3.class
@@ -36,8 +37,10 @@ clases\Rol.class
 presentacion\DAgregarEmpleado.class
 presentacion\DGenerarReporte.class
 datos\Conexion.class
+presentacion\Dashboard$17.class
 presentacion\DRecuperarCuenta.class
 presentacion\DRecuperarCuenta$2.class
+presentacion\Dashboard$14.class
 presentacion\DEmpleado$1.class
 presentacion\Dashboard$7.class
 presentacion\DAgregarInventario$1.class
@@ -45,10 +48,12 @@ datos\LoginService.class
 presentacion\DAgregarInventario$2.class
 presentacion\Dashboard$2.class
 presentacion\DRecuperarCuenta$3.class
+datos\UsuarioDAO.class
 presentacion\Dashboard$11.class
 presentacion\Dashboard$5.class
 clases\Modulo.class
 presentacion\Dashboard.class
+presentacion\Dashboard$15.class
 datos\DepartamentoDAO.class
 presentacion\Login$2.class
 clases\Inventario.class

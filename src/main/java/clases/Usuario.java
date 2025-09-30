@@ -11,92 +11,89 @@ package clases;
 public class Usuario {
 
     private int idUsuario;
-    private String nombreUsuario;
-    private String contrasena;
-    private int idRol; // Clave foránea
-    private int idEmpleado; // Clave foránea (y única)
-    private Rol rol; // Relación con Rol
+    private String username;
+    private String password;
+    private boolean cambiarPassword; // para forzar cambio en el primer ingreso
+    private Rol rol; // Asociación a la clase Rol
+    private int idEmpleado; // vínculo con empleado si corresponde
 
     // Constructor vacío
     public Usuario() {
     }
 
-    // Constructor con todos los atributos (sin idUsuario, para inserción)
-    public Usuario(String nombreUsuario, String contrasena, Rol rol, int idEmpleado) {
-        this.nombreUsuario = nombreUsuario;
-        this.contrasena = contrasena;
-        this.rol = rol;
-        this.idEmpleado = idEmpleado;
-    }
-
-    // Constructor con todos los atributos (incluyendo idUsuario)
-    public Usuario(int idUsuario, String nombreUsuario, String contrasena, Rol rol, int idEmpleado) {
+    // Constructor con parámetros
+    public Usuario(int idUsuario, String username, String password, Rol rol, int idEmpleado) {
         this.idUsuario = idUsuario;
-        this.nombreUsuario = nombreUsuario;
-        this.contrasena = contrasena;
+        this.username = username;
+        this.password = password;
+        this.rol = rol;
+        this.idEmpleado = idEmpleado;
+    }
+    
+    public Usuario(int idUsuario, String username, String password, boolean cambiarPassword, Rol rol, int idEmpleado) {
+        this.idUsuario = idUsuario;
+        this.username = username;
+        this.password = password;
+        this.cambiarPassword = cambiarPassword;
         this.rol = rol;
         this.idEmpleado = idEmpleado;
     }
 
-    // Getters
+    // Getters y Setters
     public int getIdUsuario() {
         return idUsuario;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getUsername() {
+        return username;
     }
 
-    public int getIdRol() {
-        return idRol;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public int getIdEmpleado() {
-        return idEmpleado;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isCambiarPassword() {
+        return cambiarPassword;
+    }
+
+    public void setCambiarPassword(boolean cambiarPassword) {
+        this.cambiarPassword = cambiarPassword;
     }
 
     public Rol getRol() {
         return rol;
     }
 
-    // Setters
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
-    }
-
-    public void setIdRol(int idRol) {
-        this.idRol = idRol;
+    public int getIdEmpleado() {
+        return idEmpleado;
     }
 
     public void setIdEmpleado(int idEmpleado) {
         this.idEmpleado = idEmpleado;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
-    // toString
     @Override
     public String toString() {
         return "Usuario{"
                 + "idUsuario=" + idUsuario
-                + ", nombreUsuario='" + nombreUsuario + '\''
-                + ", contrasena='" + contrasena + '\''
-                + ", idRol=" + idRol
-                + ", idEmpleado=" + idEmpleado
+                + ", username='" + username + '\''
+                + ", rol=" + (rol != null ? rol.getNombreRol() : "sin rol")
                 + '}';
     }
 }

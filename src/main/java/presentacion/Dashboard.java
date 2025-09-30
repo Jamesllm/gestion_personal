@@ -10,6 +10,7 @@ import datos.Conexion;
 import datos.EmpleadoDAO;
 import datos.InventarioDAO;
 import datos.ModuloDAO;
+import datos.UsuarioDAO;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -95,12 +96,12 @@ public class Dashboard extends javax.swing.JFrame {
             }
         }
 
-        utilidades.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario);
+        utilidades.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario, btnUsuario);
 
         // Cargar el nombre
-        txt_bienvenida.setText("Bienvenido " + usuarioAutenticado.getNombreUsuario());
-        txt_bienvenida1.setText("Bienvenido " + usuarioAutenticado.getNombreUsuario());
-        nombre_usuario.setText(usuarioAutenticado.getNombreUsuario());
+        txt_bienvenida.setText("Bienvenido " + usuarioAutenticado.getUsername());
+        txt_bienvenida1.setText("Bienvenido " + usuarioAutenticado.getUsername());
+        nombre_usuario.setText(usuarioAutenticado.getUsername());
         rol_usuario.setText(usuarioAutenticado.getRol().getNombreRol());
 
         // === SECCION FECHA ===
@@ -156,6 +157,9 @@ public class Dashboard extends javax.swing.JFrame {
 
         // Cargar empleados en tabla
         cargarEmpleadosEnTabla(empleadoDAO);
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO(conexionDB.getConexion());
+        cargarUsuariosEnTabla(usuarioDAO);
 
         // === MOSTRAR ACTIVIDAD RECIENTE == 
         // mostrar en este panel: panel_actividad_reciente
@@ -386,7 +390,7 @@ public class Dashboard extends javax.swing.JFrame {
         try {
             AsistenciaDAO dao = new AsistenciaDAO(conexionDB.getConexion());
             List<Asistencia> asistencias;
-            
+
             if (usuarioAutenticado.getRol().getNombreRol().equalsIgnoreCase("Administrador")) {
                 asistencias = dao.obtenerTodas();
             } else {
@@ -449,6 +453,36 @@ public class Dashboard extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.err.println("Error al cargar los empleados en la tabla: " + e.getMessage());
             JOptionPane.showMessageDialog(this, "Error al cargar los datos de empleados.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void cargarUsuariosEnTabla(UsuarioDAO usuarioDAO) {
+        try {
+            // Obtener la lista de todos los usuarios
+            List<Usuario> listaUsuarios = usuarioDAO.listarTodos();
+
+            // Definir las columnas del JTable
+            String[] columnNames = {"ID Usuario", "Username", "Rol", "ID Empleado", "¿Cambiar Password?"};
+            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+            // Iterar sobre la lista de usuarios y agregar cada uno como una fila
+            for (Usuario usuario : listaUsuarios) {
+                Object[] rowData = {
+                    usuario.getIdUsuario(),
+                    usuario.getUsername(),
+                    usuario.getRol() != null ? usuario.getRol().getNombreRol() : "N/A",
+                    usuario.getIdEmpleado(),
+                    usuario.isCambiarPassword() ? "Sí" : "No"
+                };
+                model.addRow(rowData);
+            }
+
+            // Asignar el modelo a tu JTable
+            tablaUsuarios.setModel(model);
+
+        } catch (Exception e) {
+            System.err.println("Error al cargar los usuarios en la tabla: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al cargar los datos de usuarios.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -531,6 +565,15 @@ public class Dashboard extends javax.swing.JFrame {
         btnEliminarProducto = new javax.swing.JButton();
         btnEditarProducto = new javax.swing.JButton();
         btnAgregarEmpleado1 = new javax.swing.JButton();
+        jPanel_Usuarios = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        tablaUsuarios = new javax.swing.JTable();
+        lbl_atender_ahora9 = new javax.swing.JLabel();
+        lbl_atender_ahora10 = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        btnEliminarUsuario = new javax.swing.JButton();
+        btnEditarUsuario = new javax.swing.JButton();
+        btnAgregarUsuario = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnInicio = new javax.swing.JButton();
@@ -538,6 +581,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnAsistencia = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnInventario = new javax.swing.JButton();
+        btnUsuario = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         nombre_usuario = new javax.swing.JLabel();
         rol_usuario = new javax.swing.JLabel();
@@ -1101,6 +1145,72 @@ public class Dashboard extends javax.swing.JFrame {
 
         PanelTab.addTab("Inventario", jPanel_Inventario);
 
+        jPanel_Usuarios.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Usuarios.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tablaUsuarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane9.setViewportView(tablaUsuarios);
+
+        jPanel_Usuarios.add(jScrollPane9, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 116, 910, 590));
+
+        lbl_atender_ahora9.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lbl_atender_ahora9.setText("Gestion de usuarios");
+        jPanel_Usuarios.add(lbl_atender_ahora9, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
+
+        lbl_atender_ahora10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbl_atender_ahora10.setText("Administra la información de todos los usuarios");
+        jPanel_Usuarios.add(lbl_atender_ahora10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        jPanel18.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+        btnEliminarUsuario.setBackground(new java.awt.Color(255, 51, 51));
+        btnEliminarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarUsuario.setText("Eliminar");
+        btnEliminarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel18.add(btnEliminarUsuario);
+
+        btnEditarUsuario.setBackground(new java.awt.Color(255, 153, 102));
+        btnEditarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarUsuario.setText("Editar");
+        btnEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel18.add(btnEditarUsuario);
+
+        btnAgregarUsuario.setBackground(new java.awt.Color(0, 121, 216));
+        btnAgregarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAgregarUsuario.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarUsuario.setText("Nuevo usuario");
+        btnAgregarUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel18.add(btnAgregarUsuario);
+
+        jPanel_Usuarios.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 420, 50));
+
+        PanelTab.addTab("Usuarios", jPanel_Usuarios);
+
         getContentPane().add(PanelTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 0, 940, 773));
 
         jPanel2.setBackground(new java.awt.Color(236, 243, 248));
@@ -1152,6 +1262,15 @@ public class Dashboard extends javax.swing.JFrame {
             }
         });
         jPanel5.add(btnInventario);
+
+        btnUsuario.setText("Usuarios");
+        btnUsuario.setMaximumSize(new java.awt.Dimension(200, 50));
+        btnUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuarioActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnUsuario);
 
         jPanel3.setBackground(new java.awt.Color(211, 234, 251));
 
@@ -1242,22 +1361,22 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         PanelTab.setSelectedIndex(0);
-        utilidades.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario);
+        utilidades.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
         PanelTab.setSelectedIndex(1);
-        utilidades.Utilidades.actualizarColoresBotones(btnEmpleados, btnEmpleados, btnInicio, btnAsistencia, btnReportes, btnInventario);
+        utilidades.Utilidades.actualizarColoresBotones(btnEmpleados, btnEmpleados, btnInicio, btnAsistencia, btnReportes, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
         PanelTab.setSelectedIndex(2);
-        utilidades.Utilidades.actualizarColoresBotones(btnAsistencia, btnAsistencia, btnInicio, btnEmpleados, btnReportes, btnInventario);
+        utilidades.Utilidades.actualizarColoresBotones(btnAsistencia, btnAsistencia, btnInicio, btnEmpleados, btnReportes, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnAsistenciaActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         PanelTab.setSelectedIndex(3);
-        utilidades.Utilidades.actualizarColoresBotones(btnReportes, btnReportes, btnInicio, btnEmpleados, btnAsistencia, btnInventario);
+        utilidades.Utilidades.actualizarColoresBotones(btnReportes, btnReportes, btnInicio, btnEmpleados, btnAsistencia, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadoActionPerformed
@@ -1286,7 +1405,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         PanelTab.setSelectedIndex(4);
-        utilidades.Utilidades.actualizarColoresBotones(btnInventario, btnInventario, btnInicio, btnEmpleados, btnAsistencia, btnReportes);
+        utilidades.Utilidades.actualizarColoresBotones(btnInventario, btnInventario, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnUsuario);
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnAgregarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleado1ActionPerformed
@@ -1441,22 +1560,43 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
+    private void btnEliminarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarUsuarioActionPerformed
+
+    private void btnEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarUsuarioActionPerformed
+
+    private void btnAgregarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarUsuarioActionPerformed
+
+    private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
+        PanelTab.setSelectedIndex(5);
+        utilidades.Utilidades.actualizarColoresBotones(btnUsuario, btnUsuario, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario);
+    }//GEN-LAST:event_btnUsuarioActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
     private javax.swing.JButton btnAgregarEmpleado;
     private javax.swing.JButton btnAgregarEmpleado1;
+    private javax.swing.JButton btnAgregarUsuario;
     private javax.swing.JButton btnAsistencia;
     private javax.swing.JMenuItem btnCerrarSesion;
     private javax.swing.JButton btnEditarEmpleado;
     private javax.swing.JButton btnEditarProducto;
+    private javax.swing.JButton btnEditarUsuario;
     private javax.swing.JButton btnEliminarEmpleado;
     private javax.swing.JButton btnEliminarProducto;
+    private javax.swing.JButton btnEliminarUsuario;
     private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnInventario;
     private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnUsuario;
     private javax.swing.JLabel fecha_actual;
     private javax.swing.JLabel fecha_actual1;
     private javax.swing.JLabel hora_actual;
@@ -1487,6 +1627,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1500,15 +1641,19 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel_Inicio;
     private javax.swing.JPanel jPanel_Inventario;
     private javax.swing.JPanel jPanel_Reportes;
+    private javax.swing.JPanel jPanel_Usuarios;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JLabel lbl_atender_ahora10;
     private javax.swing.JLabel lbl_atender_ahora3;
     private javax.swing.JLabel lbl_atender_ahora4;
     private javax.swing.JLabel lbl_atender_ahora5;
     private javax.swing.JLabel lbl_atender_ahora6;
     private javax.swing.JLabel lbl_atender_ahora7;
     private javax.swing.JLabel lbl_atender_ahora8;
+    private javax.swing.JLabel lbl_atender_ahora9;
     private javax.swing.JLabel lbl_horas_promedio;
     private javax.swing.JLabel lbl_horas_trabajadas;
     private javax.swing.JLabel lbl_horas_trabajadas1;
@@ -1526,6 +1671,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTable tablaAsistencia;
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTable tablaInventario;
+    private javax.swing.JTable tablaUsuarios;
     private javax.swing.JLabel txt_bienvenida;
     private javax.swing.JLabel txt_bienvenida1;
     // End of variables declaration//GEN-END:variables
