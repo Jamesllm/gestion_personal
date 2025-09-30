@@ -8,6 +8,7 @@ presentacion\DEmpleado.class
 clases\Usuario.class
 presentacion\Dashboard$4.class
 presentacion\DAgregarEmpleado$2.class
+presentacion\Dashboard$9.class
 clases\Empleado.class
 presentacion\Login.class
 datos\ModuloDAO.class
@@ -21,6 +22,7 @@ datos\AsistenciaDAO.class
 presentacion\DAgregarEmpleado$1.class
 presentacion\Dashboard$6.class
 clases\Departamento.class
+datos\InventarioDAO.class
 presentacion\Login$1.class
 negocio\ActualizadorFechaHora.class
 negocio\ControlAsistencia.class
@@ -41,3 +43,4 @@ clases\Modulo.class
 presentacion\Dashboard.class
 datos\DepartamentoDAO.class
 presentacion\Login$2.class
+clases\Inventario.class

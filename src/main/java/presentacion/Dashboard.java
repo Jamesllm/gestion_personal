@@ -2,17 +2,20 @@ package presentacion;
 
 import clases.Asistencia;
 import clases.Empleado;
+import clases.Inventario;
 import clases.Modulo;
 import clases.Usuario;
 import datos.AsistenciaDAO;
 import datos.Conexion;
 import datos.EmpleadoDAO;
+import datos.InventarioDAO;
 import datos.ModuloDAO;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -191,6 +194,42 @@ public class Dashboard extends javax.swing.JFrame {
         Map<String, Integer> asistencia = empleadoDAO.obtenerAsistenciaMensual();
         renderizarAsistenciaMensual(asistencia, contenedorAsistenciaMensual);
 
+        // === SECCION INVENTARIO ===
+        // RENDERIZAR EN TABLA_: tablaInventario
+        cargarInventarioEnTabla();
+    }
+
+    public void cargarInventarioEnTabla() {
+        try {
+            InventarioDAO dao = new InventarioDAO(conexionDB.getConexion());
+            List<Inventario> lista = dao.listar();
+
+            // Definir modelo de la tabla
+            String[] columnas = {"ID", "Nombre", "Stock Actual", "Unidad", "Ubicación", "Stock Mínimo", "Precio Unitario"};
+            DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+
+            // Rellenar con datos
+            NumberFormat formatoMoneda = NumberFormat.getCurrencyInstance(new Locale("es", "PE"));
+
+            for (Inventario inv : lista) {
+                Object[] fila = new Object[7];
+                fila[0] = inv.getIdItem();
+                fila[1] = inv.getNombreItem();
+                fila[2] = inv.getStockActual();
+                fila[3] = inv.getUnidad();
+                fila[4] = inv.getUbicacion();
+                fila[5] = inv.getStockMinimo();
+                fila[6] = formatoMoneda.format(inv.getPrecioUnitario());
+                modelo.addRow(fila);
+            }
+
+            // Asignar modelo a la tabla
+            tablaInventario.setModel(modelo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar inventario: " + e.getMessage());
+        }
     }
 
     private void renderizarAsistenciaMensual(Map<String, Integer> asistencia, JPanel contenedorMensual) {
@@ -410,7 +449,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         PanelTab = new javax.swing.JTabbedPane();
-        jPanel_Atender = new javax.swing.JPanel();
+        jPanel_Inicio = new javax.swing.JPanel();
         txt_bienvenida = new javax.swing.JLabel();
         fecha_actual = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -426,13 +465,13 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         lbl_horas_trabajadas = new javax.swing.JLabel();
         panel_actividad_reciente = new javax.swing.JScrollPane();
-        jPanel_Paciente = new javax.swing.JPanel();
+        jPanel_Empleados = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
         lbl_atender_ahora3 = new javax.swing.JLabel();
         btnAgregarEmpleado = new javax.swing.JButton();
         lbl_atender_ahora6 = new javax.swing.JLabel();
-        jPanel_Consultas = new javax.swing.JPanel();
+        jPanel_Asistencia = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaAsistencia = new javax.swing.JTable();
         hora_actual1 = new javax.swing.JLabel();
@@ -449,7 +488,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txt_bienvenida1 = new javax.swing.JLabel();
         fecha_actual1 = new javax.swing.JLabel();
-        jPanel_Comprobantes = new javax.swing.JPanel();
+        jPanel_Reportes = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -467,6 +506,12 @@ public class Dashboard extends javax.swing.JFrame {
         panel_dis_departamento = new javax.swing.JScrollPane();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jPanel_Inventario = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        tablaInventario = new javax.swing.JTable();
+        lbl_atender_ahora5 = new javax.swing.JLabel();
+        btnAgregarEmpleado1 = new javax.swing.JButton();
+        lbl_atender_ahora8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnInicio = new javax.swing.JButton();
@@ -487,24 +532,24 @@ public class Dashboard extends javax.swing.JFrame {
         setTitle("Dashboard - MTD");
         setResizable(false);
 
-        jPanel_Atender.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_Atender.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel_Inicio.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Inicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txt_bienvenida.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         txt_bienvenida.setText("Inicio");
-        jPanel_Atender.add(txt_bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, -1, -1));
+        jPanel_Inicio.add(txt_bienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, -1, -1));
 
         fecha_actual.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         fecha_actual.setText("fecha actual");
-        jPanel_Atender.add(fecha_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 467, -1));
+        jPanel_Inicio.add(fecha_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 467, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Actividad reciente");
-        jPanel_Atender.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 538, -1));
+        jPanel_Inicio.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 538, -1));
 
         hora_actual.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         hora_actual.setText("hora_actual");
-        jPanel_Atender.add(hora_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(726, 40, 188, -1));
+        jPanel_Inicio.add(hora_actual, new org.netbeans.lib.awtextra.AbsoluteConstraints(726, 40, 188, -1));
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
         jPanel13.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
@@ -610,15 +655,15 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel13.add(jPanel16);
 
-        jPanel_Atender.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 900, -1));
+        jPanel_Inicio.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 900, -1));
 
         panel_actividad_reciente.setBackground(new java.awt.Color(236, 243, 248));
-        jPanel_Atender.add(panel_actividad_reciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 900, 430));
+        jPanel_Inicio.add(panel_actividad_reciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 900, 430));
 
-        PanelTab.addTab("Inicio", jPanel_Atender);
+        PanelTab.addTab("Inicio", jPanel_Inicio);
 
-        jPanel_Paciente.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_Paciente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel_Empleados.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Empleados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaEmpleados.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaEmpleados.setModel(new javax.swing.table.DefaultTableModel(
@@ -634,11 +679,11 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(tablaEmpleados);
 
-        jPanel_Paciente.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 116, 910, 590));
+        jPanel_Empleados.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 116, 910, 590));
 
         lbl_atender_ahora3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lbl_atender_ahora3.setText("Gestion de empleados");
-        jPanel_Paciente.add(lbl_atender_ahora3, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
+        jPanel_Empleados.add(lbl_atender_ahora3, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
 
         btnAgregarEmpleado.setBackground(new java.awt.Color(0, 121, 216));
         btnAgregarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -649,16 +694,16 @@ public class Dashboard extends javax.swing.JFrame {
                 btnAgregarEmpleadoActionPerformed(evt);
             }
         });
-        jPanel_Paciente.add(btnAgregarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
+        jPanel_Empleados.add(btnAgregarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
 
         lbl_atender_ahora6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbl_atender_ahora6.setText("Administra la información de todos los empleados");
-        jPanel_Paciente.add(lbl_atender_ahora6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jPanel_Empleados.add(lbl_atender_ahora6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
-        PanelTab.addTab("Empleados", jPanel_Paciente);
+        PanelTab.addTab("Empleados", jPanel_Empleados);
 
-        jPanel_Consultas.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_Consultas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel_Asistencia.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Asistencia.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tablaAsistencia.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaAsistencia.setModel(new javax.swing.table.DefaultTableModel(
@@ -674,11 +719,11 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane7.setViewportView(tablaAsistencia);
 
-        jPanel_Consultas.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 292, 899, 420));
+        jPanel_Asistencia.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 292, 899, 420));
 
         hora_actual1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         hora_actual1.setText("hora_actual");
-        jPanel_Consultas.add(hora_actual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(726, 40, 188, -1));
+        jPanel_Asistencia.add(hora_actual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(726, 40, 188, -1));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
@@ -784,24 +829,24 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel8.add(jPanel7);
 
-        jPanel_Consultas.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 900, -1));
+        jPanel_Asistencia.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 900, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setText("Registro de asisencia -  viernes, 25 de septiembre de 2025");
-        jPanel_Consultas.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        jPanel_Asistencia.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
 
         txt_bienvenida1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         txt_bienvenida1.setText("Inicio");
-        jPanel_Consultas.add(txt_bienvenida1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, -1, -1));
+        jPanel_Asistencia.add(txt_bienvenida1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 19, -1, -1));
 
         fecha_actual1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         fecha_actual1.setText("fecha actual");
-        jPanel_Consultas.add(fecha_actual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 467, -1));
+        jPanel_Asistencia.add(fecha_actual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 467, -1));
 
-        PanelTab.addTab("Asistencia", jPanel_Consultas);
+        PanelTab.addTab("Asistencia", jPanel_Asistencia);
 
-        jPanel_Comprobantes.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel_Comprobantes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel_Reportes.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Reportes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setLayout(new java.awt.GridLayout(1, 0, 10, 0));
@@ -907,15 +952,15 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel9.add(jPanel12);
 
-        jPanel_Comprobantes.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 900, -1));
+        jPanel_Reportes.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 900, -1));
 
         lbl_atender_ahora4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lbl_atender_ahora4.setText("Reportes");
-        jPanel_Comprobantes.add(lbl_atender_ahora4, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
+        jPanel_Reportes.add(lbl_atender_ahora4, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
 
         lbl_atender_ahora7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbl_atender_ahora7.setText("Análisis detallado del rendimiento empresarial");
-        jPanel_Comprobantes.add(lbl_atender_ahora7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+        jPanel_Reportes.add(lbl_atender_ahora7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         btnGenerarReporte.setBackground(new java.awt.Color(0, 121, 216));
         btnGenerarReporte.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -926,23 +971,63 @@ public class Dashboard extends javax.swing.JFrame {
                 btnGenerarReporteActionPerformed(evt);
             }
         });
-        jPanel_Comprobantes.add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
+        jPanel_Reportes.add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
 
         panel_dis_mensual.setBackground(new java.awt.Color(236, 243, 248));
-        jPanel_Comprobantes.add(panel_dis_mensual, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 430, 430));
+        jPanel_Reportes.add(panel_dis_mensual, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 290, 430, 430));
 
         panel_dis_departamento.setBackground(new java.awt.Color(236, 243, 248));
-        jPanel_Comprobantes.add(panel_dis_departamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 440, 430));
+        jPanel_Reportes.add(panel_dis_departamento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 440, 430));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel15.setText("Asistencia Mensual");
-        jPanel_Comprobantes.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 430, -1));
+        jPanel_Reportes.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 250, 430, -1));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setText("Distribucion por Departamento");
-        jPanel_Comprobantes.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 430, -1));
+        jPanel_Reportes.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 430, -1));
 
-        PanelTab.addTab("Reportes", jPanel_Comprobantes);
+        PanelTab.addTab("Reportes", jPanel_Reportes);
+
+        jPanel_Inventario.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Inventario.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tablaInventario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablaInventario.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane8.setViewportView(tablaInventario);
+
+        jPanel_Inventario.add(jScrollPane8, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 116, 910, 590));
+
+        lbl_atender_ahora5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lbl_atender_ahora5.setText("Gestion de inventario");
+        jPanel_Inventario.add(lbl_atender_ahora5, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
+
+        btnAgregarEmpleado1.setBackground(new java.awt.Color(0, 121, 216));
+        btnAgregarEmpleado1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAgregarEmpleado1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregarEmpleado1.setText("Nuevo producto");
+        btnAgregarEmpleado1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarEmpleado1ActionPerformed(evt);
+            }
+        });
+        jPanel_Inventario.add(btnAgregarEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
+
+        lbl_atender_ahora8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbl_atender_ahora8.setText("Administra la información de todo el inventario");
+        jPanel_Inventario.add(lbl_atender_ahora8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        PanelTab.addTab("Inventario", jPanel_Inventario);
 
         jPanel2.setBackground(new java.awt.Color(236, 243, 248));
 
@@ -1125,17 +1210,23 @@ public class Dashboard extends javax.swing.JFrame {
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
         DGenerarReporte dgenerarReporte = new DGenerarReporte(this, false, conexionDB);
         dgenerarReporte.setVisible(true);
-        
+
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
+        PanelTab.setSelectedIndex(4);
         utilidades.Utilidades.actualizarColoresBotones(btnInventario, btnInventario, btnInicio, btnEmpleados, btnAsistencia, btnReportes);
     }//GEN-LAST:event_btnInventarioActionPerformed
+
+    private void btnAgregarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleado1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarEmpleado1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
     private javax.swing.JButton btnAgregarEmpleado;
+    private javax.swing.JButton btnAgregarEmpleado1;
     private javax.swing.JButton btnAsistencia;
     private javax.swing.JMenuItem btnCerrarSesion;
     private javax.swing.JButton btnEmpleados;
@@ -1179,16 +1270,20 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanel_Atender;
-    private javax.swing.JPanel jPanel_Comprobantes;
-    private javax.swing.JPanel jPanel_Consultas;
-    private javax.swing.JPanel jPanel_Paciente;
+    private javax.swing.JPanel jPanel_Asistencia;
+    private javax.swing.JPanel jPanel_Empleados;
+    private javax.swing.JPanel jPanel_Inicio;
+    private javax.swing.JPanel jPanel_Inventario;
+    private javax.swing.JPanel jPanel_Reportes;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JLabel lbl_atender_ahora3;
     private javax.swing.JLabel lbl_atender_ahora4;
+    private javax.swing.JLabel lbl_atender_ahora5;
     private javax.swing.JLabel lbl_atender_ahora6;
     private javax.swing.JLabel lbl_atender_ahora7;
+    private javax.swing.JLabel lbl_atender_ahora8;
     private javax.swing.JLabel lbl_horas_promedio;
     private javax.swing.JLabel lbl_horas_trabajadas;
     private javax.swing.JLabel lbl_horas_trabajadas1;
@@ -1205,6 +1300,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel rol_usuario;
     private javax.swing.JTable tablaAsistencia;
     private javax.swing.JTable tablaEmpleados;
+    private javax.swing.JTable tablaInventario;
     private javax.swing.JLabel txt_bienvenida;
     private javax.swing.JLabel txt_bienvenida1;
     // End of variables declaration//GEN-END:variables
