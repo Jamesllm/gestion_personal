@@ -145,15 +145,12 @@ public class Login extends javax.swing.JFrame {
 
             if (usuarioAutenticado != null) {
                 // 3. Verificar rol
-                if ("ADMINISTRADOR".equalsIgnoreCase(usuarioAutenticado.getRol().getNombreRol())) {
-                    // Accede al panel
-                    Dashboard d = new Dashboard(usuarioAutenticado, conexionDB);
-                    d.setVisible(true);
-                    this.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Acceso denegado. Solo administradores pueden ingresar.",
-                            "Acceso restringido", JOptionPane.ERROR_MESSAGE);
-                }
+
+                // Accede al panel
+                Dashboard d = new Dashboard(usuarioAutenticado, conexionDB);
+                d.setVisible(true);
+                this.dispose();
+
             } else {
                 // Credenciales incorrectas
                 intentosFallidos++;

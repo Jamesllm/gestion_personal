@@ -132,9 +132,9 @@ INSERT INTO departamento (nombre_departamento) VALUES
 -- Insertar Empleados
 INSERT INTO empleado (nombres, apellidos, dni, id_departamento, fecha_contratacion, correo_electronico, telefono) VALUES
 ('Ronal', 'Llapapasca Montes', '12345678', 1, '2024-01-15', 'ronallapapasca@gmail.com', '987456321'),
-('María Elena', 'Rodríguez Silva', '23456789', 2, '2024-02-01', 'mariaelena@gmail.com', '935487895'),
-('Carlos Alberto', 'López Mendoza', '34567890', 3, '2024-01-20', 'carlosmendoza@gmail.com', '954789654'),
-('Ana Sofía', 'Martínez Vega', '45678901', 4, '2024-03-01', 'anavega@gmail.com', '935489574'),
+('David', 'Ortiz Salazar', '23456789', 2, '2024-02-01', 'davidortiz@gmail.com', '935487895'),
+('Martin', 'Shaquihuanca', '34567890', 3, '2024-01-20', 'martinshaqui@gmail.com', '954789654'),
+('Anghello', 'Tafur', '45678901', 4, '2024-03-01', 'anghellotafur@gmail.com', '935489574'),
 ('Luis Fernando', 'González Ruiz', '56789012', 5, '2024-01-10', 'luisruiz@gmail.com', '965874585'),
 ('Carmen Rosa', 'Hernández Torres', '67890123', 6, '2024-02-15', 'carmentorres@gmail.com', '925478965'),
 ('Roberto Miguel', 'Díaz Flores', '78901234', 7, '2024-01-25', 'robertomiguel@gmail.com', '923458765'),
