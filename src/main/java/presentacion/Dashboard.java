@@ -472,6 +472,7 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_atender_ahora3 = new javax.swing.JLabel();
         btnAgregarEmpleado = new javax.swing.JButton();
         lbl_atender_ahora6 = new javax.swing.JLabel();
+        btnEditarEmpleado = new javax.swing.JButton();
         jPanel_Asistencia = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaAsistencia = new javax.swing.JTable();
@@ -701,6 +702,17 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_atender_ahora6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lbl_atender_ahora6.setText("Administra la información de todos los empleados");
         jPanel_Empleados.add(lbl_atender_ahora6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        btnEditarEmpleado.setBackground(new java.awt.Color(255, 153, 102));
+        btnEditarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarEmpleado.setText("Editar empleado");
+        btnEditarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel_Empleados.add(btnEditarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(573, 40, 150, 52));
 
         PanelTab.addTab("Empleados", jPanel_Empleados);
 
@@ -1270,6 +1282,32 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarProductoActionPerformed
 
+    private void btnEditarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarEmpleadoActionPerformed
+        int filaSeleccionada = tablaEmpleados.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione un empleado de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int idEmpleado = (int) tablaEmpleados.getValueAt(filaSeleccionada, 0);
+
+        try {
+            EmpleadoDAO dao = new EmpleadoDAO(conexionDB.getConexion());
+            Empleado empleado = dao.obtenerEmpleadoPorId(idEmpleado);
+
+            if (empleado != null) {
+                DAgregarEmpleado dialog = new DAgregarEmpleado(this, true, conexionDB, empleado);
+                dialog.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Empleado no encontrado en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al cargar empleado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            logger.log(java.util.logging.Level.SEVERE, "Error al editar empleado", ex);
+        }
+    }//GEN-LAST:event_btnEditarEmpleadoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
@@ -1277,6 +1315,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregarEmpleado1;
     private javax.swing.JButton btnAsistencia;
     private javax.swing.JMenuItem btnCerrarSesion;
+    private javax.swing.JButton btnEditarEmpleado;
     private javax.swing.JButton btnEditarProducto;
     private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnGenerarReporte;

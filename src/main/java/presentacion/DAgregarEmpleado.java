@@ -24,6 +24,7 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
      */
     private Conexion conexionDB;
     private Dashboard dashboard;
+    private Empleado empleadoEditar;
 
     public DAgregarEmpleado(Dashboard parent, boolean modal, Conexion conexionDB) {
         super(parent, modal);
@@ -34,6 +35,30 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
 
         // Cargar los departamentos
         cargarDepartamentos(conexionDB);
+    }
+
+    public DAgregarEmpleado(Dashboard parent, boolean modal, Conexion conexionDB, Empleado empleadoEditar) {
+        this(parent, modal, conexionDB); // llama al otro constructor
+        this.empleadoEditar = empleadoEditar;
+        precargarDatosEmpleado(empleadoEditar);
+    }
+
+    private void precargarDatosEmpleado(Empleado empleado) {
+        txt_nombres.setText(empleado.getNombres());
+        txt_apellidos.setText(empleado.getApellidos());
+        txt_dni.setText(empleado.getDni());
+        txt_correo_electronico.setText(empleado.getCorreoElectronico());
+        txt_telefono.setText(empleado.getTelefono());
+        dc_fecha_contratacion.setDate(empleado.getFechaContratacion());
+
+        // Seleccionar el departamento en el combo
+        for (int i = 0; i < cb_departamentos.getItemCount(); i++) {
+            Departamento dep = cb_departamentos.getItemAt(i);
+            if (dep.getIdDepartamento() == empleado.getIdDepartamento()) {
+                cb_departamentos.setSelectedIndex(i);
+                break;
+            }
+        }
     }
 
     private void cargarDepartamentos(Conexion conexionDB) {
@@ -193,50 +218,47 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
         String correoElectronico = txt_correo_electronico.getText().trim();
         String telefono = txt_telefono.getText().trim();
 
-        // Fecha desde JDateChooser (dc_fecha_contratacion)
         java.util.Date fechaUtil = dc_fecha_contratacion.getDate();
         java.sql.Date fechaContratacion = null;
         if (fechaUtil != null) {
             fechaContratacion = new java.sql.Date(fechaUtil.getTime());
         }
 
-        // Departamento seleccionado (del combo)
         Departamento departamentoSeleccionado = (Departamento) cb_departamentos.getSelectedItem();
         int idDepartamento = departamentoSeleccionado != null ? departamentoSeleccionado.getIdDepartamento() : -1;
 
-        Empleado empleado = new Empleado(
-                nombres,
-                apellidos,
-                dni,
-                fechaContratacion,
-                correoElectronico,
-                telefono,
-                idDepartamento
-        );
-
         EmpleadoDAO empleadoDAO = new EmpleadoDAO(conexionDB.getConexion());
-        try {
-            empleadoDAO.crearEmpleado(empleado);
 
-            // Mensaje de éxito
-            JOptionPane.showMessageDialog(this, "Empleado agregado con éxito.",
-                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            if (empleadoEditar == null) {
+                // === INSERTAR ===
+                Empleado empleado = new Empleado(nombres, apellidos, dni, fechaContratacion, correoElectronico, telefono, idDepartamento);
+                empleadoDAO.crearEmpleado(empleado);
+                JOptionPane.showMessageDialog(this, "Empleado agregado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                // === EDITAR ===
+                empleadoEditar.setNombres(nombres);
+                empleadoEditar.setApellidos(apellidos);
+                empleadoEditar.setDni(dni);
+                empleadoEditar.setFechaContratacion(fechaContratacion);
+                empleadoEditar.setCorreoElectronico(correoElectronico);
+                empleadoEditar.setTelefono(telefono);
+                empleadoEditar.setIdDepartamento(idDepartamento);
+
+                empleadoDAO.actualizarEmpleado(empleadoEditar);
+                JOptionPane.showMessageDialog(this, "Empleado actualizado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
 
             // Refrescar tabla del Dashboard
             if (dashboard != null) {
-                EmpleadoDAO dao = new EmpleadoDAO(conexionDB.getConexion());
-                dashboard.cargarEmpleadosEnTabla(dao);
+                dashboard.cargarEmpleadosEnTabla(new EmpleadoDAO(conexionDB.getConexion()));
             }
+
             this.dispose();
 
         } catch (SQLException ex) {
-            // Mensaje de error
-            JOptionPane.showMessageDialog(this, "No se pudo agregar el empleado.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
-
-            // Log para depuración
-            System.getLogger(DAgregarEmpleado.class.getName())
-                    .log(System.Logger.Level.ERROR, (String) null, ex);
+            JOptionPane.showMessageDialog(this, "Error al guardar el empleado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            logger.log(java.util.logging.Level.SEVERE, "Error al guardar empleado", ex);
         }
     }//GEN-LAST:event_btnAgregarEmpleadoActionPerformed
 
