@@ -8,6 +8,8 @@ package clases;
  *
  * @author James
  */
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate; // Para manejar fechas
 import java.time.LocalTime; // Para manejar horas
 
@@ -15,9 +17,9 @@ public class Asistencia {
 
     private int idAsistencia;
     private int idEmpleado; // Clave foránea
-    private LocalDate fecha;
-    private LocalTime horaEntrada;
-    private LocalTime horaSalida;
+    private Date fecha;
+    private Time  horaEntrada;
+    private Time  horaSalida;
     private String estado; // Ej: "A tiempo", "Tardanza", "Ausente", "Permiso"
 
     // Constructor vacío
@@ -25,7 +27,7 @@ public class Asistencia {
     }
 
     // Constructor con todos los atributos (sin idAsistencia, para inserción)
-    public Asistencia(int idEmpleado, LocalDate fecha, LocalTime horaEntrada, LocalTime horaSalida, String estado) {
+    public Asistencia(int idEmpleado, Date fecha, Time  horaEntrada, Time  horaSalida, String estado) {
         this.idEmpleado = idEmpleado;
         this.fecha = fecha;
         this.horaEntrada = horaEntrada;
@@ -34,7 +36,7 @@ public class Asistencia {
     }
 
     // Constructor con todos los atributos (incluyendo idAsistencia)
-    public Asistencia(int idAsistencia, int idEmpleado, LocalDate fecha, LocalTime horaEntrada, LocalTime horaSalida, String estado) {
+    public Asistencia(int idAsistencia, int idEmpleado, Date fecha, Time  horaEntrada, Time  horaSalida, String estado) {
         this.idAsistencia = idAsistencia;
         this.idEmpleado = idEmpleado;
         this.fecha = fecha;
@@ -44,7 +46,7 @@ public class Asistencia {
     }
 
     // Constructor para registro de entrada (sin hora de salida)
-    public Asistencia(int idEmpleado, LocalDate fecha, LocalTime horaEntrada, String estado) {
+    public Asistencia(int idEmpleado, Date fecha, Time  horaEntrada, String estado) {
         this.idEmpleado = idEmpleado;
         this.fecha = fecha;
         this.horaEntrada = horaEntrada;
@@ -60,15 +62,15 @@ public class Asistencia {
         return idEmpleado;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public LocalTime getHoraEntrada() {
+    public Time  getHoraEntrada() {
         return horaEntrada;
     }
 
-    public LocalTime getHoraSalida() {
+    public Time  getHoraSalida() {
         return horaSalida;
     }
 
@@ -85,15 +87,15 @@ public class Asistencia {
         this.idEmpleado = idEmpleado;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public void setHoraEntrada(LocalTime horaEntrada) {
+    public void setHoraEntrada(Time  horaEntrada) {
         this.horaEntrada = horaEntrada;
     }
 
-    public void setHoraSalida(LocalTime horaSalida) {
+    public void setHoraSalida(Time  horaSalida) {
         this.horaSalida = horaSalida;
     }
 

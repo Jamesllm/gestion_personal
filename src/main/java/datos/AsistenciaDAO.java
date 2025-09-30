@@ -22,11 +22,11 @@ public class AsistenciaDAO {
 
     // Insertar nueva asistencia (entrada)
     public void registrarEntrada(Asistencia asistencia) throws SQLException {
-        String sql = "INSERT INTO asistencia (id_empleado, fecha, hora_entrada, estado) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO asistencia (id_empleado, hora_entrada, hora_salida, estado) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, asistencia.getIdEmpleado());
-            ps.setDate(2, Date.valueOf(asistencia.getFecha()));
-            ps.setTime(3, Time.valueOf(asistencia.getHoraEntrada()));
+            ps.setTime(2, asistencia.getHoraEntrada());
+            ps.setTime(3, asistencia.getHoraSalida());
             ps.setString(4, asistencia.getEstado());
             ps.executeUpdate();
         }
@@ -53,6 +53,19 @@ public class AsistenciaDAO {
             }
         }
         return lista;
+    }
+
+    public int obtenerAsistenciaActiva(int idEmpleado) throws SQLException {
+        String sql = "SELECT id_asistencia FROM asistencia WHERE id_empleado = ? AND hora_salida IS NULL";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, idEmpleado);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_asistencia");
+                }
+            }
+        }
+        return -1; // No se encontró asistencia activa
     }
 
     // Obtener asistencias por empleado
@@ -91,15 +104,16 @@ public class AsistenciaDAO {
 
     // Mapear ResultSet a objeto Asistencia
     private Asistencia mapearAsistencia(ResultSet rs) throws SQLException {
-        java.sql.Time entrada = rs.getTime("hora_entrada");
-        java.sql.Time salida = rs.getTime("hora_salida");
+        java.sql.Date fechaSql = rs.getDate("fecha");
+        java.sql.Time entradaSql = rs.getTime("hora_entrada");
+        java.sql.Time salidaSql = rs.getTime("hora_salida");
 
         return new Asistencia(
                 rs.getInt("id_asistencia"),
                 rs.getInt("id_empleado"),
-                rs.getDate("fecha") != null ? rs.getDate("fecha").toLocalDate() : null,
-                entrada != null ? entrada.toLocalTime() : null,
-                salida != null ? salida.toLocalTime() : null,
+                fechaSql, // si tu constructor espera java.sql.Date
+                entradaSql, // si tu constructor espera java.sql.Time
+                salidaSql, // igual aquí
                 rs.getString("estado")
         );
     }

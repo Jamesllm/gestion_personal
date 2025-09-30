@@ -82,7 +82,7 @@ CREATE TABLE inventario (
     fecha_ultimo_movimiento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     stock_minimo INTEGER DEFAULT 0,
     precio_unitario DECIMAL(10,2) DEFAULT 0.00,
-	estado BOOLEAN DEFAULT TRUE,
+	estado BOOLEAN DEFAULT TRUE
 );
 
 -- Tabla MovimientoInventario

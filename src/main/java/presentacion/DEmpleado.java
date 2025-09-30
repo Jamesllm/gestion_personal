@@ -1,10 +1,16 @@
 package presentacion;
 
+import clases.Asistencia;
+import datos.AsistenciaDAO;
+import datos.Conexion;
+import datos.EmpleadoDAO;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Locale;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
 
 import negocio.ActualizadorFechaHora;
 
@@ -19,9 +25,12 @@ public class DEmpleado extends javax.swing.JDialog {
     /**
      * Creates new form DEmpleado
      */
-    public DEmpleado(java.awt.Frame parent, boolean modal) {
+    private Conexion conexionDB;
+
+    public DEmpleado(java.awt.Frame parent, boolean modal, Conexion conexionDB) {
         super(parent, modal);
         initComponents();
+        this.conexionDB = conexionDB;
 
         this.setLocationRelativeTo(this);
 
@@ -66,11 +75,12 @@ public class DEmpleado extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         lblIniciarSes = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
-        txtCorreo = new javax.swing.JTextField();
-        btnLogin = new javax.swing.JButton();
+        txtDNI = new javax.swing.JTextField();
+        btnMarcar = new javax.swing.JButton();
         btnLogin1 = new javax.swing.JButton();
         hora_actual = new javax.swing.JLabel();
         fecha_actual = new javax.swing.JLabel();
+        btnMarcarSalida = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Panel Empleado - Sistema Asistencia");
@@ -86,18 +96,18 @@ public class DEmpleado extends javax.swing.JDialog {
         lblCorreo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblCorreo.setText("DNI:");
 
-        txtCorreo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtCorreo.setForeground(new java.awt.Color(27, 55, 79));
-        txtCorreo.setCaretColor(new java.awt.Color(27, 55, 79));
-        txtCorreo.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        txtDNI.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtDNI.setForeground(new java.awt.Color(27, 55, 79));
+        txtDNI.setCaretColor(new java.awt.Color(27, 55, 79));
+        txtDNI.setMargin(new java.awt.Insets(2, 10, 2, 10));
 
-        btnLogin.setBackground(new java.awt.Color(0, 121, 216));
-        btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnLogin.setForeground(new java.awt.Color(255, 255, 255));
-        btnLogin.setText("Marcar");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnMarcar.setBackground(new java.awt.Color(0, 121, 216));
+        btnMarcar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnMarcar.setForeground(new java.awt.Color(255, 255, 255));
+        btnMarcar.setText("Marcar Entrada");
+        btnMarcar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnMarcarActionPerformed(evt);
             }
         });
 
@@ -119,6 +129,16 @@ public class DEmpleado extends javax.swing.JDialog {
         fecha_actual.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fecha_actual.setText("fecha_actual");
 
+        btnMarcarSalida.setBackground(new java.awt.Color(0, 121, 216));
+        btnMarcarSalida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnMarcarSalida.setForeground(new java.awt.Color(255, 255, 255));
+        btnMarcarSalida.setText("Marcar Salida");
+        btnMarcarSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMarcarSalidaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,21 +148,23 @@ public class DEmpleado extends javax.swing.JDialog {
                     .addComponent(lblIniciarSes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(hora_actual, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 119, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnLogin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(87, 87, 87))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(fecha_actual, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 119, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 584, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnLogin1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnMarcarSalida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnMarcar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(87, 87, 87))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,39 +175,99 @@ public class DEmpleado extends javax.swing.JDialog {
                 .addComponent(hora_actual)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fecha_actual)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGap(55, 55, 55)
                 .addComponent(lblCorreo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(81, 81, 81))
+                .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnMarcar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnMarcarSalida, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 510));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 540));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+    private void btnMarcarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarActionPerformed
+        String dni = txtDNI.getText();
 
-    }//GEN-LAST:event_btnLoginActionPerformed
+        try {
+            AsistenciaDAO asistenciaDAO = new AsistenciaDAO(conexionDB.getConexion());
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO(conexionDB.getConexion());
+
+            int idEmpleado = empleadoDAO.obtenerIdPorDni(dni);
+
+            // Hora de entrada y salida
+            java.sql.Time entrada = java.sql.Time.valueOf(java.time.LocalTime.now());
+
+            // Crear objeto asistencia
+            Asistencia asistencia = new Asistencia();
+            asistencia.setIdEmpleado(idEmpleado);
+            asistencia.setHoraEntrada(entrada);
+            asistencia.setEstado("PRESENTE");
+
+            // Guardar en BD
+            asistenciaDAO.registrarEntrada(asistencia);
+
+            JOptionPane.showMessageDialog(this, "Asistencia registrada con éxito.");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al registrar asistencia: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnMarcarActionPerformed
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnLogin1ActionPerformed
 
+    private void btnMarcarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarSalidaActionPerformed
+        String dni = txtDNI.getText();
+
+        try {
+            AsistenciaDAO asistenciaDAO = new AsistenciaDAO(conexionDB.getConexion());
+            EmpleadoDAO empleadoDAO = new EmpleadoDAO(conexionDB.getConexion());
+
+            int idEmpleado = empleadoDAO.obtenerIdPorDni(dni);
+
+            // Buscar la asistencia activa (entrada sin salida)
+            int idAsistencia = asistenciaDAO.obtenerAsistenciaActiva(idEmpleado);
+
+            if (idAsistencia == -1) {
+                JOptionPane.showMessageDialog(this, "No se encontró asistencia activa para este empleado.");
+                return;
+            }
+
+            // Hora de salida actual
+            LocalTime horaSalida = LocalTime.now();
+
+            // Actualizar asistencia con hora de salida
+            asistenciaDAO.registrarSalida(idAsistencia, horaSalida, "FINALIZADO");
+
+            JOptionPane.showMessageDialog(this, "Salida registrada con éxito.");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error al registrar salida: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnMarcarSalidaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogin1;
+    private javax.swing.JButton btnMarcar;
+    private javax.swing.JButton btnMarcarSalida;
     private javax.swing.JLabel fecha_actual;
     private javax.swing.JLabel hora_actual;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblIniciarSes;
-    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtDNI;
     // End of variables declaration//GEN-END:variables
 }

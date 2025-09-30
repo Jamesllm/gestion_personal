@@ -138,16 +138,19 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_total_empleados.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleados()));
         lbl_total_empleados2.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleados()));
 
-        lbl_horas_trabajadas.setText(String.valueOf(empleadoDAO.obtenerHorasTotalesHoy()));
+        double horas = empleadoDAO.obtenerHorasTotalesHoy();
+        lbl_horas_trabajadas.setText(String.format("%.2f", horas));
 
         lbl_presentes_hoy.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleadosPresentesHoy()));
         lbl_presentes_hoy1.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleadosPresentesHoy()));
         lbl_presentes_hoy2.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleadosPresentesHoy()));
 
-        lbl_horas_trabajadas1.setText(String.valueOf(empleadoDAO.obtenerHorasTotalesHoy()));
+        lbl_horas_trabajadas1.setText(String.format("%.2f", horas));
 
         lbl_total_ausentes.setText(String.valueOf(empleadoDAO.obtenerTotalAusentesHoy()));
-        lbl_horas_promedio.setText(String.valueOf(empleadoDAO.obtenerPromedioHorasHoy()));
+
+        double horas_promedio = empleadoDAO.obtenerPromedioHorasHoy();
+        lbl_horas_promedio.setText(String.format("%.2f", horas_promedio));
 
         // Cargar empleados en tabla
         cargarEmpleadosEnTabla(empleadoDAO);
@@ -1260,11 +1263,16 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarEmpleadoActionPerformed
 
     private void btnCerrarSesionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCerrarSesionMousePressed
+        // Cerrar conexión y ventana actual
         conexionDB.cerrarConexion();
         this.dispose();
 
-//        Login lg = new Login(conexionDB);
-//        lg.setVisible(true);
+        // Crear nueva conexión
+        datos.Conexion conexionDBNew = datos.Conexion.getInstance();
+
+        // Volver al login
+        Login lg = new Login(conexionDBNew);
+        lg.setVisible(true);
     }//GEN-LAST:event_btnCerrarSesionMousePressed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
@@ -1306,7 +1314,6 @@ public class Dashboard extends javax.swing.JFrame {
             Number numero = formatoMoneda.parse(precioStr);
             double precio_unitario = numero.doubleValue();
             boolean estado = (boolean) tablaInventario.getValueAt(filaSeleccionada, 7);
-            
 
             // Crear objeto Inventario
             Inventario inventario = new Inventario(id, nombre, stock_actual, unidad, ubicacion, stock_minimo, precio_unitario, estado);

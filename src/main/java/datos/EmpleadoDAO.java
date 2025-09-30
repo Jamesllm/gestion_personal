@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import clases.Empleado;
+import java.sql.Time;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -251,6 +252,20 @@ public class EmpleadoDAO {
             }
         }
         return asistencia;
+    }
+
+    // Método para obtener el ID de un empleado por su DNI
+    public int obtenerIdPorDni(String dni) throws SQLException {
+        String sql = "SELECT id_empleado FROM Empleado WHERE dni = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setString(1, dni);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_empleado");
+                }
+            }
+        }
+        return -1; // Retorna -1 si no se encuentra el empleado
     }
 
 }

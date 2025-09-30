@@ -22,7 +22,7 @@ public class Login extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         utilidades.Utilidades.setImageLabel(lblLogo, "src/main/java/imagenes/login.jpg");
         this.conexionDB = conexionDB;
-        
+
         txtCorreo.setText("12345678");
         txtContraseña.setText("admin");
     }
@@ -124,32 +124,51 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-//        Dashboard d = new Dashboard();
-//        d.setVisible(true);
-//        this.dispose();
+    // Variable global para contar intentos fallidos
+    private int intentosFallidos = 0;
 
-        String dni = txtCorreo.getText();
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        String dni = txtCorreo.getText().trim();
         char[] passwordChars = txtContraseña.getPassword();
         String pass = new String(passwordChars);
 
+        // 1. Validar campos vacíos
+        if (dni.isEmpty() || pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Complete todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try {
-            // Llama al método y guarda el resultado en una variable
+            // 2. Intentar autenticar
             Usuario usuarioAutenticado = datos.LoginService.autenticarUsuario(conexionDB.getConexion(), dni, pass);
             System.out.println(datos.LoginService.hashearContrasena(pass));
-            // Verifica si la autenticación fue exitosa
-            if (usuarioAutenticado != null) {
-                // El login fue exitoso. Abre el Dashboard y le pasa el objeto Usuario.
-                Dashboard d = new Dashboard(usuarioAutenticado, conexionDB);
-                d.setVisible(true);
-                this.dispose();
 
-//                JOptionPane.showMessageDialog(this, "Bienvenido " + usuarioAutenticado.getNombreUsuario());
+            if (usuarioAutenticado != null) {
+                // 3. Verificar rol
+                if ("ADMINISTRADOR".equalsIgnoreCase(usuarioAutenticado.getRol().getNombreRol())) {
+                    // Accede al panel
+                    Dashboard d = new Dashboard(usuarioAutenticado, conexionDB);
+                    d.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Acceso denegado. Solo administradores pueden ingresar.",
+                            "Acceso restringido", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "DNI o contraseña incorrectos", "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
+                // Credenciales incorrectas
+                intentosFallidos++;
+                if (intentosFallidos >= 3) {
+                    JOptionPane.showMessageDialog(this, "Cuenta bloqueada temporalmente por múltiples intentos fallidos.",
+                            "Cuenta bloqueada", JOptionPane.ERROR_MESSAGE);
+                    btnLogin.setEnabled(false); // Bloquear botón de login
+                } else {
+                    JOptionPane.showMessageDialog(this, "DNI o contraseña incorrectos. Intento " + intentosFallidos + " de 3",
+                            "Error de Autenticación", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar iniciar sesión.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar iniciar sesión.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
             System.getLogger(Login.class.getName()).log(System.Logger.Level.ERROR, "Error de login", ex);
         }
 
@@ -161,7 +180,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_lblContraseña1MouseClicked
 
     private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-        DEmpleado empleado = new DEmpleado(this, false);
+        DEmpleado empleado = new DEmpleado(this, false, conexionDB);
         empleado.setVisible(true);
     }//GEN-LAST:event_btnLogin1ActionPerformed
 

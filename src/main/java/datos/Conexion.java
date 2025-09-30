@@ -58,6 +58,8 @@ public class Conexion {
             } catch (SQLException e) {
                 System.err.println("Error al cerrar la conexión: " + e.getMessage());
                 e.printStackTrace();
+            } finally {
+                instancia = null; 
             }
         }
     }
