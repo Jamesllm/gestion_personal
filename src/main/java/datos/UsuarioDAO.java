@@ -108,11 +108,14 @@ public class UsuarioDAO {
     // ======================
     public List<Usuario> listarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
-        String sql = "SELECT u.id_usuario, u.username, u.password, u.cambiar_password, "
-                + "r.id_rol, r.nombre_rol, "
-                + "u.id_empleado "
-                + "FROM usuario u "
-                + "JOIN rol r ON u.id_rol = r.id_rol";
+        String sql = """
+                     SELECT u.id_usuario, e.nombres as username, u.contrasena, u.cambiar_password,
+                     r.id_rol, r.nombre_rol, 
+                     u.id_empleado 
+                     FROM usuario u
+                     JOIN rol r ON u.id_rol = r.id_rol
+                     JOIN empleado e ON u.id_empleado = e.id_empleado 
+                     """;
 
         try (Statement st = conexion.createStatement(); ResultSet rs = st.executeQuery(sql)) {
 
@@ -120,7 +123,7 @@ public class UsuarioDAO {
                 Usuario u = new Usuario();
                 u.setIdUsuario(rs.getInt("id_usuario"));
                 u.setUsername(rs.getString("username"));
-                u.setPassword(rs.getString("password"));
+                u.setPassword(rs.getString("contrasena"));
                 u.setCambiarPassword(rs.getBoolean("cambiar_password"));
                 u.setIdEmpleado(rs.getInt("id_empleado"));
 
