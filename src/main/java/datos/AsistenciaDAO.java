@@ -55,6 +55,19 @@ public class AsistenciaDAO {
         return lista;
     }
 
+    public List<Asistencia> obtenerTodasUsuario(int idEmpleado) throws SQLException {
+        List<Asistencia> lista = new ArrayList<>();
+        String sql = "SELECT * FROM asistencia ORDER BY fecha DESC, hora_entrada DESC WHERE id_empleado = ?";
+
+        try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            ps.setInt(1, idEmpleado);
+            while (rs.next()) {
+                lista.add(mapearAsistencia(rs));
+            }
+        }
+        return lista;
+    }
+
     public int obtenerAsistenciaActiva(int idEmpleado) throws SQLException {
         String sql = "SELECT id_asistencia FROM asistencia WHERE id_empleado = ? AND hora_salida IS NULL";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {

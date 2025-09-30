@@ -114,6 +114,13 @@ CREATE TABLE rol_modulo (
 );
 
 
+ALTER TABLE usuario 
+ADD COLUMN codigo_temporal VARCHAR(10),
+ADD COLUMN expira_codigo TIMESTAMP;
+
+ALTER TABLE usuario ADD COLUMN cambiar_password BOOLEAN DEFAULT TRUE;
+
+
 -- =====================================================
 -- INSERCIÓN DE DATOS DE PRUEBA
 -- =====================================================
@@ -153,8 +160,8 @@ INSERT INTO usuario (contrasena, id_rol, id_empleado) VALUES
 ('$2a$10$L2J7QBsQtn50jvsbxCO/U.v..n7MNEn8WsWqbweQMFp3wWvxN1ZjK', 1, 1), -- password: admin
 ('$2a$10$i1HdlFd8QHiTdv7kp0lLVePfZZUpGSiOD6X7HKBJxxbkIt8ZxmS3e', 2, 2), -- password: hello
 ('$2a$10$i1HdlFd8QHiTdv7kp0lLVePfZZUpGSiOD6X7HKBJxxbkIt8ZxmS3e', 3, 3), -- password: hello
-('$2a$10$i1HdlFd8QHiTdv7kp0lLVePfZZUpGSiOD6X7HKBJxxbkIt8ZxmS3e', 3, 6), -- password: hello
-('$2a$10$i1HdlFd8QHiTdv7kp0lLVePfZZUpGSiOD6X7HKBJxxbkIt8ZxmS3e', 3, 7); -- password: hello
+('$2a$10$i1HdlFd8QHiTdv7kp0lLVePfZZUpGSiOD6X7HKBJxxbkIt8ZxmS3e', 3, 4), -- password: hello
+('$2a$10$i1HdlFd8QHiTdv7kp0lLVePfZZUpGSiOD6X7HKBJxxbkIt8ZxmS3e', 3, 5); -- password: hello
 
 -- Insertar Asistencias de prueba (últimas 2 semanas)
 INSERT INTO asistencia (id_empleado, fecha, hora_entrada, hora_salida, estado) VALUES

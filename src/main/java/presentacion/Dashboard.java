@@ -49,11 +49,13 @@ public class Dashboard extends javax.swing.JFrame {
      * Creates new form Dashboard
      */
     private Conexion conexionDB;
+    private Usuario usuarioAutenticado;
 
     public Dashboard(Usuario usuarioAutenticado, Conexion conexionDB) throws SQLException {
         initComponents();
         this.setLocationRelativeTo(this);
         this.conexionDB = conexionDB;
+        this.usuarioAutenticado = usuarioAutenticado;
 
         // 
         contenedorActividad = new JPanel();
@@ -383,7 +385,13 @@ public class Dashboard extends javax.swing.JFrame {
     public void cargarTablaAsistencia() {
         try {
             AsistenciaDAO dao = new AsistenciaDAO(conexionDB.getConexion());
-            List<Asistencia> asistencias = dao.obtenerTodas();
+            List<Asistencia> asistencias;
+            
+            if (usuarioAutenticado.getRol().getNombreRol().equalsIgnoreCase("Administrador")) {
+                asistencias = dao.obtenerTodas();
+            } else {
+                asistencias = dao.obtenerPorEmpleado(usuarioAutenticado.getIdEmpleado());
+            }
 
             // Definir columnas de la tabla
             String[] columnas = {"ID", "Empleado", "Fecha", "Hora Entrada", "Hora Salida", "Estado"};
