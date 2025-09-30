@@ -550,6 +550,7 @@ public class Dashboard extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Dashboard - MTD");
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel_Inicio.setBackground(new java.awt.Color(255, 255, 255));
         jPanel_Inicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -677,7 +678,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel_Inicio.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 900, -1));
 
         panel_actividad_reciente.setBackground(new java.awt.Color(236, 243, 248));
-        jPanel_Inicio.add(panel_actividad_reciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 900, 430));
+        jPanel_Inicio.add(panel_actividad_reciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 900, 430));
 
         PanelTab.addTab("Inicio", jPanel_Inicio);
 
@@ -1100,12 +1101,15 @@ public class Dashboard extends javax.swing.JFrame {
 
         PanelTab.addTab("Inventario", jPanel_Inventario);
 
+        getContentPane().add(PanelTab, new org.netbeans.lib.awtextra.AbsoluteConstraints(217, 0, 940, 773));
+
         jPanel2.setBackground(new java.awt.Color(236, 243, 248));
 
         jPanel5.setBackground(new java.awt.Color(236, 243, 248));
-        jPanel5.setLayout(new java.awt.GridLayout(5, 1, 10, 10));
+        jPanel5.setLayout(new javax.swing.BoxLayout(jPanel5, javax.swing.BoxLayout.Y_AXIS));
 
         btnInicio.setText("Inicio");
+        btnInicio.setMaximumSize(new java.awt.Dimension(200, 50));
         btnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInicioActionPerformed(evt);
@@ -1114,6 +1118,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5.add(btnInicio);
 
         btnEmpleados.setText("Empleados");
+        btnEmpleados.setMaximumSize(new java.awt.Dimension(200, 50));
         btnEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEmpleadosActionPerformed(evt);
@@ -1122,6 +1127,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5.add(btnEmpleados);
 
         btnAsistencia.setText("Asistencia");
+        btnAsistencia.setMaximumSize(new java.awt.Dimension(200, 50));
         btnAsistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAsistenciaActionPerformed(evt);
@@ -1130,6 +1136,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5.add(btnAsistencia);
 
         btnReportes.setText("Reportes");
+        btnReportes.setMaximumSize(new java.awt.Dimension(200, 50));
         btnReportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReportesActionPerformed(evt);
@@ -1138,6 +1145,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5.add(btnReportes);
 
         btnInventario.setText("Inventario");
+        btnInventario.setMaximumSize(new java.awt.Dimension(200, 50));
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInventarioActionPerformed(evt);
@@ -1161,7 +1169,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rol_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombre_usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1188,7 +1196,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGap(14, 14, 14)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -1213,6 +1221,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(16, 16, 16))
         );
 
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 773));
+
         jMenu1.setText("Sistema");
 
         btnCerrarSesion.setText("Cerrar sesion");
@@ -1226,21 +1236,6 @@ public class Dashboard extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(PanelTab, javax.swing.GroupLayout.PREFERRED_SIZE, 941, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(PanelTab, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
-        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
