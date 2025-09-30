@@ -470,9 +470,11 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane6 = new javax.swing.JScrollPane();
         tablaEmpleados = new javax.swing.JTable();
         lbl_atender_ahora3 = new javax.swing.JLabel();
-        btnAgregarEmpleado = new javax.swing.JButton();
         lbl_atender_ahora6 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        btnEliminarEmpleado = new javax.swing.JButton();
         btnEditarEmpleado = new javax.swing.JButton();
+        btnAgregarEmpleado = new javax.swing.JButton();
         jPanel_Asistencia = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaAsistencia = new javax.swing.JTable();
@@ -512,9 +514,11 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane8 = new javax.swing.JScrollPane();
         tablaInventario = new javax.swing.JTable();
         lbl_atender_ahora5 = new javax.swing.JLabel();
-        btnAgregarEmpleado1 = new javax.swing.JButton();
         lbl_atender_ahora8 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        btnEliminarProducto = new javax.swing.JButton();
         btnEditarProducto = new javax.swing.JButton();
+        btnAgregarEmpleado1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         btnInicio = new javax.swing.JButton();
@@ -688,6 +692,34 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_atender_ahora3.setText("Gestion de empleados");
         jPanel_Empleados.add(lbl_atender_ahora3, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
 
+        lbl_atender_ahora6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbl_atender_ahora6.setText("Administra la información de todos los empleados");
+        jPanel_Empleados.add(lbl_atender_ahora6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+        btnEliminarEmpleado.setBackground(new java.awt.Color(255, 51, 51));
+        btnEliminarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarEmpleado.setText("Eliminar");
+        btnEliminarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminarEmpleado);
+
+        btnEditarEmpleado.setBackground(new java.awt.Color(255, 153, 102));
+        btnEditarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarEmpleado.setText("Editar");
+        btnEditarEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarEmpleadoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEditarEmpleado);
+
         btnAgregarEmpleado.setBackground(new java.awt.Color(0, 121, 216));
         btnAgregarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAgregarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
@@ -697,22 +729,9 @@ public class Dashboard extends javax.swing.JFrame {
                 btnAgregarEmpleadoActionPerformed(evt);
             }
         });
-        jPanel_Empleados.add(btnAgregarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
+        jPanel1.add(btnAgregarEmpleado);
 
-        lbl_atender_ahora6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbl_atender_ahora6.setText("Administra la información de todos los empleados");
-        jPanel_Empleados.add(lbl_atender_ahora6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-
-        btnEditarEmpleado.setBackground(new java.awt.Color(255, 153, 102));
-        btnEditarEmpleado.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnEditarEmpleado.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditarEmpleado.setText("Editar empleado");
-        btnEditarEmpleado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarEmpleadoActionPerformed(evt);
-            }
-        });
-        jPanel_Empleados.add(btnEditarEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(573, 40, 150, 52));
+        jPanel_Empleados.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 420, 50));
 
         PanelTab.addTab("Empleados", jPanel_Empleados);
 
@@ -1026,6 +1045,34 @@ public class Dashboard extends javax.swing.JFrame {
         lbl_atender_ahora5.setText("Gestion de inventario");
         jPanel_Inventario.add(lbl_atender_ahora5, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 19, -1, -1));
 
+        lbl_atender_ahora8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lbl_atender_ahora8.setText("Administra la información de todo el inventario");
+        jPanel_Inventario.add(lbl_atender_ahora8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
+
+        jPanel17.setLayout(new java.awt.GridLayout(1, 0, 5, 0));
+
+        btnEliminarProducto.setBackground(new java.awt.Color(255, 51, 51));
+        btnEliminarProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminarProducto.setText("Eliminar");
+        btnEliminarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProductoActionPerformed(evt);
+            }
+        });
+        jPanel17.add(btnEliminarProducto);
+
+        btnEditarProducto.setBackground(new java.awt.Color(255, 153, 102));
+        btnEditarProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnEditarProducto.setText("Editar");
+        btnEditarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProductoActionPerformed(evt);
+            }
+        });
+        jPanel17.add(btnEditarProducto);
+
         btnAgregarEmpleado1.setBackground(new java.awt.Color(0, 121, 216));
         btnAgregarEmpleado1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnAgregarEmpleado1.setForeground(new java.awt.Color(255, 255, 255));
@@ -1035,22 +1082,9 @@ public class Dashboard extends javax.swing.JFrame {
                 btnAgregarEmpleado1ActionPerformed(evt);
             }
         });
-        jPanel_Inventario.add(btnAgregarEmpleado1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 40, 183, 52));
+        jPanel17.add(btnAgregarEmpleado1);
 
-        lbl_atender_ahora8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lbl_atender_ahora8.setText("Administra la información de todo el inventario");
-        jPanel_Inventario.add(lbl_atender_ahora8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
-
-        btnEditarProducto.setBackground(new java.awt.Color(255, 153, 102));
-        btnEditarProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnEditarProducto.setForeground(new java.awt.Color(255, 255, 255));
-        btnEditarProducto.setText("Editar producto");
-        btnEditarProducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarProductoActionPerformed(evt);
-            }
-        });
-        jPanel_Inventario.add(btnEditarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(573, 40, 150, 52));
+        jPanel_Inventario.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, 50));
 
         PanelTab.addTab("Inventario", jPanel_Inventario);
 
@@ -1308,6 +1342,53 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarEmpleadoActionPerformed
 
+    private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarProductoActionPerformed
+
+    private void btnEliminarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEmpleadoActionPerformed
+        int filaSeleccionada = tablaEmpleados.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Seleccione un empleado de la tabla",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Obtener ID del empleado seleccionado
+        int idEmpleado = (int) tablaEmpleados.getValueAt(filaSeleccionada, 0);
+
+        // Confirmación antes de eliminar
+        int confirmacion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de eliminar al empleado con ID " + idEmpleado + "?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (confirmacion == JOptionPane.YES_OPTION) {
+            try {
+                EmpleadoDAO dao = new EmpleadoDAO(conexionDB.getConexion());
+                dao.eliminarEmpleado(idEmpleado);
+
+                JOptionPane.showMessageDialog(this,
+                        "Empleado eliminado con éxito.",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                // Refrescar tabla del Dashboard
+                cargarEmpleadosEnTabla(new EmpleadoDAO(conexionDB.getConexion()));
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this,
+                        "Error al eliminar empleado: " + ex.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                logger.log(java.util.logging.Level.SEVERE, "Error al eliminar empleado", ex);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
@@ -1317,6 +1398,8 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JMenuItem btnCerrarSesion;
     private javax.swing.JButton btnEditarEmpleado;
     private javax.swing.JButton btnEditarProducto;
+    private javax.swing.JButton btnEliminarEmpleado;
+    private javax.swing.JButton btnEliminarProducto;
     private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnInicio;
@@ -1343,6 +1426,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
@@ -1350,6 +1434,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

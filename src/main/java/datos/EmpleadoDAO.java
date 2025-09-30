@@ -98,7 +98,7 @@ public class EmpleadoDAO {
 
     // Método para eliminar un empleado
     public void eliminarEmpleado(int id_empleado) throws SQLException {
-        String sql = "DELETE FROM Empleado WHERE id_empleado = ?";
+        String sql = "UPDATE empleado SET estado=FALSE WHERE id_empleado = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, id_empleado);
             ps.executeUpdate();

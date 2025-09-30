@@ -2,6 +2,7 @@ presentacion\DRecuperarCuenta$4.class
 presentacion\Dashboard$1.class
 presentacion\DAgregarInventario.class
 presentacion\Login$3.class
+presentacion\Dashboard$12.class
 presentacion\Dashboard$8.class
 utilidades\Utilidades.class
 presentacion\DGenerarReporte$1.class
@@ -9,6 +10,7 @@ presentacion\DEmpleado.class
 clases\Usuario.class
 presentacion\Dashboard$4.class
 presentacion\DAgregarEmpleado$2.class
+presentacion\Dashboard$13.class
 presentacion\Dashboard$9.class
 clases\Empleado.class
 presentacion\Login.class
