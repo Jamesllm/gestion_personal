@@ -1,12 +1,12 @@
 package presentacion;
 
-import clases.Departamento;
-import clases.Empleado;
-import clases.Inventario;
-import datos.Conexion;
-import datos.DepartamentoDAO;
-import datos.EmpleadoDAO;
-import datos.InventarioDAO;
+import model.Departamento;
+import model.Empleado;
+import model.Inventario;
+import dao.impl.Conexion;
+import dao.impl.DepartamentoDAOImpl;
+import dao.impl.EmpleadoDAOImpl;
+import dao.impl.InventarioDAOImpl;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -193,7 +193,7 @@ public class DAgregarInventario extends javax.swing.JDialog {
                 precio_unitario
         );
 
-        InventarioDAO inventarioDAO = new InventarioDAO(conexionDB.getConexion());
+        InventarioDAOImpl inventarioDAO = new InventarioDAOImpl(conexionDB.getConexion());
         try {
             if (idInventario == -1) {
                 inventarioDAO.insertar(inventario);

@@ -1,9 +1,9 @@
 package presentacion;
 
-import clases.Asistencia;
-import datos.AsistenciaDAO;
-import datos.Conexion;
-import datos.EmpleadoDAO;
+import model.Asistencia;
+import dao.impl.AsistenciaDAOImpl;
+import dao.impl.Conexion;
+import dao.impl.EmpleadoDAOImpl;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Locale;
@@ -198,8 +198,8 @@ public class DEmpleado extends javax.swing.JDialog {
         String dni = txtDNI.getText();
 
         try {
-            AsistenciaDAO asistenciaDAO = new AsistenciaDAO(conexionDB.getConexion());
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO(conexionDB.getConexion());
+            AsistenciaDAOImpl asistenciaDAO = new AsistenciaDAOImpl(conexionDB.getConexion());
+            EmpleadoDAOImpl empleadoDAO = new EmpleadoDAOImpl(conexionDB.getConexion());
 
             int idEmpleado = empleadoDAO.obtenerIdPorDni(dni);
 
@@ -231,8 +231,8 @@ public class DEmpleado extends javax.swing.JDialog {
         String dni = txtDNI.getText();
 
         try {
-            AsistenciaDAO asistenciaDAO = new AsistenciaDAO(conexionDB.getConexion());
-            EmpleadoDAO empleadoDAO = new EmpleadoDAO(conexionDB.getConexion());
+            AsistenciaDAOImpl asistenciaDAO = new AsistenciaDAOImpl(conexionDB.getConexion());
+            EmpleadoDAOImpl empleadoDAO = new EmpleadoDAOImpl(conexionDB.getConexion());
 
             int idEmpleado = empleadoDAO.obtenerIdPorDni(dni);
 

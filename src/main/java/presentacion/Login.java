@@ -4,8 +4,8 @@ package presentacion;
  *
  * @author James
  */
-import clases.Usuario;
-import datos.Conexion;
+import model.Usuario;
+import dao.impl.Conexion;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -140,8 +140,8 @@ public class Login extends javax.swing.JFrame {
 
         try {
             // 2. Intentar autenticar
-            Usuario usuarioAutenticado = datos.LoginService.autenticarUsuario(conexionDB.getConexion(), dni, pass);
-            System.out.println(datos.LoginService.hashearContrasena(pass));
+            Usuario usuarioAutenticado = dao.impl.LoginService.autenticarUsuario(conexionDB.getConexion(), dni, pass);
+            System.out.println(dao.impl.LoginService.hashearContrasena(pass));
 
             if (usuarioAutenticado != null) {
                 // 3. Verificar rol
