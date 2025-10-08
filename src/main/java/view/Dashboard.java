@@ -1,4 +1,4 @@
-package presentacion;
+package view;
 
 import model.Asistencia;
 import model.Empleado;
@@ -34,7 +34,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import negocio.ActualizadorFechaHora;
+import service.ActualizadorFechaHora;
 
 /**
  *
@@ -96,7 +96,7 @@ public class Dashboard extends javax.swing.JFrame {
             }
         }
 
-        utilidades.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario, btnUsuario);
+        util.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario, btnUsuario);
 
         // Cargar el nombre
         txt_bienvenida.setText("Bienvenido " + usuarioAutenticado.getUsername());
@@ -1361,22 +1361,22 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
         PanelTab.setSelectedIndex(0);
-        utilidades.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario, btnUsuario);
+        util.Utilidades.actualizarColoresBotones(btnInicio, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmpleadosActionPerformed
         PanelTab.setSelectedIndex(1);
-        utilidades.Utilidades.actualizarColoresBotones(btnEmpleados, btnEmpleados, btnInicio, btnAsistencia, btnReportes, btnInventario, btnUsuario);
+        util.Utilidades.actualizarColoresBotones(btnEmpleados, btnEmpleados, btnInicio, btnAsistencia, btnReportes, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnEmpleadosActionPerformed
 
     private void btnAsistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsistenciaActionPerformed
         PanelTab.setSelectedIndex(2);
-        utilidades.Utilidades.actualizarColoresBotones(btnAsistencia, btnAsistencia, btnInicio, btnEmpleados, btnReportes, btnInventario, btnUsuario);
+        util.Utilidades.actualizarColoresBotones(btnAsistencia, btnAsistencia, btnInicio, btnEmpleados, btnReportes, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnAsistenciaActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
         PanelTab.setSelectedIndex(3);
-        utilidades.Utilidades.actualizarColoresBotones(btnReportes, btnReportes, btnInicio, btnEmpleados, btnAsistencia, btnInventario, btnUsuario);
+        util.Utilidades.actualizarColoresBotones(btnReportes, btnReportes, btnInicio, btnEmpleados, btnAsistencia, btnInventario, btnUsuario);
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnAgregarEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadoActionPerformed
@@ -1405,7 +1405,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         PanelTab.setSelectedIndex(4);
-        utilidades.Utilidades.actualizarColoresBotones(btnInventario, btnInventario, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnUsuario);
+        util.Utilidades.actualizarColoresBotones(btnInventario, btnInventario, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnUsuario);
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnAgregarEmpleado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEmpleado1ActionPerformed
@@ -1575,7 +1575,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         PanelTab.setSelectedIndex(5);
-        utilidades.Utilidades.actualizarColoresBotones(btnUsuario, btnUsuario, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario);
+        util.Utilidades.actualizarColoresBotones(btnUsuario, btnUsuario, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario);
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
 

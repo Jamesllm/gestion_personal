@@ -1,4 +1,4 @@
-package presentacion;
+package view;
 
 import model.Asistencia;
 import dao.impl.AsistenciaDAOImpl;
@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
-import negocio.ActualizadorFechaHora;
+import service.ActualizadorFechaHora;
 
 /**
  *

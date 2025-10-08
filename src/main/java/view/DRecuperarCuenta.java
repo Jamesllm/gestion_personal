@@ -1,4 +1,4 @@
-package presentacion;
+package view;
 
 /**
  *
@@ -15,7 +15,7 @@ public class DRecuperarCuenta extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(this);
-        utilidades.Utilidades.setImageLabel(lblLogo, "src/main/java/imagenes/login.jpg");
+        util.Utilidades.setImageLabel(lblLogo, "src/main/java/imagenes/login.jpg");
     }
 
     /**

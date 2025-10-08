@@ -1,4 +1,4 @@
-package presentacion;
+package view;
 
 /**
  *
@@ -20,7 +20,7 @@ public class Login extends javax.swing.JFrame {
     public Login(Conexion conexionDB) {
         initComponents();
         this.setLocationRelativeTo(this);
-        utilidades.Utilidades.setImageLabel(lblLogo, "src/main/java/imagenes/login.jpg");
+        util.Utilidades.setImageLabel(lblLogo, "src/main/java/imagenes/login.jpg");
         this.conexionDB = conexionDB;
 
         txtCorreo.setText("12345678");

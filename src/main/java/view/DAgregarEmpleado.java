@@ -1,4 +1,4 @@
-package presentacion;
+package view;
 
 import model.Departamento;
 import model.Empleado;

@@ -1,7 +1,7 @@
-package negocio;
+package service;
 
 import com.formdev.flatlaf.FlatLightLaf;
-import presentacion.Login;
+import view.Login;
 import javax.swing.UIManager;
 
 /**

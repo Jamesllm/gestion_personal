@@ -1,4 +1,4 @@
-package presentacion;
+package view;
 
 import model.Departamento;
 import model.Empleado;
@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import javax.swing.JOptionPane;
-import utilidades.GeneradorReporte;
+import util.GeneradorReporte;
 
 /**
  *
