@@ -1,10 +1,10 @@
 package presentacion;
 
-import clases.Departamento;
-import clases.Empleado;
-import datos.Conexion;
-import datos.DepartamentoDAO;
-import datos.EmpleadoDAO;
+import model.Departamento;
+import model.Empleado;
+import dao.impl.Conexion;
+import dao.impl.DepartamentoDAOImpl;
+import dao.impl.EmpleadoDAOImpl;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -63,7 +63,7 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
 
     private void cargarDepartamentos(Conexion conexionDB) {
         try {
-            DepartamentoDAO departamentoDAO = new DepartamentoDAO(conexionDB.getConexion());
+            DepartamentoDAOImpl departamentoDAO = new DepartamentoDAOImpl(conexionDB.getConexion());
             List<Departamento> departamentos = departamentoDAO.obtenerTodosDepartamentos();
 
             cb_departamentos.removeAllItems(); // limpiar el combo
@@ -227,7 +227,7 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
         Departamento departamentoSeleccionado = (Departamento) cb_departamentos.getSelectedItem();
         int idDepartamento = departamentoSeleccionado != null ? departamentoSeleccionado.getIdDepartamento() : -1;
 
-        EmpleadoDAO empleadoDAO = new EmpleadoDAO(conexionDB.getConexion());
+        EmpleadoDAOImpl empleadoDAO = new EmpleadoDAOImpl(conexionDB.getConexion());
 
         try {
             if (empleadoEditar == null) {
@@ -251,7 +251,7 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
 
             // Refrescar tabla del Dashboard
             if (dashboard != null) {
-                dashboard.cargarEmpleadosEnTabla(new EmpleadoDAO(conexionDB.getConexion()));
+                dashboard.cargarEmpleadosEnTabla(new EmpleadoDAOImpl(conexionDB.getConexion()));
             }
 
             this.dispose();

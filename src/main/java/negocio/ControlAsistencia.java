@@ -14,7 +14,7 @@ public class ControlAsistencia {
         try {
             UIManager.setLookAndFeel(new FlatLightLaf());
 
-            datos.Conexion conexionDB = datos.Conexion.getInstance();
+            dao.impl.Conexion conexionDB = dao.impl.Conexion.getInstance();
             
             if (conexionDB.getConexion() != null) {
                 System.out.println("Conexión exitosa a la base de datos PostgreSQL.");

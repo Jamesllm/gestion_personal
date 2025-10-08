@@ -1,10 +1,10 @@
 package presentacion;
 
-import clases.Departamento;
-import clases.Empleado;
-import datos.Conexion;
-import datos.DepartamentoDAO;
-import datos.EmpleadoDAO;
+import model.Departamento;
+import model.Empleado;
+import dao.impl.Conexion;
+import dao.impl.DepartamentoDAOImpl;
+import dao.impl.EmpleadoDAOImpl;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;

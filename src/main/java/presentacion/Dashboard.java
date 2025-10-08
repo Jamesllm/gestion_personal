@@ -1,16 +1,16 @@
 package presentacion;
 
-import clases.Asistencia;
-import clases.Empleado;
-import clases.Inventario;
-import clases.Modulo;
-import clases.Usuario;
-import datos.AsistenciaDAO;
-import datos.Conexion;
-import datos.EmpleadoDAO;
-import datos.InventarioDAO;
-import datos.ModuloDAO;
-import datos.UsuarioDAO;
+import model.Asistencia;
+import model.Empleado;
+import model.Inventario;
+import model.Modulo;
+import model.Usuario;
+import dao.impl.AsistenciaDAOImpl;
+import dao.impl.Conexion;
+import dao.impl.EmpleadoDAOImpl;
+import dao.impl.InventarioDAOImpl;
+import dao.impl.ModuloDAOImpl;
+import dao.impl.UsuarioDAOImpl;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -70,7 +70,7 @@ public class Dashboard extends javax.swing.JFrame {
         panel_actividad_reciente.getVerticalScrollBar().setUnitIncrement(30);
 
         // == VERIFICAR ROLES ==
-        ModuloDAO moduloDAO = new ModuloDAO(conexionDB.getConexion());
+        ModuloDAOImpl moduloDAO = new ModuloDAOImpl(conexionDB.getConexion());
         List<Modulo> modulosActivos = moduloDAO.obtenerModulosPorRol(usuarioAutenticado.getRol().getIdRol());
 
         // Ocultar todo por defecto
@@ -137,7 +137,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         // === SECCION EMPLEADOS ===
         // Cargar el total de empleados
-        EmpleadoDAO empleadoDAO = new EmpleadoDAO(conexionDB.getConexion());
+        EmpleadoDAOImpl empleadoDAO = new EmpleadoDAOImpl(conexionDB.getConexion());
         lbl_total_empleados.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleados()));
         lbl_total_empleados2.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleados()));
 
@@ -158,7 +158,7 @@ public class Dashboard extends javax.swing.JFrame {
         // Cargar empleados en tabla
         cargarEmpleadosEnTabla(empleadoDAO);
 
-        UsuarioDAO usuarioDAO = new UsuarioDAO(conexionDB.getConexion());
+        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl(conexionDB.getConexion());
         cargarUsuariosEnTabla(usuarioDAO);
 
         // === MOSTRAR ACTIVIDAD RECIENTE == 
@@ -211,7 +211,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     public void cargarInventarioEnTabla() {
         try {
-            InventarioDAO dao = new InventarioDAO(conexionDB.getConexion());
+            InventarioDAOImpl dao = new InventarioDAOImpl(conexionDB.getConexion());
             List<Inventario> lista = dao.listar();
 
             // Definir modelo de la tabla
@@ -388,7 +388,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     public void cargarTablaAsistencia() {
         try {
-            AsistenciaDAO dao = new AsistenciaDAO(conexionDB.getConexion());
+            AsistenciaDAOImpl dao = new AsistenciaDAOImpl(conexionDB.getConexion());
             List<Asistencia> asistencias;
 
             if (usuarioAutenticado.getRol().getNombreRol().equalsIgnoreCase("Administrador")) {
@@ -423,7 +423,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
-    public void cargarEmpleadosEnTabla(EmpleadoDAO empleadoDAO) {
+    public void cargarEmpleadosEnTabla(EmpleadoDAOImpl empleadoDAO) {
         try {
             // Obtener la lista de todos los empleados
             List<Empleado> listaEmpleados = empleadoDAO.obtenerTodosEmpleados();
@@ -456,7 +456,7 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
-    public void cargarUsuariosEnTabla(UsuarioDAO usuarioDAO) {
+    public void cargarUsuariosEnTabla(UsuarioDAOImpl usuarioDAO) {
         try {
             // Obtener la lista de todos los usuarios
             List<Usuario> listaUsuarios = usuarioDAO.listarTodos();
@@ -1390,7 +1390,7 @@ public class Dashboard extends javax.swing.JFrame {
         this.dispose();
 
         // Crear nueva conexión
-        datos.Conexion conexionDBNew = datos.Conexion.getInstance();
+        dao.impl.Conexion conexionDBNew = dao.impl.Conexion.getInstance();
 
         // Volver al login
         Login lg = new Login(conexionDBNew);
@@ -1459,7 +1459,7 @@ public class Dashboard extends javax.swing.JFrame {
         int idEmpleado = (int) tablaEmpleados.getValueAt(filaSeleccionada, 0);
 
         try {
-            EmpleadoDAO dao = new EmpleadoDAO(conexionDB.getConexion());
+            EmpleadoDAOImpl dao = new EmpleadoDAOImpl(conexionDB.getConexion());
             Empleado empleado = dao.obtenerEmpleadoPorId(idEmpleado);
 
             if (empleado != null) {
@@ -1497,7 +1497,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
-                InventarioDAO dao = new InventarioDAO(conexionDB.getConexion());
+                InventarioDAOImpl dao = new InventarioDAOImpl(conexionDB.getConexion());
                 dao.eliminar(idProducto);
 
                 JOptionPane.showMessageDialog(this,
@@ -1540,7 +1540,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
-                EmpleadoDAO dao = new EmpleadoDAO(conexionDB.getConexion());
+                EmpleadoDAOImpl dao = new EmpleadoDAOImpl(conexionDB.getConexion());
                 dao.eliminarEmpleado(idEmpleado);
 
                 JOptionPane.showMessageDialog(this,
@@ -1549,7 +1549,7 @@ public class Dashboard extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
 
                 // Refrescar tabla del Dashboard
-                cargarEmpleadosEnTabla(new EmpleadoDAO(conexionDB.getConexion()));
+                cargarEmpleadosEnTabla(new EmpleadoDAOImpl(conexionDB.getConexion()));
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this,
