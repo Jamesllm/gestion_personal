@@ -1,40 +1,49 @@
 package view;
 
+// === MODEL
+import controller.EmpleadoController;
 import model.Asistencia;
 import model.Empleado;
 import model.Inventario;
 import model.Modulo;
 import model.Usuario;
-import dao.impl.AsistenciaDAOImpl;
-import dao.impl.Conexion;
+
+// === DAO
 import dao.impl.EmpleadoDAOImpl;
+import dao.impl.AsistenciaDAOImpl;
 import dao.impl.InventarioDAOImpl;
 import dao.impl.ModuloDAOImpl;
 import dao.impl.UsuarioDAOImpl;
+import dao.impl.Conexion;
+
+// === SERVICE
+import service.ActualizadorFechaHora;
+
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.sql.SQLException;
+
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+
+import java.sql.SQLException;
 
 import java.time.LocalDate;
-import java.util.Locale;
-
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+
+import java.util.Locale;
 import java.util.Map;
+import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import service.ActualizadorFechaHora;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -137,33 +146,33 @@ public class Dashboard extends javax.swing.JFrame {
 
         // === SECCION EMPLEADOS ===
         // Cargar el total de empleados
-        EmpleadoDAOImpl empleadoDAO = new EmpleadoDAOImpl(conexionDB.getConexion());
-        lbl_total_empleados.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleados()));
-        lbl_total_empleados2.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleados()));
+        EmpleadoController empleadoController = new EmpleadoController(conexionDB);
+        lbl_total_empleados.setText(String.valueOf(empleadoController.contarTotalEmpleados()));
+        lbl_total_empleados2.setText(String.valueOf(empleadoController.contarTotalEmpleados()));
 
-        double horas = empleadoDAO.obtenerHorasTotalesHoy();
+        double horas = empleadoController.obtenerHorasTotalesHoy();
         lbl_horas_trabajadas.setText(String.format("%.2f", horas));
 
-        lbl_presentes_hoy.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleadosPresentesHoy()));
-        lbl_presentes_hoy1.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleadosPresentesHoy()));
-        lbl_presentes_hoy2.setText(String.valueOf(empleadoDAO.obtenerTotalEmpleadosPresentesHoy()));
+        lbl_presentes_hoy.setText(String.valueOf(empleadoController.contarPresentesHoy()));
+        lbl_presentes_hoy1.setText(String.valueOf(empleadoController.contarPresentesHoy()));
+        lbl_presentes_hoy2.setText(String.valueOf(empleadoController.contarPresentesHoy()));
 
         lbl_horas_trabajadas1.setText(String.format("%.2f", horas));
 
-        lbl_total_ausentes.setText(String.valueOf(empleadoDAO.obtenerTotalAusentesHoy()));
+        lbl_total_ausentes.setText(String.valueOf(empleadoController.contarAusentesHoy()));
 
-        double horas_promedio = empleadoDAO.obtenerPromedioHorasHoy();
+        double horas_promedio = empleadoController.obtenerPromedioHorasHoy();
         lbl_horas_promedio.setText(String.format("%.2f", horas_promedio));
 
         // Cargar empleados en tabla
-        cargarEmpleadosEnTabla(empleadoDAO);
+        cargarEmpleadosEnTabla(empleadoController);
 
         UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl(conexionDB.getConexion());
         cargarUsuariosEnTabla(usuarioDAO);
 
         // === MOSTRAR ACTIVIDAD RECIENTE == 
         // mostrar en este panel: panel_actividad_reciente
-        List<String> actividadReciente = empleadoDAO.obtenerActividadReciente(10);
+        List<String> actividadReciente = empleadoController.obtenerActividadReciente(10);
 
         // Renderizar en el panel
         renderizarActividadReciente(actividadReciente);
@@ -184,7 +193,7 @@ public class Dashboard extends javax.swing.JFrame {
         panel_dis_departamento.getVerticalScrollBar().setUnitIncrement(30);
 
         // Renderizar distribución
-        Map<String, Integer> distribucion = empleadoDAO.obtenerDistribucionPorDepartamento();
+        Map<String, Integer> distribucion = empleadoController.obtenerDistribucionPorDepartamento();
         renderizarDistribucionDepartamentos(distribucion, contenedorDepartamentos);
 
         // === SECCION REPORTES ===
@@ -201,7 +210,7 @@ public class Dashboard extends javax.swing.JFrame {
         panel_dis_mensual.getVerticalScrollBar().setUnitIncrement(30);
 
         // Renderizar distribución
-        Map<String, Integer> asistencia = empleadoDAO.obtenerAsistenciaMensual();
+        Map<String, Integer> asistencia = empleadoController.obtenerAsistenciaMensual();
         renderizarAsistenciaMensual(asistencia, contenedorAsistenciaMensual);
 
         // === SECCION INVENTARIO ===
@@ -423,37 +432,33 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
-    public void cargarEmpleadosEnTabla(EmpleadoDAOImpl empleadoDAO) {
-        try {
-            // Obtener la lista de todos los empleados
-            List<Empleado> listaEmpleados = empleadoDAO.obtenerTodosEmpleados();
+    public void cargarEmpleadosEnTabla(EmpleadoController empleadoDAO) {
 
-            // Definir las columnas del JTable
-            String[] columnNames = {"ID", "Nombres", "Apellidos", "DNI", "Correo", "Teléfono", "Depto ID", "Estado"};
-            DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        // Obtener la lista de todos los empleados
+        List<Empleado> listaEmpleados = empleadoDAO.obtenerEmpleados();
 
-            // Iterar sobre la lista de empleados y agregar cada uno como una fila
-            for (Empleado empleado : listaEmpleados) {
-                Object[] rowData = {
-                    empleado.getIdEmpleado(),
-                    empleado.getNombres(),
-                    empleado.getApellidos(),
-                    empleado.getDni(),
-                    empleado.getCorreoElectronico(),
-                    empleado.getTelefono(),
-                    empleado.getIdDepartamento(),
-                    empleado.isEstado() ? "Activo" : "Inactivo" // Muestra 'Activo' o 'Inactivo' en lugar de true/false
-                };
-                model.addRow(rowData);
-            }
+        // Definir las columnas del JTable
+        String[] columnNames = {"ID", "Nombres", "Apellidos", "DNI", "Correo", "Teléfono", "Depto ID", "Estado"};
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
-            // Asignar el modelo a tu JTable
-            tablaEmpleados.setModel(model);
-
-        } catch (SQLException e) {
-            System.err.println("Error al cargar los empleados en la tabla: " + e.getMessage());
-            JOptionPane.showMessageDialog(this, "Error al cargar los datos de empleados.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Iterar sobre la lista de empleados y agregar cada uno como una fila
+        for (Empleado empleado : listaEmpleados) {
+            Object[] rowData = {
+                empleado.getIdEmpleado(),
+                empleado.getNombres(),
+                empleado.getApellidos(),
+                empleado.getDni(),
+                empleado.getCorreoElectronico(),
+                empleado.getTelefono(),
+                empleado.getIdDepartamento(),
+                empleado.isEstado() ? "Activo" : "Inactivo" // Muestra 'Activo' o 'Inactivo' en lugar de true/false
+            };
+            model.addRow(rowData);
         }
+
+        // Asignar el modelo a tu JTable
+        tablaEmpleados.setModel(model);
+
     }
 
     public void cargarUsuariosEnTabla(UsuarioDAOImpl usuarioDAO) {
@@ -1549,7 +1554,7 @@ public class Dashboard extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
 
                 // Refrescar tabla del Dashboard
-                cargarEmpleadosEnTabla(new EmpleadoDAOImpl(conexionDB.getConexion()));
+                cargarEmpleadosEnTabla(new EmpleadoController(conexionDB));
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(this,

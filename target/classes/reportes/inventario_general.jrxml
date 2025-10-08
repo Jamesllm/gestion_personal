@@ -1,113 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
-              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
-              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
-              name="inventario_general"
-              pageWidth="595" pageHeight="842" columnWidth="555"
-              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+              http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="inventario_general"
+              pageWidth="595" pageHeight="842" columnWidth="555"
+              leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 
-        <parameter name="TITULO" class="java.lang.String"/>
-    <parameter name="NOMBRE_EMPRESA" class="java.lang.String"/>
-    <parameter name="RUC_EMPRESA" class="java.lang.String"/>
-    <parameter name="DIRECCION_EMPRESA" class="java.lang.String"/>
-    <parameter name="TELEFONO_EMPRESA" class="java.lang.String"/>
-    <parameter name="EMAIL_EMPRESA" class="java.lang.String"/>
-    <parameter name="LOGO_EMPRESA" class="java.lang.String"/>
+    <parameter name="TITULO" class="java.lang.String"/>
+ <parameter name="NOMBRE_EMPRESA" class="java.lang.String"/>
+  <parameter name="RUC_EMPRESA" class="java.lang.String"/>
 
-    <queryString>
-        <![CDATA[
-        SELECT i.nombre_item, i.stock_actual, i.unidad, i.ubicacion, i.precio_unitario, i.fecha_ultimo_movimiento
-        FROM inventario i
-        ORDER BY i.nombre_item
-        ]]>
-    </queryString>
+    <queryString>
+        <![CDATA[
+        SELECT i.nombre_item, i.stock_actual, i.unidad, i.ubicacion, i.precio_unitario, i.fecha_ultimo_movimiento
+        FROM inventario i
+        ORDER BY i.nombre_item
+        ]]>
+    </queryString>
 
-    <field name="nombre_item" class="java.lang.String"/>
-    <field name="stock_actual" class="java.lang.Integer"/>
-    <field name="unidad" class="java.lang.String"/>
-    <field name="ubicacion" class="java.lang.String"/>
-    <field name="precio_unitario" class="java.math.BigDecimal"/>
-    <field name="fecha_ultimo_movimiento" class="java.sql.Timestamp"/>
+    <field name="nombre_item" class="java.lang.String"/>
+    <field name="stock_actual" class="java.lang.Integer"/>
+    <field name="unidad" class="java.lang.String"/>
+    <field name="ubicacion" class="java.lang.String"/>
+    <field name="precio_unitario" class="java.math.BigDecimal"/>
+    <field name="fecha_ultimo_movimiento" class="java.sql.Timestamp"/>
 
-        <title>
-        <band height="90" splitType="Stretch">
-                        <image scaleImage="FillFrame" onErrorType="Icon">
-                <reportElement x="0" y="0" width="80" height="70"/>
-                <imageExpression class="java.lang.String"><![CDATA[$P{LOGO_EMPRESA}]]></imageExpression>
-                <printWhenExpression><![CDATA[!$P{LOGO_EMPRESA}.isEmpty()]]></printWhenExpression>
-            </image>
-            
-                        <textField>
-                <reportElement x="85" y="0" width="470" height="15" forecolor="#333333"/>
-                <textElement textAlignment="Left">
-                    <font size="12" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$P{NOMBRE_EMPRESA}]]></textFieldExpression>
-            </textField>
+    <!-- Título del reporte -->
+    <title>
+        <band height="50">
+            <textField>
+                <reportElement x="0" y="10" width="555" height="30"/>
+                <textElement textAlignment="Center">
+                    <font size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{NOMBRE_EMPRESA}]]></textFieldExpression>
+            </textField>
+        </band>
+    </title>
+	
+	
 
-                        <textField>
-                <reportElement x="85" y="15" width="470" height="13" forecolor="#666666"/>
-                <textElement textAlignment="Left">
-                    <font size="9"/>
-                </textElement>
-                <textFieldExpression><![CDATA["RUC: " + $P{RUC_EMPRESA} + " | Teléfono: " + $P{TELEFONO_EMPRESA}]]></textFieldExpression>
-            </textField>
+    <columnHeader>
+        <band height="20">
+            <staticText><reportElement x="0" y="0" width="120" height="20"/><text><![CDATA[Item]]></text></staticText>
+            <staticText><reportElement x="120" y="0" width="80" height="20"/><text><![CDATA[Stock]]></text></staticText>
+            <staticText><reportElement x="200" y="0" width="80" height="20"/><text><![CDATA[Unidad]]></text></staticText>
+            <staticText><reportElement x="280" y="0" width="100" height="20"/><text><![CDATA[Ubicación]]></text></staticText>
+            <staticText><reportElement x="380" y="0" width="80" height="20"/><text><![CDATA[Precio]]></text></staticText>
+            <staticText><reportElement x="460" y="0" width="95" height="20"/><text><![CDATA[Últ. Mov.]]></text></staticText>
+        </band>
+    </columnHeader>
 
-                        <textField>
-                <reportElement x="85" y="28" width="470" height="13" forecolor="#666666"/>
-                <textElement textAlignment="Left">
-                    <font size="9"/>
-                </textElement>
-                <textFieldExpression><![CDATA["Dirección: " + $P{DIRECCION_EMPRESA}]]></textFieldExpression>
-            </textField>
-            
-                        <textField>
-                <reportElement x="85" y="41" width="470" height="13" forecolor="#666666"/>
-                <textElement textAlignment="Left">
-                    <font size="9"/>
-                </textElement>
-                <textFieldExpression><![CDATA["Email: " + $P{EMAIL_EMPRESA}]]></textFieldExpression>
-            </textField>
-
-                        <textField>
-                <reportElement x="0" y="65" width="555" height="25" forecolor="#000000"/>
-                <textElement textAlignment="Center">
-                    <font size="14" isBold="true"/>
-                </textElement>
-                <textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
-            </textField>
-            
-            <line>
-                <reportElement x="0" y="89" width="555" height="1" forecolor="#CCCCCC"/>
-            </line>
-        </band>
-    </title>
-
-
-    <columnHeader>
-        <band height="20">
-            <staticText><reportElement x="0" y="0" width="120" height="20" backcolor="#EBEBEB"/><textElement><font isBold="true"/></textElement><text><![CDATA[Item]]></text></staticText>
-            <staticText><reportElement x="120" y="0" width="80" height="20" backcolor="#EBEBEB"/><textElement><font isBold="true"/></textElement><text><![CDATA[Stock]]></text></staticText>
-            <staticText><reportElement x="200" y="0" width="80" height="20" backcolor="#EBEBEB"/><textElement><font isBold="true"/></textElement><text><![CDATA[Unidad]]></text></staticText>
-            <staticText><reportElement x="280" y="0" width="100" height="20" backcolor="#EBEBEB"/><textElement><font isBold="true"/></textElement><text><![CDATA[Ubicación]]></text></staticText>
-            <staticText><reportElement x="380" y="0" width="80" height="20" backcolor="#EBEBEB"/><textElement><font isBold="true"/></textElement><text><![CDATA[Precio]]></text></staticText>
-            <staticText><reportElement x="460" y="0" width="95" height="20" backcolor="#EBEBEB"/><textElement><font isBold="true"/></textElement><text><![CDATA[Últ. Mov.]]></text></staticText>
-            <line>
-                <reportElement x="0" y="19" width="555" height="1" forecolor="#CCCCCC"/>
-            </line>
-        </band>
-    </columnHeader>
-
-
-    <detail>
-        <band height="20">
-            <textField><reportElement x="0" y="0" width="120" height="20"/><textFieldExpression><![CDATA[$F{nombre_item}]]></textFieldExpression></textField>
-            <textField><reportElement x="120" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{stock_actual}]]></textFieldExpression></textField>
-            <textField><reportElement x="200" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{unidad}]]></textFieldExpression></textField>
-            <textField><reportElement x="280" y="0" width="100" height="20"/><textFieldExpression><![CDATA[$F{ubicacion}]]></textFieldExpression></textField>
-            <textField pattern="$ #,##0.00"><reportElement x="380" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{precio_unitario}]]></textFieldExpression></textField>
-            <textField pattern="dd/MM/yyyy"><reportElement x="460" y="0" width="95" height="20"/><textFieldExpression><![CDATA[$F{fecha_ultimo_movimiento}]]></textFieldExpression></textField>
-        </band>
-    </detail>
+    <detail>
+        <band height="20">
+            <textField><reportElement x="0" y="0" width="120" height="20"/><textFieldExpression><![CDATA[$F{nombre_item}]]></textFieldExpression></textField>
+            <textField><reportElement x="120" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{stock_actual}]]></textFieldExpression></textField>
+            <textField><reportElement x="200" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{unidad}]]></textFieldExpression></textField>
+            <textField><reportElement x="280" y="0" width="100" height="20"/><textFieldExpression><![CDATA[$F{ubicacion}]]></textFieldExpression></textField>
+            <textField><reportElement x="380" y="0" width="80" height="20"/><textFieldExpression><![CDATA[$F{precio_unitario}]]></textFieldExpression></textField>
+            <textField><reportElement x="460" y="0" width="95" height="20"/><textFieldExpression><![CDATA[$F{fecha_ultimo_movimiento}]]></textFieldExpression></textField>
+        </band>
+    </detail>
 </jasperReport>

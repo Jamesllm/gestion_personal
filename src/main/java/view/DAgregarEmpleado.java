@@ -1,5 +1,6 @@
 package view;
 
+import controller.EmpleadoController;
 import model.Departamento;
 import model.Empleado;
 import dao.impl.Conexion;
@@ -251,7 +252,7 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
 
             // Refrescar tabla del Dashboard
             if (dashboard != null) {
-                dashboard.cargarEmpleadosEnTabla(new EmpleadoDAOImpl(conexionDB.getConexion()));
+                dashboard.cargarEmpleadosEnTabla(new EmpleadoController(conexionDB));
             }
 
             this.dispose();
