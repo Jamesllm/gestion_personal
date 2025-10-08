@@ -62,5 +62,6 @@ view\DRecuperarCuenta$2.class
 dao\interfaces\IUsuarioDAO.class
 model\Departamento.class
 view\Dashboard$5.class
+controller\DepartamentoController.class
 view\Login.class
 view\Dashboard$16.class

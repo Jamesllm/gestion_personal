@@ -1,14 +1,13 @@
 package view;
 
+import controller.DepartamentoController;
 import controller.EmpleadoController;
 import model.Departamento;
 import model.Empleado;
 import dao.impl.Conexion;
-import dao.impl.DepartamentoDAOImpl;
 import dao.impl.EmpleadoDAOImpl;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.ZoneId;
+
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -63,21 +62,12 @@ public class DAgregarEmpleado extends javax.swing.JDialog {
     }
 
     private void cargarDepartamentos(Conexion conexionDB) {
-        try {
-            DepartamentoDAOImpl departamentoDAO = new DepartamentoDAOImpl(conexionDB.getConexion());
-            List<Departamento> departamentos = departamentoDAO.obtenerTodosDepartamentos();
+        DepartamentoController departamentoDAO = new DepartamentoController(conexionDB);
+        List<Departamento> departamentos = departamentoDAO.obtenerDepartamentos();
 
-            cb_departamentos.removeAllItems(); // limpiar el combo
-            for (Departamento dep : departamentos) {
-                cb_departamentos.addItem(dep);
-            }
-
-        } catch (SQLException ex) {
-            logger.log(java.util.logging.Level.SEVERE, "Error al cargar departamentos", ex);
-            javax.swing.JOptionPane.showMessageDialog(this,
-                    "Error al cargar los departamentos",
-                    "Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        cb_departamentos.removeAllItems(); 
+        for (Departamento dep : departamentos) {
+            cb_departamentos.addItem(dep);
         }
     }
 
