@@ -1,5 +1,7 @@
 package view;
 
+import controller.AsistenciaController;
+import controller.EmpleadoController;
 import model.Asistencia;
 import dao.impl.AsistenciaDAOImpl;
 import dao.impl.Conexion;
@@ -230,32 +232,27 @@ public class DEmpleado extends javax.swing.JDialog {
     private void btnMarcarSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarSalidaActionPerformed
         String dni = txtDNI.getText();
 
-        try {
-            AsistenciaDAOImpl asistenciaDAO = new AsistenciaDAOImpl(conexionDB.getConexion());
-            EmpleadoDAOImpl empleadoDAO = new EmpleadoDAOImpl(conexionDB.getConexion());
+        AsistenciaController asistenciaDAO = new AsistenciaController(conexionDB);
+        EmpleadoController empleadoDAO = new EmpleadoController(conexionDB);
 
-            int idEmpleado = empleadoDAO.obtenerIdPorDni(dni);
+        int idEmpleado = empleadoDAO.obtenerEmpleadoPorDNI(dni);
 
-            // Buscar la asistencia activa (entrada sin salida)
-            int idAsistencia = asistenciaDAO.obtenerAsistenciaActiva(idEmpleado);
+        // Buscar la asistencia activa (entrada sin salida)
+        int idAsistencia = asistenciaDAO.obtenerAsistenciaActiva(idEmpleado);
 
-            if (idAsistencia == -1) {
-                JOptionPane.showMessageDialog(this, "No se encontró asistencia activa para este empleado.");
-                return;
-            }
-
-            // Hora de salida actual
-            LocalTime horaSalida = LocalTime.now();
-
-            // Actualizar asistencia con hora de salida
-            asistenciaDAO.registrarSalida(idAsistencia, horaSalida, "FINALIZADO");
-
-            JOptionPane.showMessageDialog(this, "Salida registrada con éxito.");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al registrar salida: " + ex.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+        if (idAsistencia == -1) {
+            JOptionPane.showMessageDialog(this, "No se encontró asistencia activa para este empleado.");
+            return;
         }
+
+        // Hora de salida actual
+        LocalTime horaSalida = LocalTime.now();
+
+        // Actualizar asistencia con hora de salida
+        asistenciaDAO.registrarSalida(idAsistencia, horaSalida, "FINALIZADO");
+
+        JOptionPane.showMessageDialog(this, "Salida registrada con éxito.");
+
     }//GEN-LAST:event_btnMarcarSalidaActionPerformed
 
 

@@ -42,6 +42,15 @@ public class EmpleadoController {
             throw new RuntimeException("Error al obtener el empleado: " + e.getMessage());
         }
     }
+    
+    public int obtenerEmpleadoPorDNI(String id) {
+        try {
+            return empleadoDAO.obtenerIdPorDni(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error al obtener el empleado: " + e.getMessage());
+        }
+    }
 
     public void actualizarEmpleado(Empleado empleado) {
         try {

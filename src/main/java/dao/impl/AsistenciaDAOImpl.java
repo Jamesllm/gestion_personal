@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author James
  */
-public class AsistenciaDAOImpl implements IAsistenciaDAO{
+public class AsistenciaDAOImpl implements IAsistenciaDAO {
 
     private final Connection conexion;
 

@@ -1,7 +1,10 @@
 package view;
 
-// === MODEL
+// === CONTROLLER
+import controller.AsistenciaController;
 import controller.EmpleadoController;
+
+// === MODEL
 import model.Asistencia;
 import model.Empleado;
 import model.Inventario;
@@ -9,8 +12,6 @@ import model.Modulo;
 import model.Usuario;
 
 // === DAO
-import dao.impl.EmpleadoDAOImpl;
-import dao.impl.AsistenciaDAOImpl;
 import dao.impl.InventarioDAOImpl;
 import dao.impl.ModuloDAOImpl;
 import dao.impl.UsuarioDAOImpl;
@@ -397,7 +398,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     public void cargarTablaAsistencia() {
         try {
-            AsistenciaDAOImpl dao = new AsistenciaDAOImpl(conexionDB.getConexion());
+            AsistenciaController dao = new AsistenciaController(conexionDB);
             List<Asistencia> asistencias;
 
             if (usuarioAutenticado.getRol().getNombreRol().equalsIgnoreCase("Administrador")) {
@@ -1463,21 +1464,16 @@ public class Dashboard extends javax.swing.JFrame {
 
         int idEmpleado = (int) tablaEmpleados.getValueAt(filaSeleccionada, 0);
 
-        try {
-            EmpleadoDAOImpl dao = new EmpleadoDAOImpl(conexionDB.getConexion());
-            Empleado empleado = dao.obtenerEmpleadoPorId(idEmpleado);
+        EmpleadoController dao = new EmpleadoController(conexionDB);
+        Empleado empleado = dao.obtenerEmpleadoPorId(idEmpleado);
 
-            if (empleado != null) {
-                DAgregarEmpleado dialog = new DAgregarEmpleado(this, true, conexionDB, empleado);
-                dialog.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Empleado no encontrado en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar empleado: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            logger.log(java.util.logging.Level.SEVERE, "Error al editar empleado", ex);
+        if (empleado != null) {
+            DAgregarEmpleado dialog = new DAgregarEmpleado(this, true, conexionDB, empleado);
+            dialog.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Empleado no encontrado en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnEditarEmpleadoActionPerformed
 
     private void btnEliminarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProductoActionPerformed
@@ -1544,25 +1540,18 @@ public class Dashboard extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            try {
-                EmpleadoDAOImpl dao = new EmpleadoDAOImpl(conexionDB.getConexion());
-                dao.eliminarEmpleado(idEmpleado);
 
-                JOptionPane.showMessageDialog(this,
-                        "Empleado eliminado con éxito.",
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
+            EmpleadoController dao = new EmpleadoController(conexionDB);
+            dao.eliminarEmpleado(idEmpleado);
 
-                // Refrescar tabla del Dashboard
-                cargarEmpleadosEnTabla(new EmpleadoController(conexionDB));
+            JOptionPane.showMessageDialog(this,
+                    "Empleado eliminado con éxito.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this,
-                        "Error al eliminar empleado: " + ex.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                logger.log(java.util.logging.Level.SEVERE, "Error al eliminar empleado", ex);
-            }
+            // Refrescar tabla del Dashboard
+            cargarEmpleadosEnTabla(new EmpleadoController(conexionDB));
+
         }
     }//GEN-LAST:event_btnEliminarEmpleadoActionPerformed
 
