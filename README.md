@@ -15,9 +15,11 @@
 * Ronal James Llapapasca Montes
 * Junior Danfert Yesquen Ojeda
 
-**Docente:** Anaximandro Fernéndez Guerrero
-**Sección:** 11722
-**A?o:** 2025
+- **Docente:** Anaximandro Fernéndez Guerrero
+
+- **Sección:** 11722
+
+- **Año:** 2025
 
 ---
 
@@ -82,7 +84,7 @@ Dise?ar y desarrollar un aplicativo de escritorio que optimice el **control del 
 * **Frontend/Interfaz:** Java Swing
 * **Backend/DAO:** Java con patrán DAO (Data Access Object)
 * **Base de Datos:** PostgreSQL
-* **Patrones de Dise?o:** Singleton (Conexión DB), MVC (modelo-vista-controlador)
+* **Patrones de Diseño:** Singleton (Conexión DB), MVC (modelo-vista-controlador)
 * **Reportes:** JasperReports
 
 
