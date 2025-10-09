@@ -1,38 +1,38 @@
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\controller\AsistenciaController.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\controller\DepartamentoController.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\controller\EmpleadoController.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\controller\InventarioController.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\controller\ModuloController.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\controller\UsuarioController.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\AsistenciaDAOImpl.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\Conexion.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\DepartamentoDAOImpl.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\EmpleadoDAOImpl.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\InventarioDAOImpl.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\LoginService.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\ModuloDAOImpl.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\impl\UsuarioDAOImpl.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\interfaces\IAsistenciaDAO.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\interfaces\IDepartamentoDAO.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\interfaces\IEmpleadoDAO.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\interfaces\IInventarioDAO.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\interfaces\IModuloDAO.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\dao\interfaces\IUsuarioDAO.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\model\Asistencia.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\model\Departamento.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\model\Empleado.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\model\Inventario.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\model\Modulo.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\model\Rol.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\model\Usuario.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\service\ActualizadorFechaHora.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\service\ControlAsistencia.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\util\GeneradorReporte.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\util\Utilidades.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\view\DAgregarEmpleado.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\view\DAgregarInventario.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\view\Dashboard.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\view\DEmpleado.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\view\DGenerarReporte.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\view\DRecuperarCuenta.java
-C:\Users\James\Documents\NetBeansProjects\ControlAsistencia\src\main\java\view\Login.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\controller\AsistenciaController.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\controller\DepartamentoController.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\controller\EmpleadoController.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\controller\InventarioController.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\controller\ModuloController.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\controller\UsuarioController.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\AsistenciaDAOImpl.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\Conexion.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\DepartamentoDAOImpl.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\EmpleadoDAOImpl.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\InventarioDAOImpl.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\LoginService.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\ModuloDAOImpl.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\impl\UsuarioDAOImpl.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\interfaces\IAsistenciaDAO.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\interfaces\IDepartamentoDAO.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\interfaces\IEmpleadoDAO.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\interfaces\IInventarioDAO.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\interfaces\IModuloDAO.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\dao\interfaces\IUsuarioDAO.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\model\Asistencia.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\model\Departamento.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\model\Empleado.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\model\Inventario.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\model\Modulo.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\model\Rol.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\model\Usuario.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\service\ActualizadorFechaHora.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\service\ControlAsistencia.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\util\GeneradorReporte.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\util\Utilidades.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\view\DAgregarEmpleado.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\view\DAgregarInventario.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\view\Dashboard.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\view\DEmpleado.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\view\DGenerarReporte.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\view\DRecuperarCuenta.java
+C:\Users\James\Documents\RONAL_UTP\CICLO II - 2025\Curso Integrador I Sistemas Software\gestion_personal\src\main\java\view\Login.java
