@@ -27,6 +27,7 @@ dao\impl\UsuarioDAOImpl.class
 view\DGenerarReporte$2.class
 view\DAgregarInventario.class
 view\DRecuperarCuenta.class
+controller\InventarioController.class
 dao\impl\LoginService.class
 controller\ModuloController.class
 view\DAgregarEmpleado$1.class

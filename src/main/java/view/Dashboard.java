@@ -3,6 +3,7 @@ package view;
 // === CONTROLLER
 import controller.AsistenciaController;
 import controller.EmpleadoController;
+import controller.InventarioController;
 import controller.ModuloController;
 
 // === MODEL
@@ -13,7 +14,6 @@ import model.Modulo;
 import model.Usuario;
 
 // === DAO
-import dao.impl.InventarioDAOImpl;
 import dao.impl.UsuarioDAOImpl;
 import dao.impl.Conexion;
 
@@ -221,7 +221,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     public void cargarInventarioEnTabla() {
         try {
-            InventarioDAOImpl dao = new InventarioDAOImpl(conexionDB.getConexion());
+            InventarioController dao = new InventarioController(conexionDB);
             List<Inventario> lista = dao.listar();
 
             // Definir modelo de la tabla
@@ -1497,25 +1497,14 @@ public class Dashboard extends javax.swing.JFrame {
                 JOptionPane.QUESTION_MESSAGE);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
-            try {
-                InventarioDAOImpl dao = new InventarioDAOImpl(conexionDB.getConexion());
-                dao.eliminar(idProducto);
-
-                JOptionPane.showMessageDialog(this,
-                        "Producto eliminado con éxito.",
-                        "Éxito",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                // Refrescar tabla del Dashboard
-                cargarInventarioEnTabla();
-
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this,
-                        "Error al eliminar producto: " + ex.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                logger.log(java.util.logging.Level.SEVERE, "Error al eliminar producto", ex);
-            }
+            InventarioController dao = new InventarioController(conexionDB);
+            dao.eliminar(idProducto);
+            JOptionPane.showMessageDialog(this,
+                    "Producto eliminado con éxito.",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE);
+            // Refrescar tabla del Dashboard
+            cargarInventarioEnTabla();
         }
     }//GEN-LAST:event_btnEliminarProductoActionPerformed
 
