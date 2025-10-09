@@ -32,11 +32,11 @@ El presente proyecto plantea un **aplicativo de escritorio** con **Java Swing** 
 
 ## Misión
 
-Ofrecer una experiencia excepcional en moda, combinando dise?o, tecnología y sostenibilidad, entregando prendas modernas con impacto positivo en el planeta.
+Ofrecer una experiencia excepcional en moda, combinando diseño, tecnología y sostenibilidad, entregando prendas modernas con impacto positivo en el planeta.
 
 ## Visión
 
-Ser líderes en la moda peruana, donde la innovación y el respeto por la naturaleza se entrelacen para definir la moda del ma?ana.
+Ser líderes en la moda peruana, donde la innovación y el respeto por la naturaleza se entrelacen para definir la moda del mañana.
 
 ---
 
@@ -57,7 +57,7 @@ El sistema permitirá:
 
 ### Objetivo General
 
-Dise?ar y desarrollar un aplicativo de escritorio que optimice el **control del personal e inventario** en la empresa Drago.
+Diseñar y desarrollar un aplicativo de escritorio que optimice el **control del personal e inventario** en la empresa Drago.
 
 ### Objetivos Específicos
 
@@ -187,7 +187,7 @@ public void registrarSalida(int idAsistencia, LocalTime horaSalida, String estad
 * Validación de credenciales:
 
   * Verifica campos vacíos.
-  * Valida usuario y contrase?a en BD (con hash).
+  * Valida usuario y contraseña en BD (con hash).
   * Incrementa intentos fallidos y bloquea tras 3 errores.
   * Verifica **rol = Administrador** antes de acceder al panel.
 
