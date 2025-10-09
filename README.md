@@ -192,7 +192,7 @@ public void registrarSalida(int idAsistencia, LocalTime horaSalida, String estad
   * Verifica **rol = Administrador** antes de acceder al panel.
 
 * Flujo visual:
-  ![Proceso de Login](./login-flow.png)
+  ![Proceso de Login](./imgs/login.jpg)
 
 ---
 
