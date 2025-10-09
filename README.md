@@ -1,9 +1,9 @@
 # Documentación Técnica
 
-**Proyecto: Sistema de Control de Asistencia e Inventario**
-**Empresa: MODAS TEXTILES DRAGO S.A.C.**
-**Curso:** Curso Integrador: Sistema 1
-**C��digo:** AC-S08-APF2
+- **Proyecto: Sistema de Control de Asistencia e Inventario**
+- **Empresa: MODAS TEXTILES DRAGO S.A.C.**
+- **Curso:** Curso Integrador: Sistema 1
+- **Código:** AC-S08-APF2
 
 ---
 
@@ -15,10 +15,9 @@
 * Ronal James Llapapasca Montes
 * Junior Danfert Yesquen Ojeda
 
+
 - **Docente:** Anaximandro Fernéndez Guerrero
-
 - **Sección:** 11722
-
 - **Año:** 2025
 
 ---
