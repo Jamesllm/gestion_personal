@@ -1,9 +1,9 @@
-# Documentación Técnica
+# Documentaci贸n T茅cnica
 
 **Proyecto: Sistema de Control de Asistencia e Inventario**
 **Empresa: MODAS TEXTILES DRAGO S.A.C.**
 **Curso:** Curso Integrador: Sistema 1
-**Código:** AC-S08-APF2
+**C锟斤拷digo:** AC-S08-APF2
 
 ---
 
@@ -15,33 +15,33 @@
 * Ronal James Llapapasca Montes
 * Junior Danfert Yesquen Ojeda
 
-**Docente:** Anaximandro Fernández Guerrero
-**Sección:** 11722
+**Docente:** Anaximandro Fern茅ndez Guerrero
+**Secci贸n:** 11722
 **A?o:** 2025
 
 ---
 
-## Introducción
+## Introducci贸n
 
-La empresa **MODAS TEXTILES DRAGO S.A.C.** enfrenta problemas derivados del **registro manual de asistencia** y el **control básico de inventario**. Esto genera errores, inconsistencias y pérdida de tiempo.
+La empresa **MODAS TEXTILES DRAGO S.A.C.** enfrenta problemas derivados del **registro manual de asistencia** y el **control b谩sico de inventario**. Esto genera errores, inconsistencias y p茅rdida de tiempo.
 
-El presente proyecto plantea un **aplicativo de escritorio** con **Java Swing** y **PostgreSQL**, que permitirá optimizar estos procesos, mejorando la eficiencia operativa y reduciendo errores humanos.
+El presente proyecto plantea un **aplicativo de escritorio** con **Java Swing** y **PostgreSQL**, que permitir谩 optimizar estos procesos, mejorando la eficiencia operativa y reduciendo errores humanos.
 
 ---
 
-## Misión
+## Misi贸n
 
-Ofrecer una experiencia excepcional en moda, combinando dise?o, tecnología y sostenibilidad, entregando prendas modernas con impacto positivo en el planeta.
+Ofrecer una experiencia excepcional en moda, combinando dise?o, tecnolog铆a y sostenibilidad, entregando prendas modernas con impacto positivo en el planeta.
 
-## Visión
+## Visi贸n
 
-Ser líderes en la moda peruana, donde la innovación y el respeto por la naturaleza se entrelacen para definir la moda del ma?ana.
+Ser l铆deres en la moda peruana, donde la innovaci贸n y el respeto por la naturaleza se entrelacen para definir la moda del ma?ana.
 
 ---
 
 ## Alcance del Proyecto
 
-El sistema permitirá:
+El sistema permitir谩:
 
 * Registrar entrada y salida de los trabajadores.
 * Generar reportes de asistencia, tardanzas y ausencias.
@@ -58,20 +58,20 @@ El sistema permitirá:
 
 Dise?ar y desarrollar un aplicativo de escritorio que optimice el **control del personal e inventario** en la empresa Drago.
 
-### Objetivos Específicos
+### Objetivos Espec铆ficos
 
-* Crear una **interfaz amigable y fácil de usar**.
+* Crear una **interfaz amigable y f谩cil de usar**.
 * Implementar una **base de datos robusta en PostgreSQL**.
 * Definir **perfiles de usuario** con roles y permisos diferenciados.
 * Ejecutar **pruebas exhaustivas** para validar el correcto funcionamiento.
 
 ---
 
-##  Análisis del Contexto
+##  An谩lisis del Contexto
 
-* **Problema actual:** registros manuales en hojas físicas y Excel.
-* **Consecuencias:** errores en asistencia e inventario, dificultad para consolidar información, reportes poco confiables.
-* **Solución propuesta:** sistema de escritorio con BD centralizada, digitalización de procesos y reportes automáticos.
+* **Problema actual:** registros manuales en hojas f铆sicas y Excel.
+* **Consecuencias:** errores en asistencia e inventario, dificultad para consolidar informaci贸n, reportes poco confiables.
+* **Soluci贸n propuesta:** sistema de escritorio con BD centralizada, digitalizaci贸n de procesos y reportes autom谩ticos.
 
 ---
 
@@ -80,28 +80,15 @@ Dise?ar y desarrollar un aplicativo de escritorio que optimice el **control del 
 ### Lenguajes y Herramientas
 
 * **Frontend/Interfaz:** Java Swing
-* **Backend/DAO:** Java con patrón DAO (Data Access Object)
+* **Backend/DAO:** Java con patr谩n DAO (Data Access Object)
 * **Base de Datos:** PostgreSQL
-* **Patrones de Dise?o:** Singleton (Conexión DB), MVC (modelo-vista-controlador)
+* **Patrones de Dise?o:** Singleton (Conexi贸n DB), MVC (modelo-vista-controlador)
 * **Reportes:** JasperReports
 
-### Diagrama de Capas
 
-```
-[ Interfaz Gráfica (Swing) ]
-          ↓
-[ Controladores ]
-          ↓
-[ DAO (InventarioDAO, AsistenciaDAO, UsuarioDAO) ]
-          ↓
-[ Base de Datos PostgreSQL ]
-```
+##  Componentes T茅cnicos
 
----
-
-##  Componentes Técnicos
-
-### 1. **Conexión a la Base de Datos (Singleton)**
+### 1. **Conexi贸n a la Base de Datos (Singleton)**
 
 ```java
 public class Conexion {
@@ -134,7 +121,7 @@ public class Conexion {
 
 ---
 
-### 2. **Módulo de Inventario**
+### 2. **M贸dulo de Inventario**
 
 * Tabla `inventario`:
 
@@ -162,7 +149,7 @@ fila[7] = inv.isEstado() ? "Activo" : "Inactivo";
 
 ---
 
-### 3. **Módulo de Asistencia**
+### 3. **M贸dulo de Asistencia**
 
 * Registro de entrada:
 
@@ -196,9 +183,9 @@ public void registrarSalida(int idAsistencia, LocalTime horaSalida, String estad
 
 ### 4. **Login y Roles**
 
-* Validación de credenciales:
+* Validaci贸n de credenciales:
 
-  * Verifica campos vacíos.
+  * Verifica campos vac铆os.
   * Valida usuario y contrase?a en BD (con hash).
   * Incrementa intentos fallidos y bloquea tras 3 errores.
   * Verifica **rol = Administrador** antes de acceder al panel.
@@ -213,56 +200,50 @@ public void registrarSalida(int idAsistencia, LocalTime horaSalida, String estad
 * JasperReports configurado para:
 
   * Reportes de asistencia diaria/mensual.
-  * Reportes de inventario y stock mínimo.
-* Exportación a **PDF y Excel**.
+  * Reportes de inventario y stock m铆nimo.
+* Exportaci贸n a **PDF y Excel**.
 
 ---
 
-##  Gestión del Proyecto
+##  Gesti贸n del Proyecto
 
 ### Project Charter
 
-* **Título:** Sistema de Control de Asistencia del Personal
-* **Jefe de Proyecto:** José Shaquihuanga
-* **Sponsor:** Corporación Grupo Drago S.A.C.
+* **T铆tulo:** Sistema de Control de Asistencia del Personal
+* **Jefe de Proyecto:** Jos茅 Shaquihuanga
+* **Sponsor:** Corporaci贸n Grupo Drago S.A.C.
 * **Presupuesto:** S/. 5,000
-* **Cronograma:** Inicio 12/08/2025 – Fin 05/09/2025
+* **Cronograma:** Inicio 12/08/2025 - Fin 05/09/2025
 
 ### Lean Canvas
 
-*(Incluido en el entregable del curso con el análisis de problema, cliente y propuesta de valor)*
+*(Incluido en el entregable del curso con el an谩lisis de problema, cliente y propuesta de valor)*
 
 ---
 
 ## Riesgos Identificados
 
 * Resistencia del personal al cambio digital.
-* Problemas técnicos con hardware de asistencia.
-* Dependencia de conexión estable a internet.
-* Posible dificultad en integración con otros sistemas de la empresa.
+* Problemas t茅cnicos con hardware de asistencia.
+* Dependencia de conexi贸n estable a internet.
+* Posible dificultad en integraci贸n con otros sistemas de la empresa.
 
 ---
 
 ##  Costos Estimados
 
 * Desarrollo: S/. 3,000
-* Licencias y librerías: S/. 1,000
-* Capacitación y soporte: S/. 1,000
+* Licencias y librer铆as: S/. 1,000
+* Capacitaci贸n y soporte: S/. 1,000
   **Total: S/. 5,000**
 
 ---
 
 ##  Conclusiones
 
-El desarrollo del sistema permitirá a la empresa:
+El desarrollo del sistema permitir谩 a la empresa:
 
 * Reducir errores en la asistencia y el inventario.
-* Agilizar la generación de reportes.
+* Agilizar la generaci贸n de reportes.
 * Mejorar el control de personal.
 * Optimizar recursos para aumentar competitividad.
-
----
-
- **Anexos:** Diagramas UML, ERD de la base de datos, Gantt Chart, Mockups de pantallas, Lean Canvas completo.
-
----
