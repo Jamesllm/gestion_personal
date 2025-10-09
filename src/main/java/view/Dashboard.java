@@ -3,6 +3,7 @@ package view;
 // === CONTROLLER
 import controller.AsistenciaController;
 import controller.EmpleadoController;
+import controller.ModuloController;
 
 // === MODEL
 import model.Asistencia;
@@ -13,7 +14,6 @@ import model.Usuario;
 
 // === DAO
 import dao.impl.InventarioDAOImpl;
-import dao.impl.ModuloDAOImpl;
 import dao.impl.UsuarioDAOImpl;
 import dao.impl.Conexion;
 
@@ -80,7 +80,7 @@ public class Dashboard extends javax.swing.JFrame {
         panel_actividad_reciente.getVerticalScrollBar().setUnitIncrement(30);
 
         // == VERIFICAR ROLES ==
-        ModuloDAOImpl moduloDAO = new ModuloDAOImpl(conexionDB.getConexion());
+        ModuloController moduloDAO = new ModuloController(conexionDB);
         List<Modulo> modulosActivos = moduloDAO.obtenerModulosPorRol(usuarioAutenticado.getRol().getIdRol());
 
         // Ocultar todo por defecto
