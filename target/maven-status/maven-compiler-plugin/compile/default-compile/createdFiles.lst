@@ -13,6 +13,7 @@ model\Empleado.class
 view\DEmpleado$1.class
 view\DEmpleado.class
 dao\interfaces\IDepartamentoDAO.class
+controller\UsuarioController.class
 view\Dashboard$6.class
 view\DAgregarInventario$2.class
 view\Dashboard$15.class

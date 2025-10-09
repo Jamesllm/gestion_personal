@@ -5,6 +5,7 @@ import controller.AsistenciaController;
 import controller.EmpleadoController;
 import controller.InventarioController;
 import controller.ModuloController;
+import controller.UsuarioController;
 
 // === MODEL
 import model.Asistencia;
@@ -13,8 +14,7 @@ import model.Inventario;
 import model.Modulo;
 import model.Usuario;
 
-// === DAO
-import dao.impl.UsuarioDAOImpl;
+// === DAO CONEXION
 import dao.impl.Conexion;
 
 // === SERVICE
@@ -168,7 +168,7 @@ public class Dashboard extends javax.swing.JFrame {
         // Cargar empleados en tabla
         cargarEmpleadosEnTabla(empleadoController);
 
-        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl(conexionDB.getConexion());
+        UsuarioController  usuarioDAO = new UsuarioController(conexionDB);
         cargarUsuariosEnTabla(usuarioDAO);
 
         // === MOSTRAR ACTIVIDAD RECIENTE == 
@@ -462,7 +462,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     }
 
-    public void cargarUsuariosEnTabla(UsuarioDAOImpl usuarioDAO) {
+    public void cargarUsuariosEnTabla(UsuarioController usuarioDAO) {
         try {
             // Obtener la lista de todos los usuarios
             List<Usuario> listaUsuarios = usuarioDAO.listarTodos();
