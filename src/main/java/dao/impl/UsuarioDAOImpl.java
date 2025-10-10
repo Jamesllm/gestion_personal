@@ -61,7 +61,7 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
             ps.setString(1, usuario.getPassword());
             ps.setInt(2, usuario.getRol().getIdRol());
             ps.setInt(3, usuario.getIdEmpleado());
-            ps.setBoolean(5, usuario.isCambiarPassword());
+            ps.setBoolean(4, usuario.isCambiarPassword());
             return ps.executeUpdate() > 0;
         }
     }
@@ -80,8 +80,8 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
             ps.setString(1, usuario.getPassword());
             ps.setInt(2, usuario.getRol().getIdRol());
             ps.setInt(3, usuario.getIdEmpleado());
-            ps.setBoolean(5, usuario.isCambiarPassword());
-            ps.setInt(6, usuario.getIdUsuario());
+            ps.setBoolean(4, usuario.isCambiarPassword());
+            ps.setInt(5, usuario.getIdUsuario());
             return ps.executeUpdate() > 0;
         }
     }
