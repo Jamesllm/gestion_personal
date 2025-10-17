@@ -545,6 +545,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txt_bienvenida1 = new javax.swing.JLabel();
         fecha_actual1 = new javax.swing.JLabel();
+        btnExportarExcelEmpleados1 = new javax.swing.JButton();
         jPanel_Reportes = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -826,7 +827,7 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane7.setViewportView(tablaAsistencia);
 
-        jPanel_Asistencia.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 292, 899, 420));
+        jPanel_Asistencia.add(jScrollPane7, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 292, 899, 370));
 
         hora_actual1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         hora_actual1.setText("hora_actual");
@@ -949,6 +950,16 @@ public class Dashboard extends javax.swing.JFrame {
         fecha_actual1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         fecha_actual1.setText("fecha actual");
         jPanel_Asistencia.add(fecha_actual1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 467, -1));
+
+        btnExportarExcelEmpleados1.setBackground(new java.awt.Color(0, 204, 51));
+        btnExportarExcelEmpleados1.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportarExcelEmpleados1.setText("Exportar a excel");
+        btnExportarExcelEmpleados1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarExcelEmpleados1ActionPerformed(evt);
+            }
+        });
+        jPanel_Asistencia.add(btnExportarExcelEmpleados1, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 680, 130, 40));
 
         PanelTab.addTab("Asistencia", jPanel_Asistencia);
 
@@ -1589,6 +1600,23 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnExportarExcelEmpleadosActionPerformed
 
+    private void btnExportarExcelEmpleados1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelEmpleados1ActionPerformed
+        AsistenciaController asistenciaController = new AsistenciaController(conexionDB);
+        boolean exportado = asistenciaController.exportarAsistenciasAExcel("reportes/asistencias.xlsx");
+
+        if (exportado) {
+            JOptionPane.showMessageDialog(null,
+                    "✅ Exportación completada correctamente.\nArchivo: reportes/asistencias.xlsx",
+                    "Exportar a Excel",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "❌ No se pudo exportar el archivo.\nVerifica los datos o permisos de carpeta.",
+                    "Error de Exportación",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExportarExcelEmpleados1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
@@ -1605,6 +1633,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminarUsuario;
     private javax.swing.JButton btnEmpleados;
     private javax.swing.JButton btnExportarExcelEmpleados;
+    private javax.swing.JButton btnExportarExcelEmpleados1;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnInventario;

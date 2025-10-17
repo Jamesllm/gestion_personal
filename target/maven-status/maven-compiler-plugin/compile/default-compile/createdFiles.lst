@@ -1,3 +1,4 @@
+view\Dashboard$19.class
 model\Inventario.class
 dao\impl\DepartamentoDAOImpl.class
 dao\interfaces\IInventarioDAO.class
