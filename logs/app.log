@@ -1,0 +1,8 @@
+2025-10-16 19:16:32 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 19:16:32 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-16 19:17:12 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 19:17:12 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
+2025-10-16 19:17:14 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 19:17:15 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
+2025-10-16 19:17:16 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 19:17:16 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
