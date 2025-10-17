@@ -1,26 +1,23 @@
 package dao.impl;
 
 import dao.interfaces.IEmpleadoDAO;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import model.Empleado;
-import java.sql.Time;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.sql.*;
+import java.util.*;
 
 public class EmpleadoDAOImpl implements IEmpleadoDAO {
 
-    private Connection conexion;
+    private static final Logger logger = LoggerFactory.getLogger(EmpleadoDAOImpl.class);
+    private final Connection conexion;
 
     public EmpleadoDAOImpl(Connection conexion) {
         this.conexion = conexion;
+        logger.info("Conexión establecida correctamente para EmpleadoDAOImpl");
     }
 
-    // Método para crear (insertar) un nuevo empleado
     @Override
     public void crearEmpleado(Empleado empleado) throws SQLException {
         String sql = "INSERT INTO Empleado (nombres, apellidos, dni, fecha_contratacion, correo_electronico, telefono, id_departamento) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -33,10 +30,13 @@ public class EmpleadoDAOImpl implements IEmpleadoDAO {
             ps.setString(6, empleado.getTelefono());
             ps.setInt(7, empleado.getIdDepartamento());
             ps.executeUpdate();
+            logger.info("Empleado creado correctamente: {}", empleado.getNombres());
+        } catch (SQLException e) {
+            logger.error("Error al crear empleado: {}", e.getMessage());
+            throw e;
         }
     }
 
-    // Método para leer (obtener) todos los empleados
     @Override
     public List<Empleado> obtenerTodosEmpleados() throws SQLException {
         List<Empleado> listaEmpleados = new ArrayList<>();
@@ -55,11 +55,14 @@ public class EmpleadoDAOImpl implements IEmpleadoDAO {
                         rs.getBoolean("estado")
                 ));
             }
+            logger.info("Total de empleados obtenidos: {}", listaEmpleados.size());
+        } catch (SQLException e) {
+            logger.error("Error al obtener empleados: {}", e.getMessage());
+            throw e;
         }
         return listaEmpleados;
     }
 
-    // Método para leer (obtener) un empleado por su ID
     @Override
     public Empleado obtenerEmpleadoPorId(int id_empleado) throws SQLException {
         String sql = "SELECT * FROM Empleado WHERE id_empleado = ?";
@@ -67,6 +70,7 @@ public class EmpleadoDAOImpl implements IEmpleadoDAO {
             ps.setInt(1, id_empleado);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
+                    logger.info("Empleado encontrado con ID: {}", id_empleado);
                     return new Empleado(
                             rs.getInt("id_empleado"),
                             rs.getString("nombres"),
@@ -80,14 +84,17 @@ public class EmpleadoDAOImpl implements IEmpleadoDAO {
                     );
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Error al obtener empleado por ID {}: {}", id_empleado, e.getMessage());
+            throw e;
         }
-        return null; // Retorna null si no se encuentra el empleado
+        logger.warn("No se encontró empleado con ID: {}", id_empleado);
+        return null;
     }
 
-    // Método para actualizar un empleado
     @Override
     public void actualizarEmpleado(Empleado empleado) throws SQLException {
-        String sql = "UPDATE Empleado SET nombres = ?, apellidos = ?, dni = ?, fecha_contratacion = ?, correo_electronico = ?, telefono = ?, id_departamento = ?, estado = ? WHERE id_empleado = ?";
+        String sql = "UPDATE Empleado SET nombres=?, apellidos=?, dni=?, fecha_contratacion=?, correo_electronico=?, telefono=?, id_departamento=?, estado=? WHERE id_empleado=?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, empleado.getNombres());
             ps.setString(2, empleado.getApellidos());
@@ -98,17 +105,32 @@ public class EmpleadoDAOImpl implements IEmpleadoDAO {
             ps.setInt(7, empleado.getIdDepartamento());
             ps.setBoolean(8, empleado.isEstado());
             ps.setInt(9, empleado.getIdEmpleado());
-            ps.executeUpdate();
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                logger.info("Empleado actualizado correctamente: {}", empleado.getIdEmpleado());
+            } else {
+                logger.warn("No se actualizó el empleado con ID: {}", empleado.getIdEmpleado());
+            }
+        } catch (SQLException e) {
+            logger.error("Error al actualizar empleado {}: {}", empleado.getIdEmpleado(), e.getMessage());
+            throw e;
         }
     }
 
-    // Método para eliminar un empleado
     @Override
     public void eliminarEmpleado(int id_empleado) throws SQLException {
         String sql = "UPDATE empleado SET estado=FALSE WHERE id_empleado = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, id_empleado);
-            ps.executeUpdate();
+            int filas = ps.executeUpdate();
+            if (filas > 0) {
+                logger.info("Empleado eliminado lógicamente con ID: {}", id_empleado);
+            } else {
+                logger.warn("No se encontró empleado para eliminar con ID: {}", id_empleado);
+            }
+        } catch (SQLException e) {
+            logger.error("Error al eliminar empleado {}: {}", id_empleado, e.getMessage());
+            throw e;
         }
     }
 
@@ -117,8 +139,13 @@ public class EmpleadoDAOImpl implements IEmpleadoDAO {
         String sql = "SELECT COUNT(*) FROM Empleado";
         try (PreparedStatement ps = conexion.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
-                return rs.getInt(1); // O rs.getInt("count")
+                int total = rs.getInt(1);
+                logger.info("Total de empleados registrados: {}", total);
+                return total;
             }
+        } catch (SQLException e) {
+            logger.error("Error al contar empleados: {}", e.getMessage());
+            throw e;
         }
         return 0;
     }

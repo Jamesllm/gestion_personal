@@ -1,5 +1,8 @@
 package dao.impl;
 
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+
 import dao.interfaces.IUsuarioDAO;
 import model.Usuario;
 import model.Rol;
@@ -9,17 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementación de IUsuarioDAO para manejar operaciones CRUD y de
- * autenticación.
- *
- * @author James
+ * Implementación de IUsuarioDAO usando Guava para validaciones seguras y listas
+ * inmutables.
  */
 public class UsuarioDAOImpl implements IUsuarioDAO {
 
     private final Connection conexion;
 
     public UsuarioDAOImpl(Connection conexion) {
-        this.conexion = conexion;
+        // Valida que la conexión no sea nula
+        this.conexion = Preconditions.checkNotNull(conexion, "La conexión no puede ser nula");
     }
 
     // ======================
@@ -27,6 +29,9 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     // ======================
     @Override
     public Usuario login(String username, String password) throws SQLException {
+        Preconditions.checkArgument(username != null && !username.isBlank(), "El nombre de usuario no puede estar vacío");
+        Preconditions.checkArgument(password != null && !password.isBlank(), "La contraseña no puede estar vacía");
+
         String sql = """
             SELECT u.id_usuario, e.nombres AS username, u.contrasena, u.cambiar_password, 
                    u.id_empleado, r.id_rol, r.nombre_rol
@@ -53,6 +58,9 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     // ======================
     @Override
     public boolean insertar(Usuario usuario) throws SQLException {
+        Preconditions.checkNotNull(usuario, "El usuario no puede ser nulo");
+        Preconditions.checkNotNull(usuario.getRol(), "El rol del usuario no puede ser nulo");
+
         String sql = """
             INSERT INTO usuario (contrasena, id_rol, id_empleado, cambiar_password)
             VALUES (?, ?, ?, ?)
@@ -71,6 +79,8 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     // ======================
     @Override
     public boolean actualizar(Usuario usuario) throws SQLException {
+        Preconditions.checkNotNull(usuario, "El usuario no puede ser nulo");
+
         String sql = """
             UPDATE usuario 
             SET contrasena = ?, id_rol = ?, id_empleado = ?, cambiar_password = ?
@@ -86,11 +96,33 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
         }
     }
 
+    @Override
+    public boolean eliminar(int idUsuario) throws SQLException {
+        // Validar argumento antes de ejecutar la consulta
+        Preconditions.checkArgument(idUsuario > 0, "El ID de usuario debe ser mayor que 0");
+
+        String sql = "UPDATE usuario SET activo = false WHERE id_usuario = ?";
+        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
+            ps.setInt(1, idUsuario);
+            int filasAfectadas = ps.executeUpdate();
+
+            // Validar que la operación realmente afectó un registro
+            Preconditions.checkState(filasAfectadas > 0, "No se encontró el usuario con el ID especificado");
+
+            return true;
+        } catch (SQLException e) {
+            throw new SQLException("Error al intentar eliminar el usuario: " + e.getMessage(), e);
+        }
+    }
+
     // ======================
     // CAMBIAR CONTRASEÑA
     // ======================
     @Override
     public boolean cambiarPassword(int idUsuario, String nuevaContrasena) throws SQLException {
+        Preconditions.checkArgument(idUsuario > 0, "El ID del usuario debe ser positivo");
+        Preconditions.checkArgument(nuevaContrasena != null && !nuevaContrasena.isBlank(), "La nueva contraseña no puede estar vacía");
+
         String sql = "UPDATE usuario SET contrasena = ?, cambiar_password = false WHERE id_usuario = ?";
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setString(1, nuevaContrasena);
@@ -100,22 +132,12 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     }
 
     // ======================
-    // ELIMINAR (DESACTIVAR)
-    // ======================
-    @Override
-    public boolean eliminar(int idUsuario) throws SQLException {
-        String sql = "UPDATE usuario SET activo = false WHERE id_usuario = ?";
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setInt(1, idUsuario);
-            return ps.executeUpdate() > 0;
-        }
-    }
-
-    // ======================
     // OBTENER POR ID
     // ======================
     @Override
     public Usuario obtenerPorId(int idUsuario) throws SQLException {
+        Preconditions.checkArgument(idUsuario > 0, "El ID del usuario debe ser positivo");
+
         String sql = """
             SELECT u.id_usuario, e.nombres AS username, u.contrasena, u.cambiar_password,
                    r.id_rol, r.nombre_rol, u.id_empleado, u.activo
@@ -124,15 +146,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
             JOIN empleado e ON u.id_empleado = e.id_empleado
             WHERE u.id_usuario = ?
         """;
+
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, idUsuario);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapResultSet(rs);
-                }
+                return rs.next() ? mapResultSet(rs) : null;
             }
         }
-        return null;
     }
 
     // ======================
@@ -155,7 +175,8 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
                 lista.add(mapResultSet(rs));
             }
         }
-        return lista;
+        // Retorna lista inmutable (no puede ser modificada accidentalmente)
+        return ImmutableList.copyOf(lista);
     }
 
     // ======================

@@ -6,3 +6,24 @@
 2025-10-16 19:17:15 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
 2025-10-16 19:17:16 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
 2025-10-16 19:17:16 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
+2025-10-16 20:15:14 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 20:15:14 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-16 20:20:13 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 20:20:13 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-16 20:23:57 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 20:23:57 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-16 20:26:30 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 20:26:31 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-16 20:26:31 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
+2025-10-16 20:26:31 INFO  dao.impl.InventarioDAOImpl - 📦 Se listaron 10 items de inventario.
+2025-10-16 20:26:51 INFO  dao.impl.InventarioDAOImpl - 🔄 Item 'Tela Denim Azul' actualizado correctamente.
+2025-10-16 20:26:52 INFO  dao.impl.InventarioDAOImpl - 📦 Se listaron 10 items de inventario.
+2025-10-16 20:30:24 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-16 20:30:24 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-16 20:30:24 INFO  dao.impl.ModuloDAOImpl - Se obtuvieron 6 módulos activos para el rol con ID 1
+2025-10-16 20:30:24 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-10-16 20:30:24 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-10-16 20:30:24 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-10-16 20:30:24 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-10-16 20:30:25 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
+2025-10-16 20:30:25 INFO  dao.impl.InventarioDAOImpl - 📦 Se listaron 10 items de inventario.
