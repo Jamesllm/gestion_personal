@@ -33,6 +33,7 @@ dao\impl\LoginService.class
 controller\ModuloController.class
 view\DAgregarEmpleado$1.class
 view\Login$1.class
+view\Dashboard$18.class
 view\Dashboard$7.class
 view\DEmpleado$2.class
 dao\impl\ModuloDAOImpl.class

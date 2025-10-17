@@ -13,9 +13,9 @@ public class Usuario {
     private int idUsuario;
     private String username;
     private String password;
-    private boolean cambiarPassword; // para forzar cambio en el primer ingreso
-    private Rol rol; // Asociación a la clase Rol
-    private int idEmpleado; // vínculo con empleado si corresponde
+    private boolean cambiarPassword; 
+    private Rol rol;
+    private int idEmpleado; 
 
     // Constructor vacío
     public Usuario() {

@@ -168,7 +168,7 @@ public class Dashboard extends javax.swing.JFrame {
         // Cargar empleados en tabla
         cargarEmpleadosEnTabla(empleadoController);
 
-        UsuarioController  usuarioDAO = new UsuarioController(conexionDB);
+        UsuarioController usuarioDAO = new UsuarioController(conexionDB);
         cargarUsuariosEnTabla(usuarioDAO);
 
         // === MOSTRAR ACTIVIDAD RECIENTE == 
@@ -527,6 +527,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnEliminarEmpleado = new javax.swing.JButton();
         btnEditarEmpleado = new javax.swing.JButton();
         btnAgregarEmpleado = new javax.swing.JButton();
+        btnExportarExcelEmpleados = new javax.swing.JButton();
         jPanel_Asistencia = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         tablaAsistencia = new javax.swing.JTable();
@@ -749,7 +750,7 @@ public class Dashboard extends javax.swing.JFrame {
         ));
         jScrollPane6.setViewportView(tablaEmpleados);
 
-        jPanel_Empleados.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 116, 910, 590));
+        jPanel_Empleados.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 116, 910, 550));
 
         lbl_atender_ahora3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lbl_atender_ahora3.setText("Gestion de empleados");
@@ -795,6 +796,16 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1.add(btnAgregarEmpleado);
 
         jPanel_Empleados.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 40, 420, 50));
+
+        btnExportarExcelEmpleados.setBackground(new java.awt.Color(0, 204, 51));
+        btnExportarExcelEmpleados.setForeground(new java.awt.Color(255, 255, 255));
+        btnExportarExcelEmpleados.setText("Exportar a excel");
+        btnExportarExcelEmpleados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportarExcelEmpleadosActionPerformed(evt);
+            }
+        });
+        jPanel_Empleados.add(btnExportarExcelEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 680, 130, 40));
 
         PanelTab.addTab("Empleados", jPanel_Empleados);
 
@@ -1561,6 +1572,23 @@ public class Dashboard extends javax.swing.JFrame {
         util.Utilidades.actualizarColoresBotones(btnUsuario, btnUsuario, btnInicio, btnEmpleados, btnAsistencia, btnReportes, btnInventario);
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
+    private void btnExportarExcelEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarExcelEmpleadosActionPerformed
+        EmpleadoController empleadoController = new EmpleadoController(conexionDB);
+        boolean exportado = empleadoController.exportarEmpleadosAExcel("reportes/empleados.xlsx");
+
+        if (exportado) {
+            JOptionPane.showMessageDialog(null,
+                    "✅ Exportación completada correctamente.\nArchivo: reportes/empleados.xlsx",
+                    "Exportar a Excel",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "❌ No se pudo exportar el archivo.\nVerifica los datos o permisos de carpeta.",
+                    "Error de Exportación",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExportarExcelEmpleadosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane PanelTab;
@@ -1576,6 +1604,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminarProducto;
     private javax.swing.JButton btnEliminarUsuario;
     private javax.swing.JButton btnEmpleados;
+    private javax.swing.JButton btnExportarExcelEmpleados;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnInventario;
