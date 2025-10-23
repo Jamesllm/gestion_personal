@@ -79,3 +79,25 @@
 2025-10-17 11:17:43 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
 2025-10-17 11:29:53 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
 2025-10-17 11:29:53 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-10-20 09:57:22 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-20 09:57:22 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-20 09:57:23 INFO  dao.impl.ModuloDAOImpl - Se obtuvieron 6 módulos activos para el rol con ID 1
+2025-10-20 09:57:23 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-10-20 09:57:23 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-10-20 09:57:23 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-10-20 09:57:23 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-10-20 09:57:23 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
+2025-10-20 09:57:23 INFO  dao.impl.InventarioDAOImpl - 📦 Se listaron 10 items de inventario.
+2025-10-20 21:14:31 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-20 21:14:31 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-20 21:14:32 INFO  dao.impl.ModuloDAOImpl - Se obtuvieron 6 módulos activos para el rol con ID 1
+2025-10-20 21:14:32 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-10-20 21:14:32 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-10-20 21:14:32 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-10-20 21:14:32 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-10-20 21:14:32 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
+2025-10-20 21:14:32 INFO  dao.impl.InventarioDAOImpl - 📦 Se listaron 10 items de inventario.
+2025-10-20 21:25:10 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-10-20 21:25:10 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario: Ronal Llapapasca Montes
+2025-10-20 21:29:55 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: admin
+2025-10-20 21:29:55 WARN  dao.impl.LoginService - ❌ No se encontró usuario con DNI: admin
