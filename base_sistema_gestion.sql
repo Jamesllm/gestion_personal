@@ -287,3 +287,555 @@ CREATE INDEX idx_inventario_stock ON inventario(stock_actual);
 -- FROM inventario
 -- WHERE stock_actual <= stock_minimo
 -- ORDER BY stock_actual;
+
+
+-- =====================================================
+-- PROCEDIMIENTOS ALMACENADOS
+-- =====================================================
+
+-- =====================================================
+-- MODULOS
+CREATE OR REPLACE FUNCTION sp_obtener_modulos_por_rol(p_id_rol INT)
+RETURNS TABLE(
+    id_modulo INT,
+    nombre_modulo VARCHAR,
+    activo BOOLEAN
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT m.id_modulo, m.nombre_modulo, rm.activo
+    FROM rol_modulo rm
+    JOIN modulo m ON rm.id_modulo = m.id_modulo
+    WHERE rm.id_rol = p_id_rol AND rm.activo = TRUE
+    ORDER BY m.id_modulo;
+END;
+$$ LANGUAGE plpgsql;
+
+-- =====================================================
+-- LOGIN SERVICE
+CREATE OR REPLACE FUNCTION sp_autenticar_usuario(p_dni VARCHAR)
+RETURNS TABLE(
+    id_usuario INT,
+    nombre_completo VARCHAR,
+    contrasena VARCHAR,
+    id_rol INT,
+    nombre_rol VARCHAR,
+    id_empleado INT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        u.id_usuario,
+        CAST(e.nombres || ' ' || e.apellidos AS VARCHAR) AS nombre_completo,
+        u.contrasena,
+        u.id_rol,
+        r.nombre_rol,
+        u.id_empleado
+    FROM usuario u
+    JOIN empleado e ON u.id_empleado = e.id_empleado
+    JOIN rol r ON u.id_rol = r.id_rol
+    WHERE e.dni = p_dni
+      AND u.activo = TRUE;
+END;
+$$ LANGUAGE plpgsql;
+
+-- =====================================================
+--- USUARIOS
+-- LOGIN USUARIO
+CREATE OR REPLACE FUNCTION sp_login_usuario(p_username VARCHAR, p_password VARCHAR)
+RETURNS TABLE (
+    id_usuario INT,
+    username VARCHAR,
+    contrasena VARCHAR,
+    cambiar_password BOOLEAN,
+    id_empleado INT,
+    id_rol INT,
+    nombre_rol VARCHAR
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        u.id_usuario,
+        e.nombres AS username,
+        u.contrasena,
+        u.cambiar_password,
+        u.id_empleado,
+        r.id_rol,
+        r.nombre_rol
+    FROM usuario u
+    JOIN rol r ON u.id_rol = r.id_rol
+    JOIN empleado e ON u.id_empleado = e.id_empleado
+    WHERE e.nombres = p_username 
+      AND u.contrasena = p_password
+      AND u.activo = TRUE;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- INSERTAR USUARIO
+CREATE OR REPLACE FUNCTION sp_insertar_usuario(
+    p_contrasena VARCHAR,
+    p_id_rol INT,
+    p_id_empleado INT,
+    p_cambiar_password BOOLEAN
+)
+RETURNS BOOLEAN AS $$
+BEGIN
+    INSERT INTO usuario (contrasena, id_rol, id_empleado, cambiar_password)
+    VALUES (p_contrasena, p_id_rol, p_id_empleado, p_cambiar_password);
+    RETURN TRUE;
+EXCEPTION WHEN OTHERS THEN
+    RETURN FALSE;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- ACTUALIZAR USUARIO
+CREATE OR REPLACE FUNCTION sp_actualizar_usuario(
+    p_id_usuario INT,
+    p_contrasena VARCHAR,
+    p_id_rol INT,
+    p_id_empleado INT,
+    p_cambiar_password BOOLEAN
+)
+RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE usuario
+    SET contrasena = p_contrasena,
+        id_rol = p_id_rol,
+        id_empleado = p_id_empleado,
+        cambiar_password = p_cambiar_password
+    WHERE id_usuario = p_id_usuario;
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- ELIMINAR USUARIO (desactivar)
+CREATE OR REPLACE FUNCTION sp_eliminar_usuario(p_id_usuario INT)
+RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE usuario SET activo = FALSE WHERE id_usuario = p_id_usuario;
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- CAMBIAR CONTRASEÑA
+CREATE OR REPLACE FUNCTION sp_cambiar_password(p_id_usuario INT, p_nueva_contrasena VARCHAR)
+RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE usuario SET contrasena = p_nueva_contrasena, cambiar_password = FALSE
+    WHERE id_usuario = p_id_usuario;
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- LISTAR TODOS
+CREATE OR REPLACE FUNCTION sp_listar_usuarios()
+RETURNS TABLE (
+    id_usuario INT,
+    username VARCHAR,
+    contrasena VARCHAR,
+    cambiar_password BOOLEAN,
+    id_rol INT,
+    nombre_rol VARCHAR,
+    id_empleado INT,
+    activo BOOLEAN
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT u.id_usuario, e.nombres AS username, u.contrasena, u.cambiar_password,
+           r.id_rol, r.nombre_rol, u.id_empleado, u.activo
+    FROM usuario u
+    JOIN rol r ON u.id_rol = r.id_rol
+    JOIN empleado e ON u.id_empleado = e.id_empleado
+    ORDER BY u.id_usuario DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_obtener_usuario_por_id(p_id_usuario INTEGER)
+RETURNS TABLE (
+    id_usuario INTEGER,
+    username VARCHAR,
+    contrasena VARCHAR,
+    cambiar_password BOOLEAN,
+    id_rol INTEGER,
+    nombre_rol VARCHAR,
+    id_empleado INTEGER,
+    activo BOOLEAN
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        u.id_usuario,
+        e.nombres AS username,
+        u.contrasena,
+        u.cambiar_password,
+        r.id_rol,
+        r.nombre_rol,
+        u.id_empleado,
+        u.activo
+    FROM usuario u
+    JOIN rol r ON u.id_rol = r.id_rol
+    JOIN empleado e ON u.id_empleado = e.id_empleado
+    WHERE u.id_usuario = p_id_usuario;
+END;
+$$ LANGUAGE plpgsql;
+
+-- =====================================================
+--- DEPARTAMENTO
+
+-- Crear Departamento
+CREATE OR REPLACE FUNCTION sp_crear_departamento(
+    p_nombre_departamento VARCHAR,
+    p_estado BOOLEAN
+)
+RETURNS VOID
+AS $$
+BEGIN
+    INSERT INTO departamento (nombre_departamento, estado)
+    VALUES (p_nombre_departamento, p_estado);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Obtener todos los Departamentos
+CREATE OR REPLACE FUNCTION sp_obtener_todos_departamentos()
+RETURNS TABLE (
+    id_departamento INTEGER,
+    nombre_departamento VARCHAR,
+    estado BOOLEAN
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT id_departamento, nombre_departamento, estado
+    FROM departamento
+    ORDER BY id_departamento;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Obtener Departamento por ID
+CREATE OR REPLACE FUNCTION sp_obtener_departamento_por_id(p_id_departamento INTEGER)
+RETURNS TABLE (
+    id_departamento INTEGER,
+    nombre_departamento VARCHAR,
+    estado BOOLEAN
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT id_departamento, nombre_departamento, estado
+    FROM departamento
+    WHERE id_departamento = p_id_departamento;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Actualizar Departamento
+CREATE OR REPLACE FUNCTION sp_actualizar_departamento(
+    p_id_departamento INTEGER,
+    p_nombre_departamento VARCHAR,
+    p_estado BOOLEAN
+)
+RETURNS VOID
+AS $$
+BEGIN
+    UPDATE departamento
+    SET nombre_departamento = p_nombre_departamento,
+        estado = p_estado
+    WHERE id_departamento = p_id_departamento;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Eliminar Departamento
+CREATE OR REPLACE FUNCTION sp_eliminar_departamento(p_id_departamento INTEGER)
+RETURNS VOID
+AS $$
+BEGIN
+    DELETE FROM departamento WHERE id_departamento = p_id_departamento;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Distribución de Empleados por Departamento
+CREATE OR REPLACE FUNCTION sp_distribucion_departamentos()
+RETURNS TABLE (
+    departamento VARCHAR,
+    cantidad_empleados INTEGER
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT d.nombre_departamento AS departamento, COUNT(e.id_empleado) AS cantidad_empleados
+    FROM empleado e
+    INNER JOIN departamento d ON e.id_departamento = d.id_departamento
+    GROUP BY d.nombre_departamento
+    ORDER BY d.nombre_departamento;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_insertar_inventario(
+    p_nombre_item VARCHAR,
+    p_stock_actual INTEGER,
+    p_unidad VARCHAR,
+    p_ubicacion VARCHAR,
+    p_stock_minimo INTEGER,
+    p_precio_unitario DECIMAL
+) RETURNS BOOLEAN AS $$
+BEGIN
+    INSERT INTO inventario(nombre_item, stock_actual, unidad, ubicacion, stock_minimo, precio_unitario)
+    VALUES (p_nombre_item, p_stock_actual, p_unidad, p_ubicacion, p_stock_minimo, p_precio_unitario);
+
+    RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_actualizar_inventario(
+    p_id_item INTEGER,
+    p_nombre_item VARCHAR,
+    p_stock_actual INTEGER,
+    p_unidad VARCHAR,
+    p_ubicacion VARCHAR,
+    p_stock_minimo INTEGER,
+    p_precio_unitario DECIMAL
+) RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE inventario 
+    SET nombre_item = p_nombre_item,
+        stock_actual = p_stock_actual,
+        unidad = p_unidad,
+        ubicacion = p_ubicacion,
+        stock_minimo = p_stock_minimo,
+        precio_unitario = p_precio_unitario,
+        fecha_ultimo_movimiento = NOW()
+    WHERE id_item = p_id_item;
+
+    RETURN FOUND; -- TRUE si actualizó filas
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_eliminar_inventario(
+    p_id_item INTEGER
+) RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE inventario 
+    SET estado = FALSE
+    WHERE id_item = p_id_item;
+
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_buscar_inventario(p_id_item INTEGER)
+RETURNS SETOF inventario AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM inventario WHERE id_item = p_id_item;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_listar_inventario()
+RETURNS SETOF inventario AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM inventario ORDER BY id_item DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_crear_empleado(
+    p_nombres VARCHAR,
+    p_apellidos VARCHAR,
+    p_dni VARCHAR,
+    p_fecha_contratacion DATE,
+    p_correo VARCHAR,
+    p_telefono VARCHAR,
+    p_id_departamento INT
+) RETURNS BOOLEAN AS $$
+BEGIN
+    INSERT INTO empleado(nombres, apellidos, dni, fecha_contratacion, correo_electronico, telefono, id_departamento)
+    VALUES (p_nombres, p_apellidos, p_dni, p_fecha_contratacion, p_correo, p_telefono, p_id_departamento);
+
+    RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_listar_empleados()
+RETURNS SETOF empleado AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM empleado ORDER BY id_empleado DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_obtener_empleado_por_id(p_id INT)
+RETURNS SETOF empleado AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM empleado WHERE id_empleado = p_id;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_actualizar_empleado(
+    p_id INT,
+    p_nombres VARCHAR,
+    p_apellidos VARCHAR,
+    p_dni VARCHAR,
+    p_fecha DATE,
+    p_correo VARCHAR,
+    p_telefono VARCHAR,
+    p_id_departamento INT,
+    p_estado BOOLEAN
+) RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE empleado
+    SET nombres = p_nombres,
+        apellidos = p_apellidos,
+        dni = p_dni,
+        fecha_contratacion = p_fecha,
+        correo_electronico = p_correo,
+        telefono = p_telefono,
+        id_departamento = p_id_departamento,
+        estado = p_estado
+    WHERE id_empleado = p_id;
+
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_eliminar_empleado(p_id INT)
+RETURNS BOOLEAN AS $$
+BEGIN
+    UPDATE empleado SET estado = FALSE WHERE id_empleado = p_id;
+    RETURN FOUND;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_total_empleados()
+RETURNS INT AS $$
+DECLARE total INT;
+BEGIN
+    SELECT COUNT(*) INTO total FROM empleado;
+    RETURN total;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_total_presentes_hoy()
+RETURNS INT AS $$
+DECLARE total INT;
+BEGIN
+    SELECT COUNT(*)
+    INTO total
+    FROM asistencia
+    WHERE fecha = CURRENT_DATE AND estado = 'PRESENTE';
+
+    RETURN total;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_horas_totales_hoy()
+RETURNS NUMERIC AS $$
+DECLARE horas NUMERIC;
+BEGIN
+    SELECT SUM(EXTRACT(EPOCH FROM (hora_salida - hora_entrada)) / 3600)
+    INTO horas
+    FROM asistencia
+    WHERE fecha = CURRENT_DATE
+    AND hora_entrada IS NOT NULL
+    AND hora_salida IS NOT NULL;
+
+    RETURN COALESCE(horas, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_promedio_horas_hoy()
+RETURNS NUMERIC AS $$
+DECLARE promedio NUMERIC;
+BEGIN
+    SELECT AVG(EXTRACT(EPOCH FROM (hora_salida - hora_entrada)) / 3600)
+    INTO promedio
+    FROM asistencia
+    WHERE fecha = CURRENT_DATE
+      AND hora_entrada IS NOT NULL
+      AND hora_salida IS NOT NULL;
+
+    RETURN COALESCE(promedio, 0);
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION sp_total_ausentes_hoy()
+RETURNS INT AS $$
+DECLARE total INT;
+BEGIN
+    SELECT COUNT(*) INTO total
+    FROM empleado
+    WHERE id_empleado NOT IN (
+        SELECT id_empleado FROM asistencia WHERE fecha = CURRENT_DATE
+    );
+
+    RETURN total;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_actividad_reciente(p_limite INT)
+RETURNS TABLE (
+    id_asistencia INT,
+    empleado TEXT,
+    fecha DATE,
+    hora_entrada TIME,
+    hora_salida TIME,
+    estado TEXT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        a.id_asistencia,
+        e.nombres || ' ' || e.apellidos AS empleado,
+        a.fecha,
+        a.hora_entrada,
+        a.hora_salida,
+        CASE 
+            WHEN a.hora_salida IS NULL THEN 'En oficina'
+            ELSE 'Finalizado'
+        END
+    FROM asistencia a
+    JOIN empleado e ON e.id_empleado = a.id_empleado
+    ORDER BY a.fecha DESC, a.hora_entrada DESC
+    LIMIT p_limite;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_distribucion_departamento()
+RETURNS TABLE (
+    departamento TEXT,
+    cantidad INT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT d.nombre_departamento, COUNT(e.id_empleado)
+    FROM departamento d
+    LEFT JOIN empleado e ON d.id_departamento = e.id_departamento
+    GROUP BY d.nombre_departamento
+    ORDER BY COUNT(e.id_empleado) DESC;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_asistencia_mensual()
+RETURNS TABLE (
+    mes TEXT,
+    cantidad INT
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT TO_CHAR(fecha, 'MM'), COUNT(*)
+    FROM asistencia
+    GROUP BY TO_CHAR(fecha, 'MM')
+    ORDER BY 1;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION sp_obtener_id_por_dni(p_dni VARCHAR)
+RETURNS INT AS $$
+DECLARE resultado INT;
+BEGIN
+    SELECT id_empleado INTO resultado FROM empleado WHERE dni = p_dni;
+    RETURN COALESCE(resultado, -1);
+END;
+$$ LANGUAGE plpgsql;

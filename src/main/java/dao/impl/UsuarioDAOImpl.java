@@ -32,19 +32,12 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
         Preconditions.checkArgument(username != null && !username.isBlank(), "El nombre de usuario no puede estar vacío");
         Preconditions.checkArgument(password != null && !password.isBlank(), "La contraseña no puede estar vacía");
 
-        String sql = """
-            SELECT u.id_usuario, e.nombres AS username, u.contrasena, u.cambiar_password, 
-                   u.id_empleado, r.id_rol, r.nombre_rol
-            FROM usuario u
-            JOIN rol r ON u.id_rol = r.id_rol
-            JOIN empleado e ON u.id_empleado = e.id_empleado
-            WHERE e.nombres = ? AND u.contrasena = ? AND u.activo = TRUE
-        """;
+        String sql = "{ CALL sp_login_usuario(?, ?) }";
 
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, username);
-            ps.setString(2, password);
-            try (ResultSet rs = ps.executeQuery()) {
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.setString(1, username);
+            cs.setString(2, password);
+            try (ResultSet rs = cs.executeQuery()) {
                 if (rs.next()) {
                     return mapResultSet(rs);
                 }
@@ -59,18 +52,15 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     @Override
     public boolean insertar(Usuario usuario) throws SQLException {
         Preconditions.checkNotNull(usuario, "El usuario no puede ser nulo");
-        Preconditions.checkNotNull(usuario.getRol(), "El rol del usuario no puede ser nulo");
-
-        String sql = """
-            INSERT INTO usuario (contrasena, id_rol, id_empleado, cambiar_password)
-            VALUES (?, ?, ?, ?)
-        """;
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, usuario.getPassword());
-            ps.setInt(2, usuario.getRol().getIdRol());
-            ps.setInt(3, usuario.getIdEmpleado());
-            ps.setBoolean(4, usuario.isCambiarPassword());
-            return ps.executeUpdate() > 0;
+        String sql = "{ ? = CALL sp_insertar_usuario(?, ?, ?, ?) }";
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.registerOutParameter(1, Types.BOOLEAN);
+            cs.setString(2, usuario.getPassword());
+            cs.setInt(3, usuario.getRol().getIdRol());
+            cs.setInt(4, usuario.getIdEmpleado());
+            cs.setBoolean(5, usuario.isCambiarPassword());
+            cs.execute();
+            return cs.getBoolean(1);
         }
     }
 
@@ -79,39 +69,27 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     // ======================
     @Override
     public boolean actualizar(Usuario usuario) throws SQLException {
-        Preconditions.checkNotNull(usuario, "El usuario no puede ser nulo");
-
-        String sql = """
-            UPDATE usuario 
-            SET contrasena = ?, id_rol = ?, id_empleado = ?, cambiar_password = ?
-            WHERE id_usuario = ?
-        """;
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, usuario.getPassword());
-            ps.setInt(2, usuario.getRol().getIdRol());
-            ps.setInt(3, usuario.getIdEmpleado());
-            ps.setBoolean(4, usuario.isCambiarPassword());
-            ps.setInt(5, usuario.getIdUsuario());
-            return ps.executeUpdate() > 0;
+        String sql = "{ ? = CALL sp_actualizar_usuario(?, ?, ?, ?, ?) }";
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.registerOutParameter(1, Types.BOOLEAN);
+            cs.setInt(2, usuario.getIdUsuario());
+            cs.setString(3, usuario.getPassword());
+            cs.setInt(4, usuario.getRol().getIdRol());
+            cs.setInt(5, usuario.getIdEmpleado());
+            cs.setBoolean(6, usuario.isCambiarPassword());
+            cs.execute();
+            return cs.getBoolean(1);
         }
     }
 
     @Override
     public boolean eliminar(int idUsuario) throws SQLException {
-        // Validar argumento antes de ejecutar la consulta
-        Preconditions.checkArgument(idUsuario > 0, "El ID de usuario debe ser mayor que 0");
-
-        String sql = "UPDATE usuario SET activo = false WHERE id_usuario = ?";
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setInt(1, idUsuario);
-            int filasAfectadas = ps.executeUpdate();
-
-            // Validar que la operación realmente afectó un registro
-            Preconditions.checkState(filasAfectadas > 0, "No se encontró el usuario con el ID especificado");
-
-            return true;
-        } catch (SQLException e) {
-            throw new SQLException("Error al intentar eliminar el usuario: " + e.getMessage(), e);
+        String sql = "{ ? = CALL sp_eliminar_usuario(?) }";
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.registerOutParameter(1, Types.BOOLEAN);
+            cs.setInt(2, idUsuario);
+            cs.execute();
+            return cs.getBoolean(1);
         }
     }
 
@@ -120,14 +98,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     // ======================
     @Override
     public boolean cambiarPassword(int idUsuario, String nuevaContrasena) throws SQLException {
-        Preconditions.checkArgument(idUsuario > 0, "El ID del usuario debe ser positivo");
-        Preconditions.checkArgument(nuevaContrasena != null && !nuevaContrasena.isBlank(), "La nueva contraseña no puede estar vacía");
-
-        String sql = "UPDATE usuario SET contrasena = ?, cambiar_password = false WHERE id_usuario = ?";
-        try (PreparedStatement ps = conexion.prepareStatement(sql)) {
-            ps.setString(1, nuevaContrasena);
-            ps.setInt(2, idUsuario);
-            return ps.executeUpdate() > 0;
+        String sql = "{ ? = CALL sp_cambiar_password(?, ?) }";
+        try (CallableStatement cs = conexion.prepareCall(sql)) {
+            cs.registerOutParameter(1, Types.BOOLEAN);
+            cs.setInt(2, idUsuario);
+            cs.setString(3, nuevaContrasena);
+            cs.execute();
+            return cs.getBoolean(1);
         }
     }
 
@@ -138,14 +115,7 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     public Usuario obtenerPorId(int idUsuario) throws SQLException {
         Preconditions.checkArgument(idUsuario > 0, "El ID del usuario debe ser positivo");
 
-        String sql = """
-            SELECT u.id_usuario, e.nombres AS username, u.contrasena, u.cambiar_password,
-                   r.id_rol, r.nombre_rol, u.id_empleado, u.activo
-            FROM usuario u
-            JOIN rol r ON u.id_rol = r.id_rol
-            JOIN empleado e ON u.id_empleado = e.id_empleado
-            WHERE u.id_usuario = ?
-        """;
+        String sql = "{CALL sp_obtener_usuario_por_id(?)}";
 
         try (PreparedStatement ps = conexion.prepareStatement(sql)) {
             ps.setInt(1, idUsuario);
@@ -161,21 +131,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO {
     @Override
     public List<Usuario> listarTodos() throws SQLException {
         List<Usuario> lista = new ArrayList<>();
-        String sql = """
-            SELECT u.id_usuario, e.nombres AS username, u.contrasena, u.cambiar_password,
-                   r.id_rol, r.nombre_rol, u.id_empleado, u.activo
-            FROM usuario u
-            JOIN rol r ON u.id_rol = r.id_rol
-            JOIN empleado e ON u.id_empleado = e.id_empleado
-            ORDER BY u.id_usuario DESC
-        """;
+        String sql = "{ CALL sp_listar_usuarios() }";
 
-        try (Statement st = conexion.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+        try (CallableStatement cs = conexion.prepareCall(sql); ResultSet rs = cs.executeQuery()) {
             while (rs.next()) {
                 lista.add(mapResultSet(rs));
             }
         }
-        // Retorna lista inmutable (no puede ser modificada accidentalmente)
         return ImmutableList.copyOf(lista);
     }
 

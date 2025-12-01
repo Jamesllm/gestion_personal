@@ -41,6 +41,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
@@ -67,6 +68,10 @@ public class Dashboard extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         this.conexionDB = conexionDB;
         this.usuarioAutenticado = usuarioAutenticado;
+
+        setIconImage(
+                new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage()
+        );
 
         // 
         contenedorActividad = new JPanel();

@@ -58,11 +58,21 @@ public class Utilidades {
 
     public static void setImageLabel(JLabel labelName, String root, int width, int height) {
         try {
-            ImageIcon image = new ImageIcon(root);
-            int finalWidth = width > 0 ? width : 210; // Usar el ancho proporcionado o un valor predeterminado
-            int finalHeight = height > 0 ? height : 320; // Usar el alto proporcionado o un valor predeterminado
+            java.net.URL imageURL = Utilidades.class.getResource(root);
 
-            Icon icon = new ImageIcon(image.getImage().getScaledInstance(finalWidth, finalHeight, Image.SCALE_SMOOTH));
+            if (imageURL == null) {
+                System.err.println("No se encontró la imagen: " + root);
+                return;
+            }
+
+            ImageIcon image = new ImageIcon(imageURL);
+
+            int finalWidth = width > 0 ? width : 210;
+            int finalHeight = height > 0 ? height : 320;
+
+            Icon icon = new ImageIcon(
+                    image.getImage().getScaledInstance(finalWidth, finalHeight, Image.SCALE_SMOOTH)
+            );
             labelName.setIcon(icon);
         } catch (Exception e) {
             System.err.println("Error al cargar la imagen: " + e.getMessage());

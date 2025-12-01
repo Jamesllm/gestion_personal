@@ -19,8 +19,8 @@ public class Conexion {
 
 // Local
     private final String URL = "jdbc:postgresql://localhost:5432/sistema_drago";
-    private final String USUARIO = "gestion";
-    private final String CLAVE = "123456";
+    private final String USUARIO = "postgres";
+    private final String CLAVE = "admin";
 
     private Conexion() {
         try {
@@ -59,7 +59,7 @@ public class Conexion {
                 System.err.println("Error al cerrar la conexión: " + e.getMessage());
                 e.printStackTrace();
             } finally {
-                instancia = null; 
+                instancia = null;
             }
         }
     }

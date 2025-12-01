@@ -6,6 +6,7 @@ package view;
  */
 import model.Usuario;
 import dao.impl.Conexion;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -20,7 +21,11 @@ public class Login extends javax.swing.JFrame {
     public Login(Conexion conexionDB) {
         initComponents();
         this.setLocationRelativeTo(this);
-        util.Utilidades.setImageLabel(lblLogo, "src/main/java/imagenes/login.jpg");
+        util.Utilidades.setImageLabel(lblLogo, "/imagenes/login.jpg");
+        setIconImage(
+                new ImageIcon(getClass().getResource("/imagenes/icono.png")).getImage()
+        );
+
         this.conexionDB = conexionDB;
 
         txtCorreo.setText("12345678");

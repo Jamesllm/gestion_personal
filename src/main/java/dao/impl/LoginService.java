@@ -1,5 +1,6 @@
 package dao.impl;
 
+import java.sql.CallableStatement;
 import model.Rol;
 import model.Usuario;
 import org.mindrot.jbcrypt.BCrypt;
@@ -7,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class LoginService {
 
@@ -26,61 +27,56 @@ public class LoginService {
     public static Usuario autenticarUsuario(Connection conn, String dniUsuario, String contrasenaIngresada) throws Exception {
         logger.info("Intentando autenticar usuario con DNI: {}", dniUsuario);
 
-        String sql = """
-            SELECT
-                u.id_usuario,
-                e.nombres || ' ' || e.apellidos AS nombre_completo,
-                u.contrasena,
-                u.id_rol,
-                r.nombre_rol,
-                u.id_empleado
-            FROM Usuario u
-            JOIN Empleado e ON u.id_empleado = e.id_empleado
-            JOIN Rol r ON u.id_rol = r.id_rol
-            WHERE e.dni = ?
-        """;
+        String sql = "{ CALL sp_autenticar_usuario(?) }";
 
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, dniUsuario);
-            ResultSet rs = ps.executeQuery();
+        try (CallableStatement cs = conn.prepareCall(sql)) {
+            cs.setString(1, dniUsuario);
 
-            Usuario usuario = null;
-            if (rs.next()) {
-                String contrasenaHashBd = rs.getString("contrasena");
-                if (BCrypt.checkpw(contrasenaIngresada, contrasenaHashBd)) {
-                    Rol rol = new Rol(
-                            rs.getInt("id_rol"),
-                            rs.getString("nombre_rol")
-                    );
+            try (ResultSet rs = cs.executeQuery()) {
+                Usuario usuario = null;
 
-                    usuario = new Usuario(
-                            rs.getInt("id_usuario"),
-                            rs.getString("nombre_completo"),
-                            rs.getString("contrasena"),
-                            rol,
-                            rs.getInt("id_empleado")
-                    );
+                if (rs.next()) {
+                    String contrasenaHashBd = rs.getString("contrasena");
 
-                    logger.info("✅ Autenticación exitosa para usuario: {}", usuario.getUsername());
+                    if (BCrypt.checkpw(contrasenaIngresada, contrasenaHashBd)) {
+                        Rol rol = new Rol(
+                                rs.getInt("id_rol"),
+                                rs.getString("nombre_rol")
+                        );
+
+                        usuario = new Usuario(
+                                rs.getInt("id_usuario"),
+                                rs.getString("nombre_completo"),
+                                rs.getString("contrasena"),
+                                rol,
+                                rs.getInt("id_empleado")
+                        );
+
+                        logger.info("✅ Autenticación exitosa para usuario con DNI: {}", dniUsuario);
+                    } else {
+                        logger.warn("❌ Contraseña incorrecta para usuario con DNI: {}", dniUsuario);
+                    }
                 } else {
-                    logger.warn("❌ Contraseña incorrecta para usuario con DNI: {}", dniUsuario);
+                    logger.warn("⚠️ No se encontró usuario activo con DNI: {}", dniUsuario);
                 }
-            } else {
-                logger.warn("❌ No se encontró usuario con DNI: {}", dniUsuario);
+
+                return usuario;
             }
 
-            return usuario;
-
+        } catch (SQLException e) {
+            logger.error("❌ Error SQL al autenticar usuario con DNI {}: {}", dniUsuario, e.getMessage());
+            throw e;
         } catch (Exception e) {
-            logger.error("❌ Error al autenticar usuario con DNI: {}", dniUsuario, e);
+            logger.error("⚠️ Error inesperado al autenticar usuario con DNI {}: {}", dniUsuario, e.getMessage());
             throw e;
         }
     }
 
     /**
      * Genera el hash de una contraseña.
+     *
      * @param contrasenaPlana
-     * @return 
+     * @return
      */
     public static String hashearContrasena(String contrasenaPlana) {
         logger.debug("Hasheando contraseña para nuevo usuario...");

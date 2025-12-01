@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
+import java.util.Objects;
 
-/**
- *
- * @author James
- */
 public class Usuario {
 
     private int idUsuario;
@@ -17,11 +10,9 @@ public class Usuario {
     private Rol rol;
     private int idEmpleado; 
 
-    // Constructor vacío
-    public Usuario() {
-    }
+    // Constructores
+    public Usuario() {}
 
-    // Constructor con parámetros
     public Usuario(int idUsuario, String username, String password, Rol rol, int idEmpleado) {
         this.idUsuario = idUsuario;
         this.username = username;
@@ -88,12 +79,27 @@ public class Usuario {
         this.idEmpleado = idEmpleado;
     }
 
+    // 👇 Implementación correcta de equals() y hashCode()
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Usuario)) return false;
+        Usuario usuario = (Usuario) o;
+        return idUsuario == usuario.idUsuario &&
+               Objects.equals(username, usuario.username);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idUsuario, username);
+    }
+
     @Override
     public String toString() {
-        return "Usuario{"
-                + "idUsuario=" + idUsuario
-                + ", username='" + username + '\''
-                + ", rol=" + (rol != null ? rol.getNombreRol() : "sin rol")
-                + '}';
+        return "Usuario{" +
+                "idUsuario=" + idUsuario +
+                ", username='" + username + '\'' +
+                ", rol=" + (rol != null ? rol.getNombreRol() : "sin rol") +
+                '}';
     }
 }
