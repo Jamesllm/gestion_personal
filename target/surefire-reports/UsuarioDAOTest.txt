@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: UsuarioDAOTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.367 s -- in UsuarioDAOTest
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.913 s -- in UsuarioDAOTest

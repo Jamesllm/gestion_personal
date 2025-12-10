@@ -853,3 +853,238 @@ org.postgresql.util.PSQLException: ERROR: la referencia a la columna «id_depart
 2025-11-28 11:21:50 WARN  dao.impl.LoginService - ⚠️ No se encontró usuario activo con DNI: 00000000
 2025-11-28 11:21:50 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
 2025-11-28 11:21:50 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
+2025-12-05 08:50:59 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:50:59 ERROR dao.impl.LoginService - ⚠️ Error inesperado al autenticar usuario con DNI 12345678: Cannot invoke "java.sql.Connection.prepareCall(String)" because "conn" is null
+2025-12-05 08:50:59 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:50:59 ERROR dao.impl.LoginService - ⚠️ Error inesperado al autenticar usuario con DNI 12345678: Cannot invoke "java.sql.Connection.prepareCall(String)" because "conn" is null
+2025-12-05 08:50:59 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 87654321
+2025-12-05 08:50:59 ERROR dao.impl.LoginService - ⚠️ Error inesperado al autenticar usuario con DNI 87654321: Cannot invoke "java.sql.Connection.prepareCall(String)" because "conn" is null
+2025-12-05 08:51:00 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 00000000
+2025-12-05 08:51:00 ERROR dao.impl.LoginService - ⚠️ Error inesperado al autenticar usuario con DNI 00000000: Cannot invoke "java.sql.Connection.prepareCall(String)" because "conn" is null
+2025-12-05 08:51:00 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:51:00 ERROR dao.impl.LoginService - ⚠️ Error inesperado al autenticar usuario con DNI 12345678: Cannot invoke "java.sql.Connection.prepareCall(String)" because "conn" is null
+2025-12-05 08:53:46 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:53:47 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-05 08:53:47 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:53:47 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-05 08:53:47 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 87654321
+2025-12-05 08:53:47 WARN  dao.impl.LoginService - ⚠️ No se encontró usuario activo con DNI: 87654321
+2025-12-05 08:53:47 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 00000000
+2025-12-05 08:53:47 WARN  dao.impl.LoginService - ⚠️ No se encontró usuario activo con DNI: 00000000
+2025-12-05 08:53:47 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:53:47 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
+2025-12-05 08:58:18 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:58:18 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-05 08:58:18 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:58:18 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-05 08:58:18 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 87654321
+2025-12-05 08:58:18 WARN  dao.impl.LoginService - ⚠️ No se encontró usuario activo con DNI: 87654321
+2025-12-05 08:58:18 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 00000000
+2025-12-05 08:58:18 WARN  dao.impl.LoginService - ⚠️ No se encontró usuario activo con DNI: 00000000
+2025-12-05 08:58:18 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-05 08:58:18 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678
+2025-12-07 10:25:24 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-07 10:25:24 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-07 10:25:25 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 5 módulos activos para el rol con ID 1
+2025-12-07 10:25:25 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-07 10:25:25 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-07 10:25:25 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-07 10:25:25 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-07 10:25:25 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 15 registros de asistencia
+2025-12-07 10:42:29 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-07 10:42:30 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-07 10:42:30 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 5 módulos activos para el rol con ID 1
+2025-12-07 10:42:30 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-07 10:42:30 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-07 10:42:30 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-07 10:42:30 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-07 10:42:30 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 15 registros de asistencia
+2025-12-08 13:53:16 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-08 13:53:16 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-08 13:53:17 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 5 módulos activos para el rol con ID 1
+2025-12-08 13:53:17 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-08 13:53:17 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 13:53:17 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 13:53:17 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-08 13:53:17 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 15 registros de asistencia
+2025-12-08 13:55:14 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-08 13:55:14 INFO  dao.impl.EmpleadoDAOImpl - Empleado encontrado con ID: 4
+2025-12-08 13:55:15 ERROR dao.impl.DepartamentoDAOImpl - Error al obtener la lista de departamentos: The column name estado was not found in this ResultSet.
+org.postgresql.util.PSQLException: The column name estado was not found in this ResultSet.
+	at org.postgresql.jdbc.PgResultSet.findColumn(PgResultSet.java:3085)
+	at org.postgresql.jdbc.PgResultSet.getBoolean(PgResultSet.java:2927)
+	at dao.impl.DepartamentoDAOImpl.obtenerTodosDepartamentos(DepartamentoDAOImpl.java:48)
+	at controller.DepartamentoController.obtenerDepartamentos(DepartamentoController.java:30)
+	at view.DAgregarEmpleado.cargarDepartamentos(DAgregarEmpleado.java:66)
+	at view.DAgregarEmpleado.<init>(DAgregarEmpleado.java:37)
+	at view.DAgregarEmpleado.<init>(DAgregarEmpleado.java:41)
+	at view.Dashboard.btnEditarEmpleadoActionPerformed(Dashboard.java:1498)
+	at view.Dashboard$2.actionPerformed(Dashboard.java:788)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2314)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:407)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6576)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3404)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6341)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2260)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4958)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2318)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4790)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4917)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4560)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4501)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2304)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2671)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4790)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:725)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:702)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2025-12-08 13:55:17 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-08 13:55:17 INFO  dao.impl.EmpleadoDAOImpl - Empleado encontrado con ID: 4
+2025-12-08 13:55:17 ERROR dao.impl.DepartamentoDAOImpl - Error al obtener la lista de departamentos: The column name estado was not found in this ResultSet.
+org.postgresql.util.PSQLException: The column name estado was not found in this ResultSet.
+	at org.postgresql.jdbc.PgResultSet.findColumn(PgResultSet.java:3085)
+	at org.postgresql.jdbc.PgResultSet.getBoolean(PgResultSet.java:2927)
+	at dao.impl.DepartamentoDAOImpl.obtenerTodosDepartamentos(DepartamentoDAOImpl.java:48)
+	at controller.DepartamentoController.obtenerDepartamentos(DepartamentoController.java:30)
+	at view.DAgregarEmpleado.cargarDepartamentos(DAgregarEmpleado.java:66)
+	at view.DAgregarEmpleado.<init>(DAgregarEmpleado.java:37)
+	at view.DAgregarEmpleado.<init>(DAgregarEmpleado.java:41)
+	at view.Dashboard.btnEditarEmpleadoActionPerformed(Dashboard.java:1498)
+	at view.Dashboard$2.actionPerformed(Dashboard.java:788)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2314)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:407)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6576)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3404)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6341)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2260)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4958)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2318)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4790)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4917)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4560)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4501)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2304)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2671)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4790)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:725)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:702)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2025-12-08 13:55:28 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 45678901
+2025-12-08 13:55:28 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 45678901
+2025-12-08 13:55:28 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 2 módulos activos para el rol con ID 3
+2025-12-08 13:55:28 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-08 13:55:28 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 13:55:28 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 13:55:28 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-08 13:55:29 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 3 asistencias para empleado 4
+2025-12-08 13:56:32 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-08 13:56:32 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-08 13:56:33 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 5 módulos activos para el rol con ID 1
+2025-12-08 13:56:33 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-08 13:56:33 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 13:56:33 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 13:56:33 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-08 13:56:33 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 15 registros de asistencia
+2025-12-08 14:00:00 ERROR dao.impl.DepartamentoDAOImpl - Error al obtener la lista de departamentos: The column name estado was not found in this ResultSet.
+org.postgresql.util.PSQLException: The column name estado was not found in this ResultSet.
+	at org.postgresql.jdbc.PgResultSet.findColumn(PgResultSet.java:3085)
+	at org.postgresql.jdbc.PgResultSet.getBoolean(PgResultSet.java:2927)
+	at dao.impl.DepartamentoDAOImpl.obtenerTodosDepartamentos(DepartamentoDAOImpl.java:48)
+	at controller.DepartamentoController.obtenerDepartamentos(DepartamentoController.java:30)
+	at view.DAgregarEmpleado.cargarDepartamentos(DAgregarEmpleado.java:66)
+	at view.DAgregarEmpleado.<init>(DAgregarEmpleado.java:37)
+	at view.Dashboard.btnAgregarEmpleadoActionPerformed(Dashboard.java:1416)
+	at view.Dashboard$3.actionPerformed(Dashboard.java:799)
+	at java.desktop/javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:1972)
+	at java.desktop/javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2314)
+	at java.desktop/javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:407)
+	at java.desktop/javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:262)
+	at java.desktop/javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:279)
+	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6576)
+	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3404)
+	at java.desktop/java.awt.Component.processEvent(Component.java:6341)
+	at java.desktop/java.awt.Container.processEvent(Container.java:2260)
+	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:4958)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2318)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4790)
+	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4917)
+	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4560)
+	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4501)
+	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2304)
+	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2671)
+	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4790)
+	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:725)
+	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:702)
+	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:203)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:124)
+	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:113)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:109)
+	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
+	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+2025-12-08 14:01:13 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-08 14:01:13 INFO  dao.impl.AsistenciaDAOImpl - Entrada registrada para empleado ID 1
+2025-12-08 14:01:49 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-08 14:01:49 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-08 14:01:49 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 5 módulos activos para el rol con ID 1
+2025-12-08 14:01:49 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-08 14:01:49 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 14:01:49 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-08 14:01:49 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-08 14:01:49 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
+2025-12-09 19:05:34 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 23456789
+2025-12-09 19:05:34 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 23456789
+2025-12-09 19:05:41 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 23456789
+2025-12-09 19:05:41 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 23456789
+2025-12-09 19:05:42 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 2 módulos activos para el rol con ID 3
+2025-12-09 19:05:42 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-09 19:05:42 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-09 19:05:42 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-09 19:05:42 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-09 19:05:42 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 3 asistencias para empleado 2
+2025-12-09 19:05:53 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-09 19:05:53 INFO  dao.impl.AsistenciaDAOImpl - Asistencia activa encontrada: ID 16
+2025-12-09 19:05:53 INFO  dao.impl.AsistenciaDAOImpl - Salida registrada para asistencia ID 16
+2025-12-09 19:05:56 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-09 19:05:57 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-09 19:05:57 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 6 módulos activos para el rol con ID 1
+2025-12-09 19:05:57 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-09 19:05:57 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-09 19:05:57 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-09 19:05:57 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-09 19:05:57 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
+2025-12-09 19:06:19 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-09 19:06:20 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-09 19:06:20 INFO  dao.impl.ModuloDAOImpl - ✅ Se obtuvieron 6 módulos activos para el rol con ID 1
+2025-12-09 19:06:20 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-09 19:06:20 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-09 19:06:20 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados registrados: 10
+2025-12-09 19:06:20 INFO  dao.impl.EmpleadoDAOImpl - Total de empleados obtenidos: 10
+2025-12-09 19:06:20 INFO  dao.impl.AsistenciaDAOImpl - Se obtuvieron 16 registros de asistencia
+2025-12-09 19:06:44 INFO  dao.impl.EmpleadoDAOImpl - Conexión establecida correctamente para EmpleadoDAOImpl
+2025-12-09 19:06:44 INFO  dao.impl.AsistenciaDAOImpl - Entrada registrada para empleado ID 2
+2025-12-09 19:07:59 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-09 19:08:00 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-09 19:08:00 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-09 19:08:01 INFO  dao.impl.LoginService - ✅ Autenticación exitosa para usuario con DNI: 12345678
+2025-12-09 19:08:01 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 87654321
+2025-12-09 19:08:01 WARN  dao.impl.LoginService - ⚠️ No se encontró usuario activo con DNI: 87654321
+2025-12-09 19:08:01 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 00000000
+2025-12-09 19:08:01 WARN  dao.impl.LoginService - ⚠️ No se encontró usuario activo con DNI: 00000000
+2025-12-09 19:08:01 INFO  dao.impl.LoginService - Intentando autenticar usuario con DNI: 12345678
+2025-12-09 19:08:01 WARN  dao.impl.LoginService - ❌ Contraseña incorrecta para usuario con DNI: 12345678

@@ -94,6 +94,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnAsistencia.setVisible(false);
         btnReportes.setVisible(false);
         btnInventario.setVisible(false);
+        btnUsuario.setVisible(false);
 
         // Mostrar solo lo que tenga activo en BD
         for (Modulo m : modulosActivos) {
@@ -108,6 +109,8 @@ public class Dashboard extends javax.swing.JFrame {
                     btnReportes.setVisible(true);
                 case "Inventario" ->
                     btnInventario.setVisible(true);
+                case "Usuarios" ->
+                    btnUsuario.setVisible(true);
             }
         }
 
